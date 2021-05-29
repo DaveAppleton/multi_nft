@@ -98,8 +98,25 @@ describe("Token contract", function () {
         await expect( sale.connect(addr3).acceptOffer(m1155.address,10,1,1,override)).to.emit(m1155, 'TransferSingle')
         expect(await m1155.balanceOf(addr2.address,10)).to.equal(4);
         expect(await m1155.balanceOf(addr3.address,10)).to.equal(1);
+        expect(await sale.available(m1155.address,10,1)).to.equal(2);
     })
 
+    it("No 3 fails to buy three", async function() {
+        let override = {
+            value: ethers.utils.parseEther("1.5")
+        };
+        await expect( sale.connect(addr3).acceptOffer(m1155.address,10,1,3,override)).to.be.revertedWith("not enough items available");
+    })
+
+    it("Check when No 2 does something naughty", async function() {
+        expect(await m1155.balanceOf(addr2.address,10)).to.equal(4);
+        expect(await sale.available(m1155.address,10,1)).to.equal(2);
+        await (expect(m1155.connect(addr2).safeTransferFrom(addr2.address,addr1.address,10,3,"0x"))).to.emit(m1155,'TransferSingle')
+        expect(await m1155.balanceOf(addr2.address,10)).to.equal(1);
+        expect(await sale.available(m1155.address,10,1)).to.equal(1);  // sale should check balance
+        await (m1155.connect(addr2).setApprovalForAll(sale.address,false));
+        expect(await sale.available(m1155.address,10,1)).to.equal(0);  // sale checks that approval is in place
+    })
 
     async function bid(signer, amount, residual) {
         

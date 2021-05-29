@@ -189,6 +189,15 @@ contract mintyMultiSale {
         return items[token][tokenId].length;
     }
 
+    function available(IMintyMultiToken token,uint tokenId, uint offerId) external view returns (uint) {
+        require(offerId < items[token][tokenId].length,"OfferID not valid");
+        Offer1155 memory offer = items[token][tokenId][offerId];
+        if (!token.isApprovedForAll(offer.creator,address(this))) return 0;
+        uint256 onOffer = offer.quantity;
+        uint256 owned   = token.balanceOf(offer.creator,tokenId);
+        return min(onOffer,owned);
+    }
+
     function splitFee(address payable creator, address payable _owner, uint value) internal {
         uint creatorPart = value * creatorPerMille / 1000;
         uint ownerPart   = value - creatorPart;
@@ -203,11 +212,16 @@ contract mintyMultiSale {
 
     function mul(uint256 a, uint256 b) internal pure returns (uint256 c) {
         if (a == 0) {
-        return 0;
+            return 0;
         }
         c = a * b;
         assert(c / a == b);
         return c;
+    }
+
+    function min(uint a, uint b) internal pure returns (uint) {
+        if (a < b) return a;
+        return b;
     }
 
 
