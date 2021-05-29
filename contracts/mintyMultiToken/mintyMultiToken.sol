@@ -5,10 +5,11 @@ import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 contract mintyMultiToken is ERC1155 {
 
     mapping (uint => bool) public minted;
-    mapping(uint => string) _tokenURIs;
-    string                  base;
-    address                 public owner;
-    mapping (address => bool) auth;
+    mapping(uint => string)       _tokenURIs;
+    string                        base;
+    address                public owner;
+    mapping (address => bool)     auth;
+    string                 public contractURI;  
 
 
     modifier onlyAuth() {
@@ -20,6 +21,12 @@ contract mintyMultiToken is ERC1155 {
         owner = _owner;
         base = "https://minty.mypinata.cloud/ipfs/";
     }
+
+    
+    function setContractURI(string memory _uri) external onlyAuth {
+        contractURI = _uri;
+    } 
+   
 
     function uri(uint256 tokenId) external view override returns (string memory) {
         string memory _tokenURI = _tokenURIs[tokenId];

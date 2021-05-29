@@ -1,6 +1,7 @@
 pragma solidity ^0.7.5;
 //SPDX-License-Identifier: UNLICENSED
 
+import "hardhat/console.sol";
 /*
 
     mapping(address => mapping(uint => []offer))
@@ -30,6 +31,9 @@ interface IMintyToken {
 }
 
 interface IMintyMultiToken {
+
+    function isApprovedForAll(address account, address operator) external view returns (bool);
+
     function mint(uint256 tokenId, uint256 quantity, string memory ipfsHash) external; // mints tokens to contract owner
 
     function minted(uint256 id) external view returns (bool) ;
@@ -107,12 +111,14 @@ contract mintyMultiSale {
     }
 
     function offerNew(IMintyMultiToken token, uint256 tokenId, string memory ipfsString, uint256 quantity, uint256 price) external {
+        require(token.isApprovedForAll(msg.sender,address(this)),"You have not approved this contract to sell your tokens");
         require(!token.minted(tokenId),"Token ID already minted");
         require(token.owner() == msg.sender,"Unauthorised");
         require(items[token][tokenId].length == 0,"Unable to offer new");
         token.mint(tokenId,quantity,ipfsString);
         items[token][tokenId].push(Offer1155(msg.sender, quantity, ipfsString,price));
         emit NewOffer(token, tokenId, msg.sender, quantity, price, ipfsString);
+        console.log("length at",address(token),tokenId,items[token][tokenId].length);
         return;        
     }
 
@@ -121,6 +127,7 @@ contract mintyMultiSale {
  
     function offerResale(IMintyMultiToken token, uint256 tokenId, uint256 quantity, uint256 price) external {
         require((quantity <= token.balanceOf(msg.sender,tokenId) && (quantity > 0)),"You do not own enough of this token");
+        require(token.isApprovedForAll(msg.sender,address(this)),"You have not approved this contract to sell your tokens");
         uint pos = items[token][tokenId].length;
         items[token][tokenId].push(Offer1155(msg.sender, quantity, token.uri(tokenId),price));
         emit ResaleOffer(token,tokenId, quantity,msg.sender, price, pos);
@@ -160,6 +167,7 @@ contract mintyMultiSale {
         require(!entered,"No reentrancy please");
         entered = true;
         bytes memory data;
+        console.log(address(token),tokenId, pos, items[token][tokenId].length);
         Offer1155 memory offer = items[token][tokenId][pos];
         address _owner = offer.creator;
         require(offer.quantity >= quantity,"not enough items available");
@@ -173,6 +181,12 @@ contract mintyMultiSale {
         splitFee(payable(offer.creator), payable(_owner), value);
         entered = false;
         emit OfferAccepted(msg.sender, token, tokenId, pos, quantity, value);
+    }
+
+    //-------- UTILITY ------
+
+    function numberOfBids(IMintyMultiToken token,uint tokenId) external view returns (uint) {
+        return items[token][tokenId].length;
     }
 
     function splitFee(address payable creator, address payable _owner, uint value) internal {
