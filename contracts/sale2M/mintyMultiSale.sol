@@ -185,7 +185,7 @@ contract mintyMultiSale {
 
     //-------- UTILITY ------
 
-    function numberOfBids(IMintyMultiToken token,uint tokenId) external view returns (uint) {
+    function numberOfOffers(IMintyMultiToken token,uint tokenId) external view returns (uint) {
         return items[token][tokenId].length;
     }
 
