@@ -1,6 +1,8 @@
 pragma solidity ^0.7.5;
 
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
+import "../locking/locking.sol";
+import "hardhat/console.sol";
 
 contract mintyMultiToken is ERC1155 {
 
@@ -9,7 +11,9 @@ contract mintyMultiToken is ERC1155 {
     string                        base;
     address                public owner;
     mapping (address => bool)     auth;
-    string                 public contractURI;  
+    string                 public contractURI;
+    locking []             public locs;
+    string                 public lockError;
 
 
     modifier onlyAuth() {
@@ -17,8 +21,10 @@ contract mintyMultiToken is ERC1155 {
         _;
     }
 
-    constructor(address _owner) ERC1155("") {
+    constructor(address _owner, locking[] memory _locs, string memory _lockError ) ERC1155("") {
         owner = _owner;
+        locs = _locs;
+        lockError = _lockError;
         base = "https://minty.mypinata.cloud/ipfs/";
     }
 
@@ -42,6 +48,14 @@ contract mintyMultiToken is ERC1155 {
 
     function setAuth(address operator, bool state) external onlyAuth {
         auth[operator] = state;
-
     }
+
+    function validateBuyer(address buyer) external {
+        for (uint j = 0; j < locs.length; j++) {
+            bool res = locs[j].isLocked(buyer);
+            console.log("trying ",address(locs[j]),buyer,res);
+            if (res) return;
+        }
+        require(locs.length == 0,lockError);
+    } 
 }

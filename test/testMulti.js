@@ -42,7 +42,7 @@ describe("Token contract", function () {
 
         M1155 = await ethers.getContractFactory("mintyMultiToken")
  
-        m1155 = await M1155.deploy(addr1.address)
+        m1155 = await M1155.deploy(addr1.address,[],"")
         console.log("ERC1155 ",m1155.address)
         console.log
 

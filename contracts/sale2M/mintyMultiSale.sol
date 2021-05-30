@@ -4,15 +4,8 @@ pragma solidity ^0.7.5;
 import "hardhat/console.sol";
 /*
 
-    mapping(address => mapping(uint => []offer))
-
-    1) offerNew -> token, tokenID, quantity, price
-    2) offerResale -> token, tokenId, quantity, price
-
-
-
-
-
+    1. Allow Multiple Mints at once
+    2. Restrict level 0 sales to people who satisfy the criteria set out in the 1155
 
 */
 
@@ -47,6 +40,8 @@ interface IMintyMultiToken {
     function owner() external view returns (address);
 
     function uri(uint256 id) external view returns (string memory);
+
+    function validateBuyer(address buyer) external; // should revert is not valid
 }
 
     struct Offer721 {
@@ -165,6 +160,9 @@ contract mintyMultiSale {
 
     function accept(IMintyMultiToken token,uint tokenId, uint256 pos, uint256 quantity, uint value) internal {
         require(!entered,"No reentrancy please");
+        if (pos == 0) {
+            token.validateBuyer(msg.sender);
+        }
         entered = true;
         bytes memory data;
         console.log(address(token),tokenId, pos, items[token][tokenId].length);
