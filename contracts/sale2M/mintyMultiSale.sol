@@ -1,4 +1,5 @@
 pragma solidity ^0.7.5;
+pragma abicoder v2;
 //SPDX-License-Identifier: UNLICENSED
 
 import "hardhat/console.sol";
@@ -28,6 +29,8 @@ interface IMintyMultiToken {
     function isApprovedForAll(address account, address operator) external view returns (bool);
 
     function mint(uint256 tokenId, uint256 quantity, string memory ipfsHash) external; // mints tokens to contract owner
+
+    function mintBatch(uint [] memory tokenIds, uint [] memory quantities, string[] memory hashes) external;
 
     function minted(uint256 id) external view returns (bool) ;
 
@@ -117,6 +120,19 @@ contract mintyMultiSale {
         return;        
     }
 
+    function offerNewBatch(IMintyMultiToken token, uint256[] memory tokenIds, string[] memory ipfsStrings, uint256[] memory quantities, uint256[] memory prices) external {
+        require(token.isApprovedForAll(msg.sender,address(this)),"You have not approved this contract to sell your tokens");
+        require(token.owner() == msg.sender,"Unauthorised");
+        for (uint j = 0; j < tokenIds.length; j++) {
+            require(!token.minted(tokenIds[j]),"Token ID already minted");
+            require(items[token][tokenIds[j]].length == 0,"Unable to offer new");
+            items[token][tokenIds[j]].push(Offer1155(msg.sender, quantities[j], ipfsStrings[j],prices[j]));
+            emit NewOffer(token, tokenIds[j], msg.sender, quantities[j], prices[j], ipfsStrings[j]);
+        }
+        token.mintBatch(tokenIds,quantities,ipfsStrings);
+        return;        
+    }
+
     //   SistineToken--->132-->[(initial Offer)]
 
  
@@ -195,6 +211,14 @@ contract mintyMultiSale {
         uint256 owned   = token.balanceOf(offer.creator,tokenId);
         return min(onOffer,owned);
     }
+
+    function price(IMintyMultiToken token,uint tokenId, uint offerId) external view returns (uint) {
+        require(offerId < items[token][tokenId].length,"OfferID not valid");
+        Offer1155 memory offer = items[token][tokenId][offerId];
+        if (!token.isApprovedForAll(offer.creator,address(this))) return 0;
+        return offer.unitPrice;
+    }
+
 
     function splitFee(address payable creator, address payable _owner, uint value) internal {
         uint creatorPart = value * creatorPerMille / 1000;

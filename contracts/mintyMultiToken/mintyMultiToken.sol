@@ -1,4 +1,5 @@
 pragma solidity ^0.7.5;
+pragma abicoder v2;
 
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 import "../locking/locking.sol";
@@ -46,8 +47,22 @@ contract mintyMultiToken is ERC1155 {
         _mint(owner, tokenId, quantity, data);
     }
 
+    function mintBatch(uint [] memory tokenIds, uint [] memory quantities, string[] memory hashes) external onlyAuth {
+        bytes memory data;
+        require(tokenIds.length == hashes.length,"array lengths do not match");
+        for (uint j = 0; j < tokenIds.length; j++) {
+            _tokenURIs[tokenIds[j]] = hashes[j];
+            minted[tokenIds[j]] = true;
+        }
+        _mintBatch(owner, tokenIds, quantities, data);
+    }
+
     function setAuth(address operator, bool state) external onlyAuth {
         auth[operator] = state;
+    }
+
+    function setBase(string memory _base) external onlyAuth {
+        base = _base;
     }
 
     function validateBuyer(address buyer) external {
