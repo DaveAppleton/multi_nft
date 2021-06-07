@@ -1,0 +1,53 @@
+2021/06/02 03:10:17 pre processing mintyMultiToken.sol
+2021/06/02 03:10:17 pre processing @openzeppelin/contracts/token/ERC1155/ERC1155.sol
+2021/06/02 03:10:17 pre processing ../locking/locking.sol
+2021/06/02 03:10:17 pre processing /Users/daveappleton/Documents/Minty/projects/node_modules/@openzeppelin/contracts/token/ERC1155/IERC1155.sol
+2021/06/02 03:10:17 pre processing /Users/daveappleton/Documents/Minty/projects/node_modules/@openzeppelin/contracts/token/ERC1155/IERC1155MetadataURI.sol
+2021/06/02 03:10:17 pre processing /Users/daveappleton/Documents/Minty/projects/node_modules/@openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol
+2021/06/02 03:10:17 pre processing /Users/daveappleton/Documents/Minty/projects/node_modules/@openzeppelin/contracts/introspection/ERC165.sol
+2021/06/02 03:10:17 pre processing /Users/daveappleton/Documents/Minty/projects/node_modules/@openzeppelin/contracts/utils/Address.sol
+2021/06/02 03:10:17 pre processing /Users/daveappleton/Documents/Minty/projects/node_modules/@openzeppelin/contracts/introspection/IERC165.sol
+2021/06/02 03:10:17 pre processing /Users/daveappleton/Documents/Minty/projects/node_modules/@openzeppelin/contracts/utils/Context.sol
+2021/06/02 03:10:17 pre processing /Users/daveappleton/Documents/Minty/projects/node_modules/@openzeppelin/contracts/math/SafeMath.sol
+2021/06/02 03:10:17 pre processing @openzeppelin/contracts/token/ERC1155/ERC1155.sol
+2021/06/02 03:10:17 Resolved  Address.sol
+2021/06/02 03:10:17 ERC1155.sol remains unresolved
+2021/06/02 03:10:17 Resolved  IERC165.sol
+2021/06/02 03:10:17 Resolved  locking.sol
+2021/06/02 03:10:17 mintyMultiToken.sol remains unresolved
+2021/06/02 03:10:17 IERC1155MetadataURI.sol remains unresolved
+2021/06/02 03:10:17 IERC1155Receiver.sol remains unresolved
+2021/06/02 03:10:17 ERC165.sol remains unresolved
+2021/06/02 03:10:17 Resolved  @openzeppelin/contracts/token/ERC1155/ERC1155.sol
+2021/06/02 03:10:17 IERC1155.sol remains unresolved
+2021/06/02 03:10:17 Resolved  Context.sol
+2021/06/02 03:10:17 Resolved  SafeMath.sol
+2021/06/02 03:10:17 ERC165.sol remains unresolved
+2021/06/02 03:10:17 Written Address.sol (183) lines
+2021/06/02 03:10:17 ERC1155.sol remains unresolved
+2021/06/02 03:10:17 Written IERC165.sol (12) lines
+2021/06/02 03:10:17 Written locking.sol (116) lines
+2021/06/02 03:10:17 mintyMultiToken.sol remains unresolved
+2021/06/02 03:10:17 IERC1155MetadataURI.sol remains unresolved
+2021/06/02 03:10:17 Resolved  IERC1155Receiver.sol
+2021/06/02 03:10:17 Written @openzeppelin/contracts/token/ERC1155/ERC1155.sol (0) lines
+2021/06/02 03:10:17 Resolved  IERC1155.sol
+2021/06/02 03:10:17 Written Context.sol (11) lines
+2021/06/02 03:10:17 Written SafeMath.sol (198) lines
+2021/06/02 03:10:17 mintyMultiToken.sol remains unresolved
+2021/06/02 03:10:17 IERC1155MetadataURI.sol remains unresolved
+2021/06/02 03:10:17 Written IERC1155Receiver.sol (49) lines
+2021/06/02 03:10:17 Resolved  ERC165.sol
+2021/06/02 03:10:17 ERC1155.sol remains unresolved
+2021/06/02 03:10:17 Written IERC1155.sol (92) lines
+2021/06/02 03:10:17 mintyMultiToken.sol remains unresolved
+2021/06/02 03:10:17 Resolved  IERC1155MetadataURI.sol
+2021/06/02 03:10:17 Written ERC165.sol (43) lines
+2021/06/02 03:10:17 ERC1155.sol remains unresolved
+2021/06/02 03:10:17 mintyMultiToken.sol remains unresolved
+2021/06/02 03:10:17 Written IERC1155MetadataURI.sol (10) lines
+2021/06/02 03:10:17 Resolved  ERC1155.sol
+2021/06/02 03:10:17 mintyMultiToken.sol remains unresolved
+2021/06/02 03:10:17 Written ERC1155.sol (395) lines
+2021/06/02 03:10:17 Resolved  mintyMultiToken.sol
+2021/06/02 03:10:17 Written mintyMultiToken.sol (68) lines

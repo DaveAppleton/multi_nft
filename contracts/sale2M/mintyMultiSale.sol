@@ -2,7 +2,6 @@ pragma solidity ^0.7.5;
 pragma abicoder v2;
 //SPDX-License-Identifier: UNLICENSED
 
-import "hardhat/console.sol";
 /*
 
     1. Allow Multiple Mints at once
@@ -116,7 +115,6 @@ contract mintyMultiSale {
         token.mint(tokenId,quantity,ipfsString);
         items[token][tokenId].push(Offer1155(msg.sender, quantity, ipfsString,price));
         emit NewOffer(token, tokenId, msg.sender, quantity, price, ipfsString);
-        console.log("length at",address(token),tokenId,items[token][tokenId].length);
         return;        
     }
 
@@ -181,7 +179,6 @@ contract mintyMultiSale {
         }
         entered = true;
         bytes memory data;
-        console.log(address(token),tokenId, pos, items[token][tokenId].length);
         Offer1155 memory offer = items[token][tokenId][pos];
         address _owner = offer.creator;
         require(offer.quantity >= quantity,"not enough items available");

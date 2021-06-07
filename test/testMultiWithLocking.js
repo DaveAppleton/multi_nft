@@ -74,9 +74,9 @@ describe("Token contract", function () {
         console.log
 
         SALE = await ethers.getContractFactory("mintyMultiSale")
-        sale = await SALE.deploy(alice, 10, 10)
+        sale = await SALE.deploy(owner.address, 10, 10)
 
-        m1155.connect(owner).setApprovalForAll(sale.address,true);
+        await m1155.connect(owner).setApprovalForAll(sale.address,true);
 
         await expect(minty.transfer(addr0.address,lock200)).to.emit(minty,'Transfer')
         await expect(minty.transfer(addr1.address,lock200)).to.emit(minty,'Transfer')

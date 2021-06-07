@@ -18,12 +18,16 @@ require("@nomiclabs/hardhat-waffle");
       url: "https://rpc-mumbai.maticvigil.com",
       accounts: [ privatekey ]
     },
-   goerli: {
-       url: "https://goerli.infura.io/v3/2c954d83bea043f48d5ac6b70fa3b7b0",
-       accounts: [ privatekey]
-     }
-   },
-   solidity: {
+    goerli: {
+      url: "https://goerli.infura.io/v3/2c954d83bea043f48d5ac6b70fa3b7b0",
+      accounts: [ privatekey]
+    },
+    kovan: {
+      url: "https://kovan.infura.io/v3/2c954d83bea043f48d5ac6b70fa3b7b0",
+      accounts: [ privatekey]
+    }
+  },
+  solidity: {
      version: "0.7.5",
      settings: {
        optimizer: {

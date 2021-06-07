@@ -3,7 +3,6 @@ pragma abicoder v2;
 
 import "@openzeppelin/contracts/token/ERC1155/ERC1155.sol";
 import "../locking/locking.sol";
-import "hardhat/console.sol";
 
 contract mintyMultiToken is ERC1155 {
 
@@ -68,7 +67,6 @@ contract mintyMultiToken is ERC1155 {
     function validateBuyer(address buyer) external {
         for (uint j = 0; j < locs.length; j++) {
             bool res = locs[j].isLocked(buyer);
-            console.log("trying ",address(locs[j]),buyer,res);
             if (res) return;
         }
         require(locs.length == 0,lockError);
