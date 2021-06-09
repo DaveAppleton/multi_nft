@@ -36,6 +36,8 @@ contract pMintysale {
     uint256                     public nextToken;
     mapping(uint256 => Offer)   public items; 
 
+    mapping(address => bool)    public isMinter;
+
     bool                               entered;
     uint                        public ownerPerMille;
     uint                        public creatorPerMille;
@@ -56,10 +58,14 @@ contract pMintysale {
 
     event Payment(address wallet,address creator, address _owner);
 
-    constructor(IMintyToken m, IERC20 _weth, address payable wallet, uint256 _ownerPerMille, uint256 _creatorPerMille, uint _divisor) {
+    modifier onlyOwner() {
+        require(msg.sender == owner, "unauthorised");
+        _;
+    }
+
+    constructor(IERC20 _weth, address payable wallet, uint256 _ownerPerMille, uint256 _creatorPerMille, uint _divisor) {
         require(_creatorPerMille + _ownerPerMille == 1000,"sum(_creatorPerMille + _ownerPerMille) must equal 1000");
-        require(divisor >= 1000,"divisor is less than 1000");
-        token = m;
+        require(_divisor >= 1000,"divisor is less than 1000");
         weth = _weth;
         minty = wallet;
         ownerPerMille = _ownerPerMille;
@@ -68,8 +74,15 @@ contract pMintysale {
         emit SharesUpdated(_ownerPerMille, _creatorPerMille, _divisor);
     }
 
-    function updateShares(uint256 _ownerPerMille, uint256 _creatorPerMille, uint _divisor) external {
-        require(msg.sender == owner, "unauthorised");
+    function setMintyUnique(IMintyToken m) external onlyOwner {
+        token = m;
+    }
+
+    function setMinter(address minter, bool status) external onlyOwner {
+        isMinter[minter] = status;
+    }
+
+    function updateShares(uint256 _ownerPerMille, uint256 _creatorPerMille, uint _divisor) external onlyOwner {
         require(_creatorPerMille + _ownerPerMille == 1000,"sum(_creatorPerMille + _ownerPerMille) must equal 1000");
         require(divisor >= 1000,"divisor is less than 1000");
         ownerPerMille = _ownerPerMille;
@@ -80,6 +93,7 @@ contract pMintysale {
 
     function offerNew(uint256 tokenId, string memory ipfsString, uint256 price) external {
         require(!token.tokenExists(tokenId),"Invalid token ID");
+        require(isMinter[msg.sender],"You are not allowed to mint tokens here");
         Offer memory offer = items[tokenId];
         require((offer.creator == address(0) ),"Attempt to modify an existing offer");
         items[tokenId] = Offer(msg.sender, ipfsString,price, true,false);
@@ -95,8 +109,7 @@ contract pMintysale {
     }
 
     // only needed if we are replacing an old contract
-    function offerSpecial(uint256 tokenId, address creator, string memory ipfsString, uint256 price) external {
-        require(msg.sender == owner,"Special function, unauthorised");
+    function offerSpecial(uint256 tokenId, address creator, string memory ipfsString, uint256 price) external onlyOwner {
         require(!token.tokenExists(tokenId),"Invalid token ID");
         items[tokenId] = Offer(creator, ipfsString,price, true,false);
         emit NewOffer(tokenId, creator, price, ipfsString);
@@ -127,7 +140,8 @@ contract pMintysale {
         emit SaleResubmitted(tokenId, price);
     }
 
-    function acceptOffer(uint tokenId, uint price) external  {
+    function acceptOffer(uint tokenId) external  {
+        uint256 price = items[tokenId].price;
         require(weth.transferFrom(msg.sender, address(this), price),"Cannot transfer funds");
         accept(tokenId, price);
     }

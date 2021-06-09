@@ -1,0 +1,67 @@
+
+
+0x31a09F5A107A5214A62ec15aB3C97Dd1E4D3382b | Neumann    146    40
+0xcad809e60e7B93fF7343E25F891A4959F0a2BBC7 | LaylaHifi  260    72
+
+nickname   | title             | project id
+-----------+-------------------+------------
+ Neuman    | Project 1         |        135
+ Neuman    | private project 1 |        158
+ Neuman    | project 4         |        160 <--
+ LaylaHifi | test              |        143
+ LaylaHifi | Private project 2 |        149
+ LaylaHifi | Private project 2 |        150
+ LaylaHifi | LIFE MUST GO ON   |        162 <--
+ LaylaHifi | test test test    |        170
+
+select a.nickname, c.title, c.id as project_id from users a, artist b, project c where a.id=b.user_id and b.id = c.artist_id and a.nickname='LaylaHifi';
+
+minty=# update project set token_address='0x032807Be1e85fcfc1Bc36Ad574b5D0cdafB25e06' where id = 160;
+minty=# update project set token_address='0x65DCBeE2cd5Df261a4ed9a4F4ECF10193d063082' where id = 162;
+
+minty=# select a.nickname, c.title, c.id as project_id, c.token_address from users a, artist b, project c where a.id=b.user_id and b.id = c.artist_id and a.nickname='Neuman';
+
+ nickname |       title        | project_id |               token_address                
+----------+--------------------+------------+--------------------------------------------
+ Neuman   | Project 1          |        135 | 
+ Neuman   | private project 1  |        158 | 
+ Neuman   | project 4          |        160 | 0x032807Be1e85fcfc1Bc36Ad574b5D0cdafB25e06
+(3 rows)
+
+minty=# select a.nickname, c.title, c.id as project_id, c.token_address from users a, artist b, project c where a.id=b.user_id and b.id = c.artist_id and a.nickname='LaylaHifi';
+ nickname  |       title       | project_id |               token_address                
+-----------+-------------------+------------+--------------------------------------------
+ LaylaHifi | test              |        143 | 
+ LaylaHifi | Private project 2 |        149 | 
+ LaylaHifi | Private project 2 |        150 | 
+ LaylaHifi | test test test    |        170 | 
+ LaylaHifi | LIFE MUST GO ON   |        162 | 0x65DCBeE2cd5Df261a4ed9a4F4ECF10193d063082
+(5 rows)
+
+select a.nickname, c.title, c.id as project_id, a.address, c.token_address from users a, artist b, project c where a.id=b.user_id and b.id = c.artist_id and a.nickname='LaylaHifi';
+
+
+select a.id, a.nickname, b.id, b.approved from users a, artist b where a.id = b.user_id and b.approved;
+ id  |    nickname    | id | approved 
+-----+----------------+----+----------
+ 106 | Jahanzaib      | 35 | t
+ 103 | serifff        | 34 | t
+ 147 | Alice          | 41 | t
+  98 | fasdfasdf      | 32 | t
+ 145 |                | 39 | t
+  91 | hello nickname | 30 | t
+  89 |                | 28 | t
+ 144 |                | 38 | t
+ 109 | minty_testing  | 36 | t
+  90 |                | 29 | t
+ 148 | Abdullah       | 42 | t
+ 143 |                | 37 | t
+  88 | seri           | 27 | t
+ 146 | Neumann        | 40 | t
+
+.id, a.nickname, b.id, b.approved from users a, artist b where a.id = b.user_id and a.nickname = 'LaylaHifi';
+ id  | nickname  | id | approved 
+-----+-----------+----+----------
+ 248 | LaylaHifi | 75 | f
+
+update artist set approved = true where id=57;

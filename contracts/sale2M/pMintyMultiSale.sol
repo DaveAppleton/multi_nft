@@ -2,6 +2,8 @@ pragma solidity ^0.7.5;
 pragma abicoder v2;
 //SPDX-License-Identifier: UNLICENSED
 
+import "hardhat/console.sol";
+
 /*
 
     1. Allow Multiple Mints at once
@@ -162,7 +164,7 @@ contract pMintyMultiSale {
         emit SaleRepriced(token,tokenId, pos, price, msg.sender);
     }
 
-    function acceptOffer(IMintyMultiToken token,uint tokenId, uint256 pos, uint256 quantity, uint256 value) external  {
+    function acceptOffer(IMintyMultiToken token,uint tokenId, uint256 pos, uint256 quantity) external  {
         require(!entered,"No reentrancy please");
         if (pos == 0) {
             token.validateBuyer(msg.sender);
@@ -172,7 +174,7 @@ contract pMintyMultiSale {
         Offer1155 memory offer = items[token][tokenId][pos];
         address _owner = offer.creator;
         require(offer.quantity >= quantity,"not enough items available");
-        require(value >= mul(offer.unitPrice,quantity), "Price not met");
+        uint value = mul(offer.unitPrice,quantity);
         require(token.balanceOf(_owner,tokenId) >= quantity,"not enough items owned by offerer");
         token.safeTransferFrom(_owner,msg.sender,tokenId,quantity, data);
 
@@ -215,17 +217,20 @@ contract pMintyMultiSale {
         uint sellerPart  = mul(value , (1000 - royaltyPerMille)) / divisor;
         require(weth.transferFrom(msg.sender,_seller,sellerPart),"cannot transfer funds");
 
+        console.log("seller ",sellerPart);
         uint sent = sellerPart;
-        
+        console.log("royalties",royaltyPart);
         PoolEntry[] memory royalties = token.getRoyalties(position);
         for (uint j = 0; j < royalties.length; j++) {
             uint amount = mul(royaltyPart , royalties[j].share) / 1000;
-            require(weth.transferFrom(msg.sender,royalties[j].beneficiary,sellerPart),"cannot transfer funds");
+            require(weth.transferFrom(msg.sender,royalties[j].beneficiary,amount),"cannot transfer funds");
             sent += amount;
+            console.log(royalties[j].beneficiary,royalties[j].share,amount);
         }
 
         uint mintyPart = value - sent;
-        require(weth.transferFrom(msg.sender,_seller,mintyPart),"cannot transfer funds");
+        console.log("minty gets ",mintyPart);
+        require(weth.transferFrom(msg.sender,minty,mintyPart),"cannot transfer funds");
     }
 
     function mul(uint256 a, uint256 b) internal pure returns (uint256 c) {
