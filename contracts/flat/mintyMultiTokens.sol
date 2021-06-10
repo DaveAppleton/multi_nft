@@ -1132,11 +1132,12 @@ contract mintyMultiTokens is ERC1155 {
         _;
     }
 
-    constructor(address _owner, locking[] memory _locs, string memory _lockError ) ERC1155("") {
+    constructor(address _owner, address sale, locking[] memory _locs, string memory _lockError ) ERC1155("") {
         owner = _owner;
         locs = _locs;
         auth[_owner] = true;
         auth[msg.sender] = true;
+        auth[sale] = true;
         lockError = _lockError;
         base = "https://minty.mypinata.cloud/ipfs/";
     }

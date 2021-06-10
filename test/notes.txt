@@ -65,3 +65,19 @@ select a.id, a.nickname, b.id, b.approved from users a, artist b where a.id = b.
  248 | LaylaHifi | 75 | f
 
 update artist set approved = true where id=57;
+
+
+select a.nickname, a.address, c.title, c.id as project_id, c.token_address from users a, artist b, project c where a.id=b.user_id and b.id = c.artist_id and a.nickname='LaylaHifi';
+
+
+
+MUMBAI
+------
+
+WETH 0xf738b83Fa52A7Ab570918Afe61b78b8E2DC6F4EF
+MINTY 0x91509AD882E530f0934CA0901e3098fB6e1e3Af1 
+SALE 0xE01017da9bd2DD291A05E7b3d24A1655dc9ca892
+MINTY UNIQUE 0xd9dB3cCEe640EEEC9321Ddc7b4D8404665f71503
+MULTI SALE 0x2576FDD593b287A941e9c61801F29541A37fD2d6 
+LOCKING 0x310a6CA6cC3069C0b72D0Dd0dfa75B6F5cBFb810
+

@@ -1,0 +1,5 @@
+{
+    "log" : "util.log",
+    "DB_HOST" : "host=localhost user=ubuntu port=5432 sslmode=disable dbname=minty connect_timeout=10"
+
+}

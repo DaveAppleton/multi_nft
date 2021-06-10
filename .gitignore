@@ -1,5 +1,9 @@
 node_modules
-artifacts
+artifacts/@openzeppelin
+artifacts/@maticnetwork
+artifacts/build-info
+artifacts/hardhat
+artifacts/contracts/flat
 cache/solidity-files-cache.json
 .DS_Store
 .secret

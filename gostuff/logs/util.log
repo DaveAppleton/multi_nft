@@ -1,0 +1,6 @@
+2021/06/10 14:37:01 database :  dial tcp [::1]:5432: connect: connection refused
+2021/06/10 14:37:01 
+2021/06/10 14:37:01 dial tcp [::1]:5432: connect: connection refused
+2021/06/10 17:47:00 database :  pq: password authentication failed for user "ubuntu"
+2021/06/10 17:47:00 host=localhost user=ubuntu port=5432 sslmode=disable dbname=minty connect_timeout=10
+2021/06/10 17:47:00 pq: password authentication failed for user "ubuntu"

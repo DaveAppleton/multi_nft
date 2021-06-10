@@ -42,7 +42,7 @@ contract pMintysale {
     uint                        public ownerPerMille;
     uint                        public creatorPerMille;
     uint                        public divisor;
-    address payable             public minty;
+    address                     public minty;
     mapping(uint => mapping(address => uint256)) public bids;
 
     event SharesUpdated(uint256 ownerShare, uint256 creatorShare, uint256 divisor);
@@ -63,7 +63,7 @@ contract pMintysale {
         _;
     }
 
-    constructor(IERC20 _weth, address payable wallet, uint256 _ownerPerMille, uint256 _creatorPerMille, uint _divisor) {
+    constructor(IERC20 _weth, address wallet, uint256 _ownerPerMille, uint256 _creatorPerMille, uint _divisor) {
         require(_creatorPerMille + _ownerPerMille == 1000,"sum(_creatorPerMille + _ownerPerMille) must equal 1000");
         require(_divisor >= 1000,"divisor is less than 1000");
         weth = _weth;
