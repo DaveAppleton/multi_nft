@@ -12,6 +12,9 @@ import (
 	"github.com/spf13/viper"
 )
 
+// minty=# create user mintyadmin with password 'nimdaytnim';
+// GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public to mintyadmin;
+
 var (
 	db *sql.DB
 )
@@ -40,10 +43,14 @@ func updateProjectWithContract(projectID int, contract common.Address) (err erro
 		return err
 	}
 	defer db.Close()
-	query := "update project set address=$1, approved=true where id=$2"
+	fmt.Println("update ", projectID, "with", contract.Hex())
+	query := "update project set token_address=$1, approved=true where id=$2"
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()
 	res, err := db.ExecContext(ctx, query, contract.Hex(), projectID)
+	if err != nil {
+		return err
+	}
 	count, err := res.RowsAffected()
 	if err != nil {
 		return err
@@ -55,11 +62,15 @@ func updateProjectWithContract(projectID int, contract common.Address) (err erro
 }
 
 type ProjectRecord struct {
-	Name         string
-	Address      string
-	Title        string
-	ProjectID    string
-	ProjectToken string
+	UserID          int
+	Name            string
+	Address         string
+	ArtistID        int
+	ArtistApproved  bool
+	Title           string
+	ProjectID       int
+	ProjectApproved bool
+	ProjectToken    sql.NullString
 }
 
 func getProjectsForUser(userName string) (pa []ProjectRecord, err error) {
@@ -68,7 +79,7 @@ func getProjectsForUser(userName string) (pa []ProjectRecord, err error) {
 		return []ProjectRecord{}, err
 	}
 	defer db.Close()
-	query := "select a.nickname, a.address, c.title, c.id as project_id, c.token_address from users a, artist b, project c where a.id=b.user_id and b.id = c.artist_id and a.nickname=$1"
+	query := "select a.id, a.nickname, a.address, b.id, b.approved, c.approved, c.title, c.id as project_id, c.token_address from users a, artist b, project c where a.id=b.user_id and b.id = c.artist_id and a.nickname=$1"
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()
 	row, err := db.QueryContext(ctx, query, userName)
@@ -77,7 +88,7 @@ func getProjectsForUser(userName string) (pa []ProjectRecord, err error) {
 	}
 	for row.Next() {
 		var p ProjectRecord
-		err = row.Scan(&p.Name, &p.Address, &p.Title, &p.ProjectID, &p.ProjectToken)
+		err = row.Scan(&p.UserID, &p.Name, &p.Address, &p.ArtistID, &p.ArtistApproved, &p.ProjectApproved, &p.Title, &p.ProjectID, &p.ProjectToken)
 		if err != nil {
 			return []ProjectRecord{}, err
 		}

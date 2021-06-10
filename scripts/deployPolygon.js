@@ -20,13 +20,46 @@ async function deployStuff() {
     const M721    = await ethers.getContractFactory("pMintyUnique")
     const SALE    = await ethers.getContractFactory("pMintysale")
     const LOCKING = await ethers.getContractFactory("contracts/locking/locking.sol:locking")
-    const SALE2   = await ethers.getContractFactory("pMintyMultiSale")
+    const SALE2   = await ethers.getContractFactory("contracts/flat/pMintyMultiSale.sol:pMintyMultiSale")
     //const M1155   = await ethers.getContractFactory("mintyMultiTokens")
     const DWETH   = await ethers.getContractFactory("dummyWeth")
 
     let wallet = "0x31EFd75bc0b5fbafc6015Bd50590f4fDab6a3F22"
 
-    let dl = true
+    let s2 = true
+    if (s2) {
+        let weth = "0xf738b83Fa52A7Ab570918Afe61b78b8E2DC6F4EF"
+        let sale2 = await SALE2.deploy(wallet,weth,1025)
+        console.log("MULTI SALE",sale2.address, sale2.deployTransaction.hash)
+        
+    }
+
+    let smu = false
+    if (smu) {
+        sale = await SALE.attach("0xE01017da9bd2DD291A05E7b3d24A1655dc9ca892")
+        tx = await sale.setMintyUnique("0xd9dB3cCEe640EEEC9321Ddc7b4D8404665f71503")
+        console.log(tx.hash)
+        process.exit(0)
+    }
+
+    let minters = [ ] // "0x39d07f321cAF5b0668459DB5Bcf039A462A9273d" ] //"0xa454515041892eB78132293ABd5763a730412F65"]
+    if (minters.length > 0) {
+        sale = await SALE.attach("0xE01017da9bd2DD291A05E7b3d24A1655dc9ca892")
+        for (j = 0; j < minters.length; j++){
+            tx = await sale.setMinter(minters[j],true)
+            console.log(tx.hash)
+        }
+        process.exit(0)
+    }
+
+    let mms = true
+    if (mms) {
+        let sale2 = await SALE2.deploy(wallet,weth,1025)
+        console.log("MULTI SALE",sale2.address, sale2.deployTransaction.hash)
+    }
+
+
+    let dl = false
     if (dl) {
         let minty = "0x91509AD882E530f0934CA0901e3098fB6e1e3Af1"
         let locking = await LOCKING.deploy(minty, ethers.utils.parseEther("100.0"))

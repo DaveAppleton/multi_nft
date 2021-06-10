@@ -4,3 +4,25 @@
 2021/06/10 17:47:00 database :  pq: password authentication failed for user "ubuntu"
 2021/06/10 17:47:00 host=localhost user=ubuntu port=5432 sslmode=disable dbname=minty connect_timeout=10
 2021/06/10 17:47:00 pq: password authentication failed for user "ubuntu"
+2021/06/10 22:48:43 database :  pq: password authentication failed for user "ubuntu"
+2021/06/10 22:48:43 host=localhost user=ubuntu port=5432 sslmode=disable dbname=minty connect_timeout=10
+2021/06/10 22:48:43 pq: password authentication failed for user "ubuntu"
+2021/06/10 22:51:56 database :  pq: password authentication failed for user "postgres"
+2021/06/10 22:51:56 host=localhost user=postgres port=5432 sslmode=disable dbname=minty connect_timeout=10
+2021/06/10 22:51:56 pq: password authentication failed for user "postgres"
+2021/06/10 22:56:09 pq: permission denied for table users
+2021/06/10 23:00:48 sql: Scan error on column index 4, name "token_address": converting NULL to string is unsupported
+2021/06/11 00:05:12 sql: expected 9 destination arguments in Scan, not 5
+2021/06/11 04:41:32 database :  read tcp [::1]:51640->[::1]:5432: read: connection reset by peer
+2021/06/11 04:41:32 host=localhost user=mintyadmin password=nimdaytnim port=5432 sslmode=disable dbname=minty connect_timeout=10
+2021/06/11 04:41:32 read tcp [::1]:51640->[::1]:5432: read: connection reset by peer
+2021/06/11 04:54:55 
+2021/06/11 04:55:28 
+2021/06/11 04:57:56 
+2021/06/11 04:59:19 
+2021/06/11 05:00:23 Project  LIFE MUST GO ON already has a token  0x65DCBeE2cd5Df261a4ed9a4F4ECF10193d063082
+
+2021/06/11 05:07:13 Project  LIFE MUST GO ON already has a token  0x65DCBeE2cd5Df261a4ed9a4F4ECF10193d063082
+
+2021/06/11 05:41:13 pq: column "address" of relation "project" does not exist
+2021/06/11 06:26:17 failed to estimate gas needed: gas required exceeds allowance (170679)
