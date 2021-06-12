@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script type="module">
+            import { ethers } from "/js/ethers-5.1.esm.min.js";
+            const provider = new ethers.providers.Web3Provider(window.ethereum)
+            const signer = provider.getSigner()
+            //const accounts = await ethereum.request({ method: 'eth_accounts' });
+
+            ethereum.on('chainChanged', (chainId) => {
+                alert(chainId)
+                /* handle the chainId */
+            });
+            if (ethereum.isConnected()) 
+                console.log("connected");
+        </script>
+        <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js"
+        type="application/javascript"></script>
+        
+        <script language="javascript">
+            let provider;
+            window.ethereum.enable()
+            .then(() => { init(); });
+
+            function init() {
+                console.log("init")
+                const provider = new ethers.providers.Web3Provider(window.ethereum)
+                const ethereumButton = document.getElementById('connect');
+                const networkButton = document.getElementById('testnet');
+                const mainButton = document.getElementById('mainnet');
+
+                ethereumButton.disabled = false;
+
+
+                const Alice  = "0x31EFd75bc0b5fbafc6015Bd50590f4fDab6a3F22"
+                const Sale = "0xE01017da9bd2DD291A05E7b3d24A1655dc9ca892"
+                
+                const toHex = (num) => {
+                    return '0x'+num.toString(16)
+                }
+
+
+                ethereumButton.addEventListener('click', () => {
+                    //Will Start the metamask extension
+                    ethereum.request({ method: 'eth_requestAccounts' })
+                    .then((result)=>{
+                        console.log(ethereum.selectedAddress)
+                        networkButton.disabled = false;
+                        mainButton.disabled   = false;
+                    })
+                    .catch((error) => {
+                        if (error.code == 4001) {
+                            console.log("rejected")
+                        } else
+                            console.log(error)
+                    });
+                    const provider = new ethers.providers.Web3Provider(window.ethereum)
+ 
+                    
+
+                });
+                
+                networkButton.addEventListener('click', () => {
+                    let chain = {
+                        chainId : 80001,
+                        name : "Mumbai",
+                        nativeCurrency : {
+                            name: "tMatic",
+                            symbol: "tMatic",
+                            decimals: 18
+                        },
+                        rpc : ['https://rpc-mumbai.maticvigil.com/v1/e46cca76910d825dbf7dd4b813700395c49b4baf'],
+                        explorers : [ 'https://explorer-mumbai.maticvigil.com']
+                    }
+                    const params = {
+                        chainId: toHex(chain.chainId), // A 0x-prefixed hexadecimal string
+                        chainName: chain.name,
+                        nativeCurrency: {
+                            name: chain.nativeCurrency.name,
+                            symbol: chain.nativeCurrency.symbol, // 2-6 characters long
+                            decimals: chain.nativeCurrency.decimals,
+                        },
+                        rpcUrls: chain.rpc,
+                        blockExplorerUrls: chain.explorers 
+                    }
+                    let accounts = provider.listAccounts()
+                    .then(result => {
+                            console.log(result)
+                            window.ethereum.request({
+                                method: 'wallet_addEthereumChain',
+                                params: [params, accounts[0]],
+                            })
+                            .then((result) => {
+                                console.log(result)
+                            })
+                            .catch((error) => {
+                                
+                                console.log(error)
+                            });
+                    })
+                    .catch(error => console.log(error))
+                })
+                
+                mainButton.addEventListener('click', () => {
+
+                    console.log("Mainnet click")
+                    
+                    let chain = {
+                        chainId : 137,
+                        name : "Polygon",
+                        nativeCurrency : {
+                            name: "Matic",
+                            symbol: "Matic",
+                            decimals: 18
+                        },
+                        rpc :       ['https://rpc-mainnet.maticvigil.com/v1/e46cca76910d825dbf7dd4b813700395c49b4baf'],
+                        explorers : ['https://polygonscan.com']
+                    }
+                    const params = {
+                        chainId: toHex(chain.chainId), // A 0x-prefixed hexadecimal string
+                        chainName: chain.name,
+                        nativeCurrency: {
+                            name: chain.nativeCurrency.name,
+                            symbol: chain.nativeCurrency.symbol, // 2-6 characters long
+                            decimals: chain.nativeCurrency.decimals,
+                        },
+                        rpcUrls: chain.rpc,
+                        blockExplorerUrls: chain.explorers
+                    }
+                    let accounts = provider.listAccounts()
+                    .then(result => {
+                            console.log(result)
+                            window.ethereum.request({
+                                method: 'wallet_addEthereumChain',
+                                params: [params, accounts[0]],
+                            })
+                            .then((result) => {
+                                console.log(result)
+                            })
+                            .catch((error) => {
+                                
+                                console.log(error)
+                            });
+                    })
+                    .catch(error => console.log(error))
+                })
+ 
+            }
+
+            function showHash(result) {
+                msg = document.getElementById("msg")
+                msg.innerHTML = '<a href="https://explorer-mumbai.maticvigil.com/tx/'+result.hash+'" target=_blank>'+result.hash+'</a>'; 
+            }
+
+        </script>
+    </head>
+    <body">
+        <h1>hello</h1>
+        <p><button id="connect" disabled>CONNECT METAMASK</button></p>
+        <p><button id="mainnet" disabled>set up mainnet</button></p>
+        <p><button id="testnet" disabled>set  up test net</button></p>
+        <p><div id="msg"></div></p>
+    </body>
+</html>

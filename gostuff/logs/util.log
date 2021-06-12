@@ -26,3 +26,8 @@
 
 2021/06/11 05:41:13 pq: column "address" of relation "project" does not exist
 2021/06/11 06:26:17 failed to estimate gas needed: gas required exceeds allowance (170679)
+2021/06/11 22:42:15 database :  dial tcp [::1]:5432: connect: connection refused
+2021/06/11 22:42:15 host=localhost user=mintyadmin password=nimdaytnim port=5432 sslmode=disable dbname=minty connect_timeout=10
+2021/06/11 22:42:15 dial tcp [::1]:5432: connect: connection refused
+2021/06/11 22:42:34 Project  AE 1 already has a token  0xAbB92D336431b125d3C4b5C5F8800311Caf0a910
+

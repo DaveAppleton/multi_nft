@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>The Enabler</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>    
+        <script type="module">
+            import { ethers } from "/js/ethers-5.1.esm.min.js";
+            const provider = new ethers.providers.Web3Provider(window.ethereum)
+            const signer = provider.getSigner()
+            //const accounts = await ethereum.request({ method: 'eth_accounts' });
+
+            ethereum.on('chainChanged', (chainId) => {
+                if (chainId != 80001) {
+                    alert("Please select the MUMBAI test network")
+                }
+                
+                /* handle the chainId */
+            });
+            if (ethereum.isConnected()) 
+                console.log("connected");
+        </script>
+        <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
+        <script src="js/pmmt.js" type="application/javascript"></script>
+        <script language="javascript">
+           function init() {
+                const ethereumButton = document.getElementById('connect');
+                
+                ethereum.request({ method: 'eth_chainId' })
+                .then((chainId)=>{
+                    if (chainId != 80001) {
+                        alert("Please select Mumbai Testnet")
+                    }
+                })
+                
+                const Alice  = "0x31EFd75bc0b5fbafc6015Bd50590f4fDab6a3F22"
+                
+                const MSale = "0x6eb156844eee707eFDEC3676f39a919176008121"
+                const projects = {
+                "0xa454515041892eb78132293abd5763a730412f65" :
+                             ["seri","Glitch","0x1d0242d1EDb7025056C6cD583dD2c51c0023e6F7"],  //"0xAbB92D336431b125d3C4b5C5F8800311Caf0a910"], // "0x67851c3A36A46e9836Dbad84e5585166517798DE"],
+                "0xcad809e60e7b93ff7343e25f891a4959f0a2bbc7" :
+                             ["LaylaHifi","LIFE MUST GO ON","0xAe9fcDA562A0e73C861Fa6BD0d1b83B675a5D4bd"],
+                "0x6e93deb7fda0e5a4ca8a3566785f0c7f4d0a2cb3" :
+                              ["Neuman","project 4","0x82dC0832693619bA4eDE5e647f591ec9635040fd"],
+                "0x39d07f321caf5b0668459db5bcf039a462a9273d" :
+                              ["Virgo","Kampung Houses of Malaysia","0xBA8637bAeAfF8D7760541bCf501417CE80b322F0"], //"The Last Mile","0x86b581452B7768A7df8fe27091C248d207126a93"],
+                "0xa1eff0887b93e18bb0f59334a0cb57148bc2086f" :
+                              ["NFTYDaddy","Bitcoin Magic Internet Money","0xDAD5997B502Ddb4a11ff8306FFddaEE349394168"],
+                "0xA7722c27a0eAaa4690358eE3D31a4D38F20c38A1" : 
+                              ["Jahanzaib","Project name","0x026d8Daa374761Bc109Ef1B255c513ade8C904Ac"]
+                }
+                
+                
+
+                ethereumButton.addEventListener('click', () => {
+                    //Will Start the metamask extension
+                    ethereum.request({ method: 'eth_requestAccounts' })
+                    .then((result)=>{
+                        console.log("your address",ethereum.selectedAddress)
+                    })
+                    .catch((error) => {
+                        if (error.code == 4001) {
+                            console.log("rejected")
+                        } else
+                            console.log(error)
+                    });
+                    const provider = new ethers.providers.Web3Provider(window.ethereum)
+
+
+                    
+
+                    let addr = projects[ethereum.selectedAddress][2]
+                    const signer = provider.getSigner()
+                    tokenContract = new ethers.Contract(addr,pmABI,provider);
+                    tokenContract.connect(signer).setAuth("0x6eb156844eee707efdec3676f39a919176008121",true)
+                    .then((result)=>{
+                        alert("Authenticated")
+                        //console.log("contract owned by ",result)
+                       
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                    });
+
+                    tokenContract.connect(signer).setApprovalForAll("0x6eb156844eee707efdec3676f39a919176008121",true)
+                    .then((result)=>{
+                        alert("Approved")
+                        //console.log("contract owned by ",result)
+                       
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                    });
+                    // tokenContract.isApprovedForAll(addr,MSale)
+                    // .then((result)=>{
+                    //     if (result) {
+                    //         alert("already approved")
+                    //     } else {
+                    //         console.log("work to do")
+                    //         const signer = provider.getSigner()
+                    //         tokenContract.connect(signer).setApprovalForAll(MSale,true)
+                    //         .then((result)=>{
+                    //             alert("DONE :-)")
+                    //         })
+                    //         .catch((error) => {
+                    //             console.log(error)
+                    //         })
+                    //     }
+                    // })
+                    
+                });
+                //'<a href="https://wallet.matic.today/bridge" target="_blank">get WETH at the bridge</a>'
+  
+            }
+
+            function showHash(result) {
+                msg1 = document.getElementById("ex_1")
+                msg2 = document.getElementById("ex_2")
+                msg3 = document.getElementById("ex_3")
+                msg4 = document.getElementById("ex_4")
+ 
+                msg1.innerHTML = '<a href="https://polygon-explorer-mumbai.chainstacklabs.com/tx/'+result.hash+'" target=_blank> explorer 1 : '+result.hash+'</a>'; 
+                msg2.innerHTML = '<a href="https://explorer-mumbai.maticvigil.com/tx/'+result.hash+'" target=_blank> explorer 2 : '+result.hash+'</a>'; 
+                msg3.innerHTML = '<a href="https://mumbai-explorer.matic.today/tx/'+result.hash+'" target=_blank> explorer 3 : '+result.hash+'</a>'; 
+                msg4.innerHTML = '<a href="https://backup-mumbai-explorer.matic.today/tx/'+result.hash+'" target=_blank> explorer 4 : '+result.hash+'</a>'; 
+            }
+            
+
+        </script>
+    </head>
+    <body onload="init()">
+
+        <div class="container">
+            <h2><input type="button" class="btn btn-success" id="connect" value="CONNECT WALLET"> enable your token to trust the sale contract ( 2 txns )</h2>
+            <h4>Sale status <div id="sale_status"></div></h4>
+            <!--div><a href="https://docs.matic.network/docs/develop/metamask/config-matic"  target=_blank>Setting up Metamask to work with Polygon (see Mumbai)</a></div>
+            <div><a href=https://chainlist.org/?search=mumbai target="_blank">Add Mumbai Test Net to Metamask</a></div>
+            <div class="row">
+                <div class="col-sm-6">
+                    <div class="well well-lg">
+                        <div class="form-group">
+                            <label for="bids_received">Current Auction Winner :</label>
+                            <input type="text" class="form-control" id="bids_received" name="bids_received" readonly value="0">
+                            <label for="min_bid">Winning Bid :</label>
+                            <input type="text" class="form-control" id="min_bid" name="min_bid" readonly value="0">
+                            <label for="min_inc">Next Ticket :</label>
+                            <input type="text" class="form-control" id="min_inc" name="min_inc" readonly value="0">
+                        </div>
+                    </div>
+                </div>
+           
+                <div class="col-sm-3">
+                    <div class="well well-lg">
+                        <div class="form-group">
+                            <label for="dai_status" class="text-info">ALLOWANCE</label>
+                            <input type="text" class="form-control" id="dai_status" name="dai_status" readonly value="0">
+                            <label for="weth_allow" class="text-info">Amount to approve</label>
+                            <input type="text" class="form-control" id="weth_allow" name="weth_allow" readonly value="100.0">
+                            <p>&nbsp;</p>
+                            <input type="button" class="btn btn-success" id="app_dai" disabled value="APPROVE DAI">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="well well-lg">
+                        <div class="form-group">
+                            <h4>DAI</h4>
+                            <label for="dai_bal" class="text-info">YOUR BALANCE</label>
+                            <input type="text" class="form-control" id="dai_bal" name="dai_bal" readonly value="0">
+                            <p>&nbsp;</p>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="well well-lg">
+                        <div class="form-group">
+                           <label for="user_comment" class="text-info" id="spendx_label">Your Bid (DAI)</label>
+                            <input type="text" class="form-control" id="spend" name="spendx" readonly value="">
+                            <p>&nbsp;</p>
+                            <input type="button" class="btn btn-success" id="bid" disabled value="SEND BID">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="well well-lg">
+                        <div class="form-group">
+                            <label for="tix_price" class="text-info">Ticket Price (DAI)</label>
+                            <input type="text" class="form-control" id="tix_price" name="tix_price" readonly value="0">
+                            <p>&nbsp;</p>
+                            <input type="button" class="btn btn-success" id="buy" disabled value="BUY">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div id="ex_1"></div>
+                    <div id="ex_2"></div>
+                    <div id="ex_3"></div>
+                    <div id="ex_4"></div>
+                </div>
+            </div-->
+        </div>
+<!--
+        <h1>hello</h1>
+        <p><button id="connect_">CONNECT METAMASK</button></p>
+        <p><button class="doit">ENABLE SALE CONTRACT TO TAKE YOUR WETH</button></p>
+        <p><input class="spend" type=text placeholder="enter your bid e.g. 57"></p>
+        <p><button class="bid">PLACE YOUR BID</button></p>
+        <p><div id="msg"></div></p> -->
+    </body>
+</html>

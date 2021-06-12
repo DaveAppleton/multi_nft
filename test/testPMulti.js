@@ -64,7 +64,7 @@ describe("Token contract", function () {
         weth = await WETH.deploy()
 
         console.log("deploy sale")
-        SALE = await ethers.getContractFactory("pMintyMultiSale")
+        SALE = await ethers.getContractFactory("contracts/flat/pMintyMultiSale.sol:pMintyMultiSale")
         sale = await SALE.deploy(alice, weth.address, 1025)
     })
 
@@ -78,7 +78,7 @@ describe("Token contract", function () {
 
         LOCKING = await ethers.getContractFactory("contracts/locking/locking.sol:locking")
         locking1 = await LOCKING.deploy(minty.address,lock100)
-        locking2 = await LOethers.utils.parseEther("100.0")CKING.deploy(minty.address,lock100)
+        locking2 = await LOCKING.deploy(minty.address,lock100)
         console.log("locking1",locking1.address)
         console.log("locking2",locking2.address)
 
@@ -102,19 +102,22 @@ describe("Token contract", function () {
             [creatorN,patronN]
             )
         console.log("ERC1155 ",m1155.address)
-        console.log
+        
 
         await expect(minty.transfer(addr1.address,lock200)).to.emit(minty,'Transfer')
         await expect(minty.transfer(addr2.address,lock200)).to.emit(minty,'Transfer')
         await expect(minty.transfer(addr3.address,lock200)).to.emit(minty,'Transfer')
 
 
-        m1155.connect(addr1).setApprovalForAll(sale.address,true);
+        await m1155.connect(addr1).setApprovalForAll(sale.address,true);
+        console.log("IS APP 4 ALL",await m1155.isApprovedForAll(addr1.address,sale.address))
     })
 
     it("check owner", async function() { 
         expect(await m1155.owner()).to.equal(addr1.address);
     })
+
+    
 
     it("set contract URI", async function() {
         let str = "beans on toast"

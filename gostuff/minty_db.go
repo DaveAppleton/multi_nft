@@ -96,3 +96,16 @@ func getProjectsForUser(userName string) (pa []ProjectRecord, err error) {
 	}
 	return pa, nil
 }
+
+func getContractMetaData(projectID int) (str string, err error) {
+	db, err := initDB()
+	if err != nil {
+		return "", err
+	}
+	defer db.Close()
+	query := "select metadata from project where id=$1"
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	defer cancel()
+	err = db.QueryRowContext(ctx, query, projectID).Scan(&str)
+	return str, err
+}

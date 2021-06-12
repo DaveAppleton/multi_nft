@@ -1,0 +1,167 @@
+const fs = require("fs");
+const {network, ethers} = require("hardhat");
+
+// remember to add ERC20Drain functions
+
+async function main() {
+    if (network.name != "mumbai")  {
+        console.warn("This needs to be on MUMBAI");
+        process.exit(1)
+    }
+    const [owner] = await ethers.getSigners();
+    console.log(network.name);
+    console.log("owner",await owner.getAddress());
+    await deployStuff();
+}
+
+async function deployStuff() {
+    const [deployer] = await ethers.getSigners();
+    const SALE2   = await ethers.getContractFactory("contracts/flat/pMintyMultiSale.sol:pMintyMultiSale")
+    const SERI    = await ethers.getContractFactory("pMintyMultiToken")
+
+    let wallet = "0x31EFd75bc0b5fbafc6015Bd50590f4fDab6a3F22"
+    let msale = "0x6eb156844eee707efdec3676f39a919176008121"
+    let seriA = "0xAbB92D336431b125d3C4b5C5F8800311Caf0a910"
+    let seriWallet = "0xa454515041892eb78132293abd5763a730412f65"
+
+    addresses = [seriA,"0x67851c3A36A46e9836Dbad84e5585166517798DE","0xAe9fcDA562A0e73C861Fa6BD0d1b83B675a5D4bd",
+    "0x82dC0832693619bA4eDE5e647f591ec9635040fd","0x86b581452B7768A7df8fe27091C248d207126a93",
+    "0xDAD5997B502Ddb4a11ff8306FFddaEE349394168","0x1d0242d1EDb7025056C6cD583dD2c51c0023e6F7"]
+
+    for (j = 0; j < addresses.length; j++) {
+        let seri = await SERI.attach(addresses[j])
+        let xx = await seri.setAuth(msale,true)
+        console.log(addresses[j], xx.hash)
+    }
+    
+    process.exit(0)
+    
+    let sale2 = await SALE2.attach(msale)
+
+    console.log("owner ",await seri.owner())
+    // console.log("owner ",await seri.getRoyalties(0))
+    // console.log("owner ",await seri.getRoyalties(1))
+
+    console.log("approved 4 all",await seri.isApprovedForAll(seriWallet,msale))
+    console.log("is minted", await seri.minted(290))
+    console.log("number offers",(await sale2.numberOfOffers(seri.address,290)).toNumber())
+
+
+    process.exit(0)
+
+
+
+    let s2 = true
+    if (s2) {
+        let weth = "0xf738b83Fa52A7Ab570918Afe61b78b8E2DC6F4EF"
+        let sale2 = await SALE2.deploy(wallet,weth,1025)
+        console.log("MULTI SALE",sale2.address, sale2.deployTransaction.hash)
+        
+    }
+
+    let smu = false
+    if (smu) {
+        sale = await SALE.attach("0xE01017da9bd2DD291A05E7b3d24A1655dc9ca892")
+        tx = await sale.setMintyUnique("0xd9dB3cCEe640EEEC9321Ddc7b4D8404665f71503")
+        console.log(tx.hash)
+        process.exit(0)
+    }
+
+    let minters = [ ] // "0x39d07f321cAF5b0668459DB5Bcf039A462A9273d" ] //"0xa454515041892eB78132293ABd5763a730412F65"]
+    if (minters.length > 0) {
+        sale = await SALE.attach("0xE01017da9bd2DD291A05E7b3d24A1655dc9ca892")
+        for (j = 0; j < minters.length; j++){
+            tx = await sale.setMinter(minters[j],true)
+            console.log(tx.hash)
+        }
+        process.exit(0)
+    }
+
+    let mms = true
+    if (mms) {
+        let sale2 = await SALE2.deploy(wallet,weth,1025)
+        console.log("MULTI SALE",sale2.address, sale2.deployTransaction.hash)
+    }
+
+
+    let dl = false
+    if (dl) {
+        let minty = "0x91509AD882E530f0934CA0901e3098fB6e1e3Af1"
+        let locking = await LOCKING.deploy(minty, ethers.utils.parseEther("100.0"))
+        console.log("locking",locking.address, locking.deployTransaction.hash)
+        process.exit(0)
+    }
+
+    let now = false
+    if (now) {
+        if (network.name == mumbai) {
+            let wethC = await DWETH.deploy(wallet)
+            console.log("WETH", wethC.address, wethC.deployTransaction.hash)
+            let weth = wethC.address
+
+            let minty = await MINTY.deploy(wallet)
+            console.log("MINTY",minty.address, minty.deployTransaction.hash)
+        } else {
+            let weth = "HUH"
+            let minty = await MINTY.deploy(0)
+            console.log("MINTY",minty.address, minty.deployTransaction.hash)
+ 
+        }
+        let sale = await SALE.deploy(weth,wallet,900,100,1025)
+        console.log("SALE",sale.address, sale.deployTransaction.hash)
+    
+
+        let m721 = await M721.deploy(sale.address)
+        console.log("MINTY UNIQUE",m721.address, m721.deployTransaction.hash)
+
+        let sale2 = await SALE2.deploy(wallet,weth,1025)
+        console.log("MULTI SALE",sale2.address, sale2.deployTransaction.hash)
+
+        process.exit(0)
+    }
+    let newToken = false
+    if (newToken) {
+        m1155 = await M1155.deploy(Seri1,[locking],"You need to be a MINTY patron or TEST PROJECT patron")
+        await m1155.deployed();
+        console.log("M1155",m1155.address,"deployed at",m1155.deployTransaction.hash)
+    } else {
+        tokenAddress = "0xC1D2c492BD2EEb8451d4d08015a13e1cA224BAf8"
+        m1155 = M1155.attach(tokenAddress)
+    }
+    let newSale = false
+    if (newSale) {
+        sale2 = await SALE2.deploy(deployer.address, 10, 10)
+        await sale2.deployed()
+        console.log("sale", sale2.address,"deployed at",sale2.deployTransaction.hash)
+    } else {
+        multiSale = "0xFfba9038a0d6bB400c341e82349097983d09998d"
+        sale2 = SALE2.attach(multiSale)
+    }
+    console.log("sale at ",sale2.address)
+    let deployLoop = true
+    if (deployLoop) {
+        addrs = [Neuman] // [Neumann,LaylaHifi] //[NFTDaddy,Amir1,Amir2]
+        for (j = 0; j < addrs.length; j++) {
+            m1155 = await M1155.deploy(addrs[j],multiSale,[locking],"You need to be a MINTY patron or TEST PROJECT patron")
+            await m1155.deployed();
+            console.log("M1155 for ",addrs[j],":",m1155.address,"deployed at",m1155.deployTransaction.hash)
+            tx = await m1155.setAuth(sale2.address,true);
+            console.log("setAuth",tx.hash)
+            receipt = await tx.wait(); 
+        }                      
+        process.exit(0)
+    }
+    tx = await m1155.connect(deployer).setAuth(sale2.address,true);
+    console.log("setAuth",tx.hash)
+    receipt = await tx.wait();
+
+
+}   
+
+
+main()
+    .then(()=>process.exit(0))
+    .catch((error) => {
+        console.error(error);
+        process.exit(1);
+    });

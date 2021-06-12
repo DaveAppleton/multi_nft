@@ -246,6 +246,13 @@ func main() {
 		}
 		return
 	}
+	// if *action == "set_metadata" {
+	// 	hash, err := getContractMetaData(*projectID)
+	// 	if err != nil {
+	// 		fmt.Println(err)
+	// 		log.Fatal(err)
+	// 	}
+	// }
 
 }
 
@@ -302,4 +309,5 @@ go run . -action approve_project -user_name seri -royalty 100 -initial_share_add
 
 go run . -action approve_project -user_name NFTYDaddy -royalty 100 -initial_share_addrs 0xa1EFF0887B93e18bB0f59334a0CB57148BC2086f -later_share_addrs 0xa1EFF0887B93e18bB0f59334a0CB57148BC2086f,0x6e93Deb7FDa0E5A4CA8A3566785F0c7f4D0A2cb3 -initial_share_shares 1000 -later_share_shares 500,500  -project_id 161
 
+go run . -action approve_project -user_name Jahanzaib -royalty 100 -initial_share_addrs 0xA7722c27a0eAaa4690358eE3D31a4D38F20c38A1 -later_share_addrs 0xA7722c27a0eAaa4690358eE3D31a4D38F20c38A1q,0x6e93Deb7FDa0E5A4CA8A3566785F0c7f4D0A2cb3 -initial_share_shares 1000 -later_share_shares 500,500  -project_id 174
 */
