@@ -8,3 +8,4 @@ cache/solidity-files-cache.json
 .DS_Store
 .secret
 gostuff/adminKeys/banker
+.mainnet

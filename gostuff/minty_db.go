@@ -109,3 +109,84 @@ func getContractMetaData(projectID int) (str string, err error) {
 	err = db.QueryRowContext(ctx, query, projectID).Scan(&str)
 	return str, err
 }
+
+type Artist struct {
+	UserID    int
+	Address   string
+	Nickname  sql.NullString
+	Avatar    sql.NullString
+	ArtistID  int
+	AboutMe   sql.NullString
+	Approved  bool
+	Facebook  sql.NullString
+	Twitter   sql.NullString
+	Instagram sql.NullString
+	Portfolio sql.NullString
+}
+
+func getArtists(start int) (pa []Artist, max int, err error) {
+	db, err := initDB()
+	if err != nil {
+		return []Artist{}, 0, err
+	}
+	defer db.Close()
+	q1 := "select count(*) from users a, artist b where a.id=b.user_id order by 1"
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	defer cancel()
+	err = db.QueryRowContext(ctx, q1).Scan(&max)
+	if err != nil {
+		fmt.Println("cannot get max")
+		return []Artist{}, 0, err
+	}
+	query := "select a.id, a.address, a.nickname, a.avatar, b.id, b.about_me, b.approved, b.facebook, b.twitter, b.instagram, b.portfolio from users a, artist b where a.id=b.user_id order by a.id limit 50 offset $1"
+	ctx, cancel = context.WithTimeout(context.Background(), 15*time.Second)
+	defer cancel()
+	row, err := db.QueryContext(ctx, query, start)
+	if err != nil {
+		return []Artist{}, 0, err
+	}
+	for row.Next() {
+		var p Artist
+		err = row.Scan(
+			&p.UserID,
+			&p.Address,
+			&p.Nickname,
+			&p.Avatar,
+			&p.ArtistID,
+			&p.AboutMe,
+			&p.Approved,
+			&p.Facebook,
+			&p.Twitter,
+			&p.Instagram,
+			&p.Portfolio)
+		if err != nil {
+			return []Artist{}, 0, err
+		}
+		pa = append(pa, p)
+	}
+	return
+}
+
+func findArtist(name string) (p *Artist, err error) {
+	db, err := initDB()
+	if err != nil {
+		return nil, err
+	}
+	defer db.Close()
+	query := "select a.id, a.address, a.nickname, a.avatar, b.id, b.about_me, b.approved, b.facebook, b.twitter, b.instagram, b.portfolio from users a, artist b where a.id=b.user_id and a.nickname=$1"
+	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	defer cancel()
+	err = db.QueryRowContext(ctx, query, projectID).Scan(
+		&p.UserID,
+		&p.Address,
+		&p.Nickname,
+		&p.Avatar,
+		&p.ArtistID,
+		&p.AboutMe,
+		&p.Approved,
+		&p.Facebook,
+		&p.Twitter,
+		&p.Instagram,
+		&p.Portfolio)
+	return
+}

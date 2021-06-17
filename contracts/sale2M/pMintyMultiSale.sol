@@ -1,8 +1,7 @@
 pragma solidity ^0.7.5;
 pragma abicoder v2;
-//SPDX-License-Identifier: UNLICENSED
+//SPDX-License-Identifier: MIT
 
-import "hardhat/console.sol";
 
 /*
 
@@ -72,6 +71,9 @@ contract pMintyMultiSale {
 
     //mapping(IMintyMultiToken => mapping(uint => mapping(address => uint256))) public bids;
 
+    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
+    event WalletTransferred(address indexed previousWallet, address indexed newWallet);
+
     event FeeUpdated(uint256 divisor);
     event NewOffer(IMintyMultiToken token, uint256 tokenId, address owner, uint256 quantity, uint256 price, string hash);
     event OfferWithdrawn(IMintyMultiToken token, uint256 tokenId);
@@ -88,6 +90,12 @@ contract pMintyMultiSale {
 
     event Payment(address wallet,address creator, address _owner,uint256 amount);
 
+    modifier onlyOwner() {
+        require(msg.sender == owner, "unauthorised");
+        _;
+    }
+
+
     constructor(address wallet, IERC20 _weth, uint256 _divisor) {
         require(_divisor >= 1000, "Divisor must be >= 1000");
         minty = wallet;
@@ -96,8 +104,7 @@ contract pMintyMultiSale {
         emit FeeUpdated(_divisor);
     }
 
-    function updateShares(uint256 _divisor) external {
-        require(msg.sender == owner, "unauthorised");
+    function updateShares(uint256 _divisor) external onlyOwner {
         require(_divisor >= 1000, "Divisor must be >= 1000");
         divisor = _divisor;
         emit FeeUpdated(_divisor);
@@ -217,19 +224,15 @@ contract pMintyMultiSale {
         uint sellerPart  = mul(value , (1000 - royaltyPerMille)) / divisor;
         require(weth.transferFrom(msg.sender,_seller,sellerPart),"cannot transfer funds");
 
-        console.log("seller ",sellerPart);
         uint sent = sellerPart;
-        console.log("royalties",royaltyPart);
         PoolEntry[] memory royalties = token.getRoyalties(position);
         for (uint j = 0; j < royalties.length; j++) {
             uint amount = mul(royaltyPart , royalties[j].share) / 1000;
             require(weth.transferFrom(msg.sender,royalties[j].beneficiary,amount),"cannot transfer funds");
             sent += amount;
-            console.log(royalties[j].beneficiary,royalties[j].share,amount);
         }
 
         uint mintyPart = value - sent;
-        console.log("minty gets ",mintyPart);
         require(weth.transferFrom(msg.sender,minty,mintyPart),"cannot transfer funds");
     }
 
@@ -245,6 +248,18 @@ contract pMintyMultiSale {
     function min(uint a, uint b) internal pure returns (uint) {
         if (a < b) return a;
         return b;
+    }
+
+    function transferOwnership(address newOwner) public onlyOwner {
+        require(newOwner != address(0),"Do not set to address zero");
+        emit OwnershipTransferred(owner, newOwner);
+        owner = newOwner;
+    }
+
+    function changeWallet(address newWallet) public onlyOwner {
+        require(newWallet != address(0),"Do not set to address zero");
+        emit WalletTransferred(minty, newWallet);
+        minty = newWallet;
     }
 
 

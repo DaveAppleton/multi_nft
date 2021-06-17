@@ -2,7 +2,7 @@
     "log" : "util.log",
     "DB_HOST" : "host=localhost user=mintyadmin password=nimdaytnim port=5432 sslmode=disable dbname=minty connect_timeout=10",
     "P_SALE" : "0xE01017da9bd2DD291A05E7b3d24A1655dc9ca892",
-    "HOST" : "https://rpc-mumbai.maticvigil.com/v1/e46cca76910d825dbf7dd4b813700395c49b4baf",
+    "HOST" : "https://rpc-mumbai.maticvigil.com/v1/d03dabf19f8c885bd8b48cbd1e8a7aadced7a3ab",
     "LOCKING" : "0x310a6CA6cC3069C0b72D0Dd0dfa75B6F5cBFb810",
     "P_M_SALE" : "0x6eb156844eee707eFDEC3676f39a919176008121"
 

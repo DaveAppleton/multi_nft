@@ -6,6 +6,7 @@ import (
 	"fmt"
 	"log"
 	"math/big"
+	"net/http"
 	"os"
 	"strconv"
 	"strings"
@@ -14,6 +15,7 @@ import (
 	"art.minty.backend/pMintyMultiToken"
 	"art.minty.backend/pSale"
 
+	"github.com/DaveAppleton/etherUtils"
 	"github.com/DaveAppleton/ether_go/ethKeys"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"
@@ -53,6 +55,14 @@ func initViper() {
 // -action approve_user -user_name LaylaHifi
 // -action approve_project -project_id 15
 
+func chkErr(msg string, err error) {
+	if err == nil {
+		return
+	}
+	fmt.Println(msg, err)
+	log.Fatal(msg, err)
+}
+
 func main() {
 	initViper()
 	logName := viper.GetString("log")
@@ -69,36 +79,28 @@ func main() {
 		os.Exit(0)
 	}
 	client, err := ethclient.Dial(viper.GetString("HOST"))
-	if err != nil {
-		fmt.Println(err)
-		log.Fatal(err)
-	}
+	chkErr("Get Client", err)
 	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
 	defer cancel()
 	chainID, err := client.ChainID(ctx)
-	if err != nil {
-		fmt.Println(err)
-		log.Fatal(err)
-	}
+	chkErr("chain ID", err)
 	banker := ethKeys.NewKey("adminKeys/banker")
 	err = banker.RestoreOrCreate()
-	if err != nil {
-		fmt.Println(err)
-		log.Fatal(err)
-	}
+	chkErr("banker", err)
+	ctx, cancel = context.WithTimeout(context.Background(), 15*time.Second)
+	defer cancel()
+	bal, err := client.BalanceAt(ctx, banker.PublicKey(), nil)
+	chkErr("Banke Balance", err)
+
+	fmt.Println("Banker", banker.PublicKeyAsHexString(), " balance ", etherUtils.EtherToStr(bal))
+
 	bankerTx, err := bind.NewKeyedTransactorWithChainID(banker.GetKey(), chainID)
-	if err != nil {
-		fmt.Println(err)
-		log.Fatal(err)
-	}
+	chkErr("transactor", err)
 	if *action == "list" {
 		chk_userName()
 
 		records, err := getProjectsForUser(*userName)
-		if err != nil {
-			fmt.Println(err)
-			log.Fatal(err)
-		}
+		chkErr("ProjectsForUser", err)
 		for _, rec := range records {
 			pt := ""
 			if rec.ProjectToken.Valid {
@@ -121,39 +123,37 @@ func main() {
 	if *action == "approve_user" {
 		pSaleA := common.HexToAddress(viper.GetString("P_SALE"))
 		pSaleC, err := pSale.NewPMintysale(pSaleA, client)
-		if err != nil {
-			fmt.Println(err)
-			log.Fatal(err)
-		}
-		records, err := getProjectsForUser(*userName)
-		if err != nil {
-			fmt.Println(err)
-			log.Fatal(err)
-		}
-		if len(records) == 0 {
-			fmt.Println("no records found")
-			return
-		}
-		if len(records[0].Address) == 0 {
-			fmt.Println("Bad Address")
-			return
-		}
-		addr := common.HexToAddress(records[0].Address)
+		chkErr("New Minty Sale", err)
+
+		artist, err := findArtist(*userName)
+		chkErr("Find Artist", err)
+
+		// records, err := getProjectsForUser(*userName)
+		// chkErr("ProjectsForUser", err)
+		// if len(records) == 0 {
+		// 	fmt.Println("no records found")
+		// 	return
+		// }
+		// if len(records[0].Address) == 0 {
+		// 	fmt.Println("Bad Address")
+		// 	return
+		// }
+		addr := common.HexToAddress(artist.Address)
 		fmt.Println("Approving ", *search, " at ", addr.Hex())
-		tx, err := pSaleC.SetMinter(bankerTx, addr, true)
-		if err != nil {
-			fmt.Println(err)
-			log.Fatal(err)
+		doit := false
+		if doit {
+			tx, err := pSaleC.SetMinter(bankerTx, addr, true)
+			chkErr("SetMinter", err)
+			fmt.Println(tx.Hash().Hex())
+			ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
+			defer cancel()
+			rct, err := bind.WaitMined(ctx, client, tx)
+			if err != nil {
+				fmt.Println(err)
+				log.Fatal(err)
+			}
+			fmt.Println("status", rct.Status)
 		}
-		fmt.Println(tx.Hash().Hex())
-		ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
-		defer cancel()
-		rct, err := bind.WaitMined(ctx, client, tx)
-		if err != nil {
-			fmt.Println(err)
-			log.Fatal(err)
-		}
-		fmt.Println("status", rct.Status)
 		return
 	}
 	if *action == "approve_project" {
@@ -246,6 +246,45 @@ func main() {
 		}
 		return
 	}
+	if *action == "check_approved" {
+		artists, max, err := getArtists(0)
+		chkErr("getArtists", err)
+		fmt.Println(max, "artists found")
+		pSaleA := common.HexToAddress(viper.GetString("P_SALE"))
+		pSaleC, err := pSale.NewPMintysale(pSaleA, client)
+		chkErr("New Minty Sale", err)
+
+		for _, artist := range artists {
+			if !artist.Nickname.Valid {
+				continue
+			}
+			addr := common.HexToAddress(artist.Address)
+			minter, err := pSaleC.IsMinter(nil, addr)
+			chkErr("isMinter", err)
+			if minter {
+				fmt.Println(artist.Nickname.String, "is a minter")
+				continue
+			}
+			fmt.Println("Approving ", artist.Nickname, " at ", addr.Hex())
+			tx, err := pSaleC.SetMinter(bankerTx, addr, true)
+			chkErr("SetMinter", err)
+			fmt.Println(tx.Hash().Hex())
+			ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
+			defer cancel()
+			rct, err := bind.WaitMined(ctx, client, tx)
+			if err != nil {
+				fmt.Println(err)
+				log.Fatal(err)
+			}
+			fmt.Println("status", rct.Status)
+		}
+	}
+	if *action == "web" {
+		http.HandleFunc("/artists", showArtists)
+		err := http.ListenAndServe(":8090", nil)
+		chkErr("Web Server", err)
+
+	}
 	// if *action == "set_metadata" {
 	// 	hash, err := getContractMetaData(*projectID)
 	// 	if err != nil {
@@ -310,4 +349,20 @@ go run . -action approve_project -user_name seri -royalty 100 -initial_share_add
 go run . -action approve_project -user_name NFTYDaddy -royalty 100 -initial_share_addrs 0xa1EFF0887B93e18bB0f59334a0CB57148BC2086f -later_share_addrs 0xa1EFF0887B93e18bB0f59334a0CB57148BC2086f,0x6e93Deb7FDa0E5A4CA8A3566785F0c7f4D0A2cb3 -initial_share_shares 1000 -later_share_shares 500,500  -project_id 161
 
 go run . -action approve_project -user_name Jahanzaib -royalty 100 -initial_share_addrs 0xA7722c27a0eAaa4690358eE3D31a4D38F20c38A1 -later_share_addrs 0xA7722c27a0eAaa4690358eE3D31a4D38F20c38A1q,0x6e93Deb7FDa0E5A4CA8A3566785F0c7f4D0A2cb3 -initial_share_shares 1000 -later_share_shares 500,500  -project_id 174
+
+go run . -action approve_project -user_name amirfive -royalty 100 -initial_share_addrs 0xc355b9A5dE199F811542D8C5D3E309789FfBEf86 -later_share_addrs 0xc355b9A5dE199F811542D8C5D3E309789FfBEf86,0x6e93Deb7FDa0E5A4CA8A3566785F0c7f4D0A2cb3 -initial_share_shares 1000 -later_share_shares 500,500  -project_id 165
+
+go run . -action approve_project -user_name Amir -royalty 100 -initial_share_addrs 0xFE029208b267daBF5077bB3E3E7B1cc9916e9943 -later_share_addrs 0xFE029208b267daBF5077bB3E3E7B1cc9916e9943,0x6e93Deb7FDa0E5A4CA8A3566785F0c7f4D0A2cb3 -initial_share_shares 1000 -later_share_shares 500,500  -project_id 163
+
+go run . -action approve_project -user_name Jahanzaib -royalty 100 -initial_share_addrs 0xA7722c27a0eAaa4690358eE3D31a4D38F20c38A1 -later_share_addrs 0xA7722c27a0eAaa4690358eE3D31a4D38F20c38A1,0x6e93Deb7FDa0E5A4CA8A3566785F0c7f4D0A2cb3 -initial_share_shares 1000 -later_share_shares 500,500  -project_id 196
+
+Abasa : 259,0xD27b5dB83D5cCF7F4e796abAa75D6C67ea9f8e7F | artist : 96 | art 463 |
+
+go run . -action approve_project -user_name Aatqa -royalty 100 -initial_share_addrs 0xB0f1A004b34457F62a29f42dF1e6D82bf9e39c74 -later_share_addrs 0xB0f1A004b34457F62a29f42dF1e6D82bf9e39c74,0x6e93Deb7FDa0E5A4CA8A3566785F0c7f4D0A2cb3 -initial_share_shares 1000 -later_share_shares 500,500  -project_id 198
+0xB0f1A004b34457F62a29f42dF1e6D82bf9e39c74 Aatqa
+
+0xb0f1a004b34457f62a29f42df1e6d82bf9e39c74
+
+go run . -action approve_project -user_name AbdullahIsa -royalty 100 -initial_share_addrs 0x1E989cD65Fec9961EC26A3492B940045244e4893 -later_share_addrs 0x1E989cD65Fec9961EC26A3492B940045244e4893,0x6e93Deb7FDa0E5A4CA8A3566785F0c7f4D0A2cb3 -initial_share_shares 1000 -later_share_shares 500,500  -project_id 200
+200
 */

@@ -4,63 +4,74 @@ const {network, ethers} = require("hardhat");
 // remember to add ERC20Drain functions
 
 async function main() {
-    if (network.name != "mumbai")  {
-        console.warn("This needs to be on MUMBAI");
+    if (network.name != "matic")  {
+        console.warn("This needs to be on MATIC");
         process.exit(1)
     }
     const [owner] = await ethers.getSigners();
     console.log(network.name);
     console.log("owner",await owner.getAddress());
+    // deployer address : 0xA45cb6B905F14b4B38bf76d79445304b5C2F355f
     await deployStuff();
 }
 
 async function deployStuff() {
     const [deployer] = await ethers.getSigners();
+    const MINTY   = await ethers.getContractFactory("contracts/flat/pminty.sol:pMinty")
+    const M721    = await ethers.getContractFactory("contracts/flat/pMintyUnique.sol:pMintyUnique")
+    const SALE    = await ethers.getContractFactory("contracts/flat/psale.sol:pMintysale")
+    const LOCKING = await ethers.getContractFactory("contracts/locking/locking.sol:locking")
     const SALE2   = await ethers.getContractFactory("contracts/flat/pMintyMultiSale.sol:pMintyMultiSale")
-    const SERI    = await ethers.getContractFactory("pMintyMultiToken")
-
+    //const M1155   = await ethers.getContractFactory("mintyMultiTokens")
+    
+    let weth = "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619"     // Main Net 
     let wallet = "0x31EFd75bc0b5fbafc6015Bd50590f4fDab6a3F22"
-    let msale = "0x6eb156844eee707efdec3676f39a919176008121"
-    let seriA = "0xAbB92D336431b125d3C4b5C5F8800311Caf0a910"
-    let seriWallet = "0xa454515041892eb78132293abd5763a730412f65"
+    let minty = "0x474Ba20088174612427cf8440ac5712e98652AD2"
+    let locking = "0x756fe78b65A400F07b6fcA2F92E0482f6DcBF25B"
+    let sale = "0x37a8De5647D5a71e2508991A033D3E46765d92af"
+    let mintyunique = "0x1332690FC3AB1C5434E5C252C5BA71Ac7A72F964"
 
-    addresses = [seriA,"0x67851c3A36A46e9836Dbad84e5585166517798DE","0xAe9fcDA562A0e73C861Fa6BD0d1b83B675a5D4bd",
-    "0x82dC0832693619bA4eDE5e647f591ec9635040fd","0x86b581452B7768A7df8fe27091C248d207126a93",
-    "0xDAD5997B502Ddb4a11ff8306FFddaEE349394168","0x1d0242d1EDb7025056C6cD583dD2c51c0023e6F7"]
+    let s1 = false
+    if (s1) {
+        let minty = await MINTY.deploy()
+        console.log("MINTY",minty.address, minty.deployTransaction.hash)
+        process.exit(0)
+    } 
 
-
-
-
-
-    for (j = 0; j < addresses.length; j++) {
-        let seri = await SERI.attach(addresses[j])
-        //let xx = await seri.setAuth(msale,true)
-        console.log(addresses[j], await( seri.owner() ``))
+    let dl = false
+    if (dl) {
+        let locking = await LOCKING.deploy(minty, ethers.utils.parseEther("100.0"))
+        console.log("locking",locking.address, locking.deployTransaction.hash)
+        process.exit(0)
     }
-    
-    process.exit(0)
-    
-    let sale2 = await SALE2.attach(msale)
 
-    console.log("owner ",await seri.owner())
-    // console.log("owner ",await seri.getRoyalties(0))
-    // console.log("owner ",await seri.getRoyalties(1))
-
-    console.log("approved 4 all",await seri.isApprovedForAll(seriWallet,msale))
-    console.log("is minted", await seri.minted(290))
-    console.log("number offers",(await sale2.numberOfOffers(seri.address,290)).toNumber())
+    let s0 = false
+    if (s0) {
+        let sale = await SALE.deploy(weth,wallet,900,100,1025)
+        console.log("SALE",sale.address, sale.deployTransaction.hash)
+        process.exit(0)
+    }
 
 
-    process.exit(0)
-
-
-
-    let s2 = true
+    let s2 = false
     if (s2) {
-        let weth = "0xf738b83Fa52A7Ab570918Afe61b78b8E2DC6F4EF"
         let sale2 = await SALE2.deploy(wallet,weth,1025)
         console.log("MULTI SALE",sale2.address, sale2.deployTransaction.hash)
-        
+        process.exit(0)
+    }
+
+    let s3 = false
+    if (s3) {
+        let m721 = await M721.deploy(sale)
+        console.log("MINTY UNIQUE",m721.address, m721.deployTransaction.hash)
+    }
+
+    let s4 = true
+    if (s4) {
+        saleContract = await SALE.attach(sale)
+        tx = await saleContract.setMintyUnique(mintyunique)
+        console.log(tx.hash)
+        process.exit(0)
     }
 
     let smu = false
@@ -81,20 +92,9 @@ async function deployStuff() {
         process.exit(0)
     }
 
-    let mms = true
-    if (mms) {
-        let sale2 = await SALE2.deploy(wallet,weth,1025)
-        console.log("MULTI SALE",sale2.address, sale2.deployTransaction.hash)
-    }
+   
 
 
-    let dl = false
-    if (dl) {
-        let minty = "0x91509AD882E530f0934CA0901e3098fB6e1e3Af1"
-        let locking = await LOCKING.deploy(minty, ethers.utils.parseEther("100.0"))
-        console.log("locking",locking.address, locking.deployTransaction.hash)
-        process.exit(0)
-    }
 
     let now = false
     if (now) {
@@ -103,16 +103,12 @@ async function deployStuff() {
             console.log("WETH", wethC.address, wethC.deployTransaction.hash)
             let weth = wethC.address
 
-            let minty = await MINTY.deploy(wallet)
-            console.log("MINTY",minty.address, minty.deployTransaction.hash)
         } else {
             let weth = "HUH"
             let minty = await MINTY.deploy(0)
             console.log("MINTY",minty.address, minty.deployTransaction.hash)
  
         }
-        let sale = await SALE.deploy(weth,wallet,900,100,1025)
-        console.log("SALE",sale.address, sale.deployTransaction.hash)
     
 
         let m721 = await M721.deploy(sale.address)
@@ -123,6 +119,7 @@ async function deployStuff() {
 
         process.exit(0)
     }
+    let m1155
     let newToken = false
     if (newToken) {
         m1155 = await M1155.deploy(Seri1,[locking],"You need to be a MINTY patron or TEST PROJECT patron")
@@ -142,7 +139,7 @@ async function deployStuff() {
         sale2 = SALE2.attach(multiSale)
     }
     console.log("sale at ",sale2.address)
-    let deployLoop = true
+    let deployLoop = false
     if (deployLoop) {
         addrs = [Neuman] // [Neumann,LaylaHifi] //[NFTDaddy,Amir1,Amir2]
         for (j = 0; j < addrs.length; j++) {

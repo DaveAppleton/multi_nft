@@ -2,8 +2,10 @@ require("@nomiclabs/hardhat-waffle");
 /**
  * @type import('hardhat/config').HardhatUserConfig
  */
+ require("@nomiclabs/hardhat-etherscan");
  const fs = require('fs');
  const privatekey = fs.readFileSync(".secret").toString().trim();
+ const monkey = fs.readFileSync(".mainnet").toString().trim();
  
  module.exports = {
    defaultNetwork: "matic",
@@ -12,7 +14,7 @@ require("@nomiclabs/hardhat-waffle");
      },
      matic: {
       url: "https://rpc-mainnet.maticvigil.com",
-      accounts: [ privatekey ]
+      accounts: [ monkey ]
     },
     mumbai: {
       url: "https://rpc-mumbai.maticvigil.com",

@@ -49,7 +49,7 @@
                 "0x39d07f321caf5b0668459db5bcf039a462a9273d" :
                               ["Virgo","Kampung Houses of Malaysia","0xBA8637bAeAfF8D7760541bCf501417CE80b322F0"], //"The Last Mile","0x86b581452B7768A7df8fe27091C248d207126a93"],
                 "0xa1eff0887b93e18bb0f59334a0cb57148bc2086f" :
-                              ["NFTYDaddy","Bitcoin Magic Internet Money","0xDAD5997B502Ddb4a11ff8306FFddaEE349394168"],
+                              ["NFTYDaddy","Bitcoin Magic Internet Money","0x3503F60012B26b91d045F8035f708042A28f9746"],
                 "0xA7722c27a0eAaa4690358eE3D31a4D38F20c38A1" : 
                               ["Jahanzaib","Project name","0x026d8Daa374761Bc109Ef1B255c513ade8C904Ac"]
                 }
@@ -69,9 +69,6 @@
                             console.log(error)
                     });
                     const provider = new ethers.providers.Web3Provider(window.ethereum)
-
-
-                    
 
                     let addr = projects[ethereum.selectedAddress][2]
                     const signer = provider.getSigner()
@@ -95,22 +92,7 @@
                     .catch((error) => {
                         console.log(error)
                     });
-                    // tokenContract.isApprovedForAll(addr,MSale)
-                    // .then((result)=>{
-                    //     if (result) {
-                    //         alert("already approved")
-                    //     } else {
-                    //         console.log("work to do")
-                    //         const signer = provider.getSigner()
-                    //         tokenContract.connect(signer).setApprovalForAll(MSale,true)
-                    //         .then((result)=>{
-                    //             alert("DONE :-)")
-                    //         })
-                    //         .catch((error) => {
-                    //             console.log(error)
-                    //         })
-                    //     }
-                    // })
+                    
                     
                 });
                 //'<a href="https://wallet.matic.today/bridge" target="_blank">get WETH at the bridge</a>'
@@ -135,7 +117,7 @@
     <body onload="init()">
 
         <div class="container">
-            <h2><input type="button" class="btn btn-success" id="connect" value="CONNECT WALLET"> enable your token to trust the sale contract ( 2 txns )</h2>
+            <h2><input type="button" class="btn btn-success" id="connect" value="ENABLE PROJECT"> enable your token to trust the sale contract ( 2 txns )</h2>
             <h4>Sale status <div id="sale_status"></div></h4>
             <!--div><a href="https://docs.matic.network/docs/develop/metamask/config-matic"  target=_blank>Setting up Metamask to work with Polygon (see Mumbai)</a></div>
             <div><a href=https://chainlist.org/?search=mumbai target="_blank">Add Mumbai Test Net to Metamask</a></div>

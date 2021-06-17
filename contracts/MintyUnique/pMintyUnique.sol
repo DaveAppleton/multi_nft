@@ -19,7 +19,7 @@ contract pMintyUnique is ERC721, Ownable {
 
     event OperatorSet(address operator, bool enabled);
 
-    constructor(address saleContract) ERC721("MintyUnique","MINTY") {
+    constructor(address saleContract) ERC721("Minty Unique NFT","MNTNFT") {
         _setBaseURI("https://minty.mypinata.cloud/ipfs/");
         operators[msg.sender] = true;
         operators[saleContract] = true;

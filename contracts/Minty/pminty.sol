@@ -1,7 +1,6 @@
 pragma solidity ^0.6.6;
 //SPDX-License-Identifier: UNLICENSED
 
-//import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
 import "@maticnetwork/pos-portal/contracts/child/ChildToken/ChildERC20.sol";
 import "@openzeppelin/contracts/math/SafeMath.sol";
 
@@ -18,16 +17,15 @@ abstract contract ERC677{
 //contract Minty is ERC20, ERC677 {
 contract pMinty is ChildERC20, ERC677 {
     using SafeMath for uint256;
+    //
+    //address   constant childChainManager = 0xb5505a6d998549090530911180f38aC5130101c6 ;
+    //
+    address   constant childChainManager = 0xA6FA4fB5f76172d178d61B04b0ecd319C5d1C0aa ;
 
-    address   constant childChainManager = 0xb5505a6d998549090530911180f38aC5130101c6 ;
-
-    uint256 constant public MAX_SUPPLY = 1000000 ether;
-    bool             public minting = true;
-
-    mapping(address => bool) public operators;
-
-    constructor(address mintysig) ChildERC20("Minty Art","MINTY", 18,childChainManager) public  {
-        if (mintysig != address(0)) _mint(mintysig, 100000000 ether);
+    uint256 constant public MAX_SUPPLY = 100000000 ether;
+    
+    constructor() ChildERC20("Minty Art","MINTY", 18,childChainManager) public  {
+        
     }
 
 
