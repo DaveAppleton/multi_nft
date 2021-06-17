@@ -116,6 +116,7 @@ Adding another pool
 await m1155.connect(addr1).addPools([creator2,musician2,patron2],[creator2R,musician2R,patron2R],"C+P+M")
 ```
 
+## Sale Contract
 Putting a new item for sale
 
 ```
