@@ -19,9 +19,9 @@ interface IMintyMultiToken {
 
     function isApprovedForAll(address account, address operator) external view returns (bool);
 
-    function mint(uint256 tokenId, uint256 quantity, string memory ipfsHash) external; // mints tokens to contract owner
+    function mint(uint256 tokenId, uint256 quantity, string memory ipfsHash, uint256 poolId) external; // mints tokens to contract owner
 
-    function mintBatch(uint [] memory tokenIds, uint [] memory quantities, string[] memory hashes) external;
+    function mintBatch(uint [] memory tokenIds, uint [] memory quantities, string[] memory hashes, uint256 poolId) external;
 
     function minted(uint256 id) external view returns (bool) ;
 
@@ -37,7 +37,7 @@ interface IMintyMultiToken {
 
     function validateBuyer(address buyer) external; // should revert is not valid
 
-    function getRoyalties(uint saleNumber) external view returns (PoolEntry[] memory);
+    function getRoyalties(uint saleNumber, uint256 tokenId) external view returns (PoolEntry[] memory);
 
     function royaltyPerMille() external view returns (uint256);
 }
@@ -75,7 +75,7 @@ contract pMintyMultiSale {
     event WalletTransferred(address indexed previousWallet, address indexed newWallet);
 
     event FeeUpdated(uint256 divisor);
-    event NewOffer(IMintyMultiToken token, uint256 tokenId, address owner, uint256 quantity, uint256 price, string hash);
+    event NewOffer(IMintyMultiToken token, uint256 tokenId, address owner, uint256 quantity, uint256 price, string hash, uint256 poolId);
     event OfferWithdrawn(IMintyMultiToken token, uint256 tokenId);
 
     event ResaleOffer(IMintyMultiToken token,uint256 tokenId, uint256 quantity, address owner, uint256 price, uint256 position);
@@ -110,27 +110,27 @@ contract pMintyMultiSale {
         emit FeeUpdated(_divisor);
     }
 
-    function offerNew(IMintyMultiToken token, uint256 tokenId, string memory ipfsString, uint256 quantity, uint256 price) external {
+    function offerNew(IMintyMultiToken token, uint256 tokenId, string memory ipfsString, uint256 quantity, uint256 price, uint256 poolId) external {
         require(token.isApprovedForAll(msg.sender,address(this)),"You have not approved this contract to sell your tokens");
         require(!token.minted(tokenId),"Token ID already minted");
         require(token.owner() == msg.sender,"Unauthorised");
         require(items[token][tokenId].length == 0,"Unable to offer new");
-        token.mint(tokenId,quantity,ipfsString);
+        token.mint(tokenId,quantity,ipfsString, poolId);
         items[token][tokenId].push(Offer1155(msg.sender, quantity, ipfsString,price));
-        emit NewOffer(token, tokenId, msg.sender, quantity, price, ipfsString);
+        emit NewOffer(token, tokenId, msg.sender, quantity, price, ipfsString,poolId);
         return;        
     }
 
-    function offerNewBatch(IMintyMultiToken token, uint256[] memory tokenIds, string[] memory ipfsStrings, uint256[] memory quantities, uint256[] memory prices) external {
+    function offerNewBatch(IMintyMultiToken token, uint256[] memory tokenIds, string[] memory ipfsStrings, uint256[] memory quantities, uint256[] memory prices, uint256 poolId) external {
         require(token.isApprovedForAll(msg.sender,address(this)),"You have not approved this contract to sell your tokens");
         require(token.owner() == msg.sender,"Unauthorised");
         for (uint j = 0; j < tokenIds.length; j++) {
             require(!token.minted(tokenIds[j]),"Token ID already minted");
             require(items[token][tokenIds[j]].length == 0,"Unable to offer new");
             items[token][tokenIds[j]].push(Offer1155(msg.sender, quantities[j], ipfsStrings[j],prices[j]));
-            emit NewOffer(token, tokenIds[j], msg.sender, quantities[j], prices[j], ipfsStrings[j]);
+            emit NewOffer(token, tokenIds[j], msg.sender, quantities[j], prices[j], ipfsStrings[j],poolId);
         }
-        token.mintBatch(tokenIds,quantities,ipfsStrings);
+        token.mintBatch(tokenIds,quantities,ipfsStrings, poolId);
         return;        
     }
 
@@ -188,7 +188,7 @@ contract pMintyMultiSale {
         offer.quantity -= quantity;
         items[token][tokenId][pos] = offer;
         emit Payment(minty,offer.creator,_owner,value);
-        splitFee(token,pos, _owner, value);
+        splitFee(token,tokenId, pos, _owner, value);
         entered = false;
         emit OfferAccepted(msg.sender, token, tokenId, pos, quantity, value);
     }
@@ -216,7 +216,7 @@ contract pMintyMultiSale {
     }
 
 
-    function splitFee(IMintyMultiToken token,uint256 position, address _seller, uint value) internal {
+    function splitFee(IMintyMultiToken token, uint256 tokenId, uint256 position, address _seller, uint value) internal {
         
         uint royaltyPerMille = token.royaltyPerMille();
         uint royaltyPart = mul(value , royaltyPerMille) / divisor;
@@ -225,7 +225,7 @@ contract pMintyMultiSale {
         require(weth.transferFrom(msg.sender,_seller,sellerPart),"cannot transfer funds");
 
         uint sent = sellerPart;
-        PoolEntry[] memory royalties = token.getRoyalties(position);
+        PoolEntry[] memory royalties = token.getRoyalties(position, tokenId);
         for (uint j = 0; j < royalties.length; j++) {
             uint amount = mul(royaltyPart , royalties[j].share) / 1000;
             require(weth.transferFrom(msg.sender,royalties[j].beneficiary,amount),"cannot transfer funds");

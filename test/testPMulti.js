@@ -35,7 +35,7 @@ describe("Token contract", function () {
     let lock200
 
     let creator
-    
+    let musician
     let patron
     
 
@@ -58,7 +58,7 @@ describe("Token contract", function () {
        
         alice = "0x31EFd75bc0b5fbafc6015Bd50590f4fDab6a3F22"
 
-        M1155 = await ethers.getContractFactory("pMintyMultiToken")
+        M1155 = await ethers.getContractFactory("contracts/flat/pMintyMultiToken.sol:pMintyMultiToken")
 
         WETH = await ethers.getContractFactory("WETH9")
         weth = await WETH.deploy()
@@ -87,10 +87,14 @@ describe("Token contract", function () {
     it("deploy m1155", async function(){
         creator = "0x39d07f321cAF5b0668459DB5Bcf039A462A9273d" // Virgo
         patron = "0x08ef5C04D2F93d9858F0d87697f22cBeCD990076" // Libra
+        musician = "0x11318D5cAB7f211c0386E803b454bBA8F482e739" // capricorn
         creator1 = { beneficiary: creator, share: 500 }
-        creatorN = { beneficiary: creator, share: 750 }
         patron1 = { beneficiary: patron, share: 500 }
-        patronN = { beneficiary: patron, share: 250 }
+
+        creator1R = { beneficiary: creator, share: 750 }
+        patron1R = { beneficiary: patron, share: 250 }
+
+
         console.log("deploy token")
         m1155 = await M1155.deploy(
             addr1.address,
@@ -99,7 +103,8 @@ describe("Token contract", function () {
             "You need to be a MINTY patron or TEST PROJECT patron",
             100,
             [creator1,patron1],
-            [creatorN,patronN]
+            [creator1R,patron1R],
+            "C+P"
             )
         console.log("ERC1155 ",m1155.address)
         
@@ -127,7 +132,7 @@ describe("Token contract", function () {
 
     it("offer an NFT for sale at 0.1 + 0.025 ", async function() { 
         await m1155.connect(addr1).setAuth(sale.address,true);
-        await sale.connect(addr1).offerNew(m1155.address,10,"1212",200,ethers.utils.parseEther("0.1025"))
+        await sale.connect(addr1).offerNew(m1155.address,10,"1212",200,ethers.utils.parseEther("0.1025"),0)
         expect(await m1155.balanceOf(addr1.address,10)).to.equal(200);
     })
 
@@ -153,15 +158,28 @@ describe("Token contract", function () {
     })
 
     it("No 2 buys five (5 x 0.1 = 0.5)", async function() {
-        console.log("buyer before ",ethers.utils.formatEther(await weth.balanceOf(addr2.address)))
+        buyerBefore = await weth.balanceOf(addr2.address)
+        sellerBefore = await weth.balanceOf(addr1.address)
+        patronBefore = await weth.balanceOf(patron)
+        creatorBefore = await weth.balanceOf(creator)
+        mintyBefore = await weth.balanceOf(alice)
+
+
         await expect( sale.connect(addr2).acceptOffer(m1155.address,10,0,5)).to.emit(m1155, 'TransferSingle')
         expect(await m1155.balanceOf(addr1.address,10)).to.equal(195);
         expect(await m1155.balanceOf(addr2.address,10)).to.equal(5);
-        console.log("buyer ",ethers.utils.formatEther(await weth.balanceOf(addr2.address)))
-        console.log("seller ",ethers.utils.formatEther(await weth.balanceOf(addr1.address)))
-        console.log("patron ",ethers.utils.formatEther(await weth.balanceOf(patron)))
-        console.log("creator ",ethers.utils.formatEther(await weth.balanceOf(creator)))
-        console.log("minty ",ethers.utils.formatEther(await weth.balanceOf(alice)))
+
+        buyerAfter = await weth.balanceOf(addr2.address)
+        sellerAfter = await weth.balanceOf(addr1.address)
+        patronAfter = await weth.balanceOf(patron)
+        creatorAfter = await weth.balanceOf(creator)
+        mintyAfter = await weth.balanceOf(alice)
+
+        console.log("buyer spends ",ethers.utils.formatEther(buyerBefore.sub(buyerAfter)))
+        console.log("seller gains ",ethers.utils.formatEther(sellerAfter.sub(sellerBefore)))
+        console.log("patron ",ethers.utils.formatEther(patronAfter.sub(patronBefore)))
+        console.log("creator ",ethers.utils.formatEther(creatorAfter.sub(creatorBefore)))
+        console.log("minty ",ethers.utils.formatEther(mintyAfter.sub(mintyBefore)))
         //expect(await weth.balanceOf(addr2.address)).to.equal(ethers.utils.parseEther("99.5"))
     })
 
@@ -183,10 +201,31 @@ describe("Token contract", function () {
         await weth.connect(addr3).deposit({ value: lock100})
         await weth.connect(addr3).approve(sale.address,ethers.utils.parseEther("100.0"))
         console.log("allowance:",ethers.utils.formatEther(await weth.allowance(addr3.address,sale.address)))
+
+        sellerBefore = await weth.balanceOf(addr2.address)
+        buyerBefore = await weth.balanceOf(addr3.address)
+        patronBefore = await weth.balanceOf(patron)
+        creatorBefore = await weth.balanceOf(creator)
+        mintyBefore = await weth.balanceOf(alice)
+
+
         await expect( sale.connect(addr3).acceptOffer(m1155.address,10,1,1)).to.emit(m1155, 'TransferSingle')
         expect(await m1155.balanceOf(addr2.address,10)).to.equal(4);
         expect(await m1155.balanceOf(addr3.address,10)).to.equal(1);
         expect(await sale.available(m1155.address,10,1)).to.equal(2);
+
+        sellerAfter = await weth.balanceOf(addr2.address)
+        buyerAfter = await weth.balanceOf(addr3.address)
+        patronAfter = await weth.balanceOf(patron)
+        creatorAfter = await weth.balanceOf(creator)
+        mintyAfter = await weth.balanceOf(alice)
+
+        console.log("buyer spend ",ethers.utils.formatEther(buyerBefore.sub(buyerAfter)))
+        console.log("seller gains ",ethers.utils.formatEther(sellerAfter.sub(sellerBefore)))
+        console.log("patron ",ethers.utils.formatEther(patronAfter.sub(patronBefore)))
+        console.log("creator ",ethers.utils.formatEther(creatorAfter.sub(creatorBefore)))
+        console.log("minty ",ethers.utils.formatEther(mintyAfter.sub(mintyBefore)))
+
     })
 
     it("No 3 fails to buy three", async function() {
@@ -202,6 +241,86 @@ describe("Token contract", function () {
         await (m1155.connect(addr2).setApprovalForAll(sale.address,false));
         expect(await sale.available(m1155.address,10,1)).to.equal(0);  // sale checks that approval is in place
     })
+
+    it("Have another pool", async function() {
+        creator2 = { beneficiary: creator, share: 500 }
+        musician2 = { beneficiary: musician, share: 300 }
+        patron2 = { beneficiary: patron, share: 200 }
+
+        creator2R = { beneficiary: creator, share: 700 }
+        musician2R = { beneficiary: musician, share: 200 }
+        patron2R = { beneficiary: patron, share: 100 }
+
+        await m1155.connect(addr1).addPools([creator2,musician2,patron2],[creator2R,musician2R,patron2R],"C+P+M")
+
+    })
+
+    it("offer an NFT for sale at 0.2 + 0.005 ", async function() { 
+        //await m1155.connect(addr1).setAuth(sale.address,true);
+        await sale.connect(addr1).offerNew(m1155.address,11,"hash",180,ethers.utils.parseEther("0.205"),1)
+        expect(await m1155.balanceOf(addr1.address,11)).to.equal(180);
+    })
+
+
+    it("No 2 buys five (5 x 0.2 = 1.0)", async function() {
+        sellerBefore = await weth.balanceOf(addr1.address)
+        buyerBefore = await weth.balanceOf(addr2.address)
+        patronBefore = await weth.balanceOf(patron)
+        creatorBefore = await weth.balanceOf(creator)
+        musicianBefore = await weth.balanceOf(musician)
+        mintyBefore = await weth.balanceOf(alice)
+        await expect( sale.connect(addr2).acceptOffer(m1155.address,11,0,5)).to.emit(m1155, 'TransferSingle')
+        expect(await m1155.balanceOf(addr1.address,11)).to.equal(175);
+        expect(await m1155.balanceOf(addr2.address,11)).to.equal(5);
+        sellerAfter = await weth.balanceOf(addr1.address)
+        buyerAfter = await weth.balanceOf(addr2.address)
+        patronAfter = await weth.balanceOf(patron)
+        creatorAfter = await weth.balanceOf(creator)
+        musicianAfter = await weth.balanceOf(musician)
+        mintyAfter = await weth.balanceOf(alice)
+
+        console.log("check balances")
+        console.log("buyer spend ",ethers.utils.formatEther(buyerBefore.sub(buyerAfter)))
+        console.log("seller gains ",ethers.utils.formatEther(sellerAfter.sub(sellerBefore)))
+        console.log("patron ",ethers.utils.formatEther(patronAfter.sub(patronBefore)))
+        console.log("creator ",ethers.utils.formatEther(creatorAfter.sub(creatorBefore)))
+        console.log("musician ",ethers.utils.formatEther(musicianAfter.sub(musicianBefore)))
+        console.log("minty ",ethers.utils.formatEther(mintyAfter.sub(mintyBefore)))
+        //expect(await weth.balanceOf(addr2.address)).to.equal(ethers.utils.parseEther("99.5"))
+    })
+
+    it("No 2 sells and 3 buys five (5 x 0.2 = 1.0) AGAIN", async function() {
+        sellerBefore = await weth.balanceOf(addr2.address)
+        buyerBefore = await weth.balanceOf(addr3.address)
+        patronBefore = await weth.balanceOf(patron)
+        creatorBefore = await weth.balanceOf(creator)
+        musicianBefore = await weth.balanceOf(musician)
+        mintyBefore = await weth.balanceOf(alice)
+
+        await m1155.connect(addr2).setApprovalForAll(sale.address,true);
+
+        await expect(sale.connect(addr2).offerResale(m1155.address,11,5,ethers.utils.parseEther("0.205"))).to.emit(sale,'ResaleOffer');
+
+        await expect( sale.connect(addr3).acceptOffer(m1155.address,11,1,5)).to.emit(m1155, 'TransferSingle')
+        expect(await m1155.balanceOf(addr2.address,11)).to.equal(0);
+        expect(await m1155.balanceOf(addr3.address,11)).to.equal(5);
+        sellerAfter = await weth.balanceOf(addr2.address)
+        buyerAfter = await weth.balanceOf(addr3.address)
+        patronAfter = await weth.balanceOf(patron)
+        creatorAfter = await weth.balanceOf(creator)
+        musicianAfter = await weth.balanceOf(musician)
+        mintyAfter = await weth.balanceOf(alice)
+
+        console.log("check balances")
+        console.log("buyer spend ",ethers.utils.formatEther(buyerBefore.sub(buyerAfter)))
+        console.log("seller gains ",ethers.utils.formatEther(sellerAfter.sub(sellerBefore)))
+        console.log("patron ",ethers.utils.formatEther(patronAfter.sub(patronBefore)))
+        console.log("creator ",ethers.utils.formatEther(creatorAfter.sub(creatorBefore)))
+        console.log("musician ",ethers.utils.formatEther(musicianAfter.sub(musicianBefore)))
+        console.log("minty ",ethers.utils.formatEther(mintyAfter.sub(mintyBefore)))
+        //expect(await weth.balanceOf(addr2.address)).to.equal(ethers.utils.parseEther("99.5"))
+    })
+
 
     async function bid(signer, amount, residual) {
         

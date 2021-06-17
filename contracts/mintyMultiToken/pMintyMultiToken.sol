@@ -20,11 +20,15 @@ contract pMintyMultiToken is ERC1155 {
     locking []             public locs;
     string                 public lockError;
 
-    uint256                public royaltyPerMille;
-    PoolEntry []           public initialPool;
-    PoolEntry []           public resalePool;
+    uint256                         public royaltyPerMille;
+    uint256                         public numPools;
+    mapping(uint => PoolEntry [])   public initialPools;
+    mapping(uint => PoolEntry [])   public resalePools;
+    mapping(uint => string)         public poolNames;
+    mapping(uint => uint)           public poolByTokenId;
 
     event OperatorSet(address operator, bool enabled);
+    event PoolAdded(uint256 poolId, string poolName);
 
     modifier onlyAuth() {
         require (auth[msg.sender] || (msg.sender == owner),"unauthorised");
@@ -38,7 +42,8 @@ contract pMintyMultiToken is ERC1155 {
         string memory _lockError, 
         uint256             _royaltyPerMille,
         PoolEntry [] memory _initialEntries,
-        PoolEntry [] memory _resaleEntries
+        PoolEntry [] memory _resaleEntries,
+        string       memory _poolName
     ) ERC1155("") {
         owner = _owner;
         auth[saleContract] = true;
@@ -48,23 +53,41 @@ contract pMintyMultiToken is ERC1155 {
         base = "https://minty.mypinata.cloud/ipfs/";
         royaltyPerMille = _royaltyPerMille;
         uint256 iPerMille = 0;
+        _addPools(_initialEntries, _resaleEntries, _poolName);
+    }
+
+    function addPools(
+        PoolEntry [] memory _initialEntries,
+        PoolEntry [] memory _resaleEntries,
+        string       memory _poolName
+    ) public onlyAuth {
+        _addPools(_initialEntries, _resaleEntries,_poolName);
+    }
+
+    function _addPools(
+        PoolEntry [] memory _initialEntries,
+        PoolEntry [] memory _resaleEntries,
+        string       memory _poolName
+    ) internal {
+        uint thisPool = numPools++;
+        uint256 iPerMille = 0;
         for (uint j = 0; j < _initialEntries.length; j++) {
             PoolEntry memory p = _initialEntries[j];
-            initialPool.push(p);
+            initialPools[thisPool].push(p);
             iPerMille += p.share;
         }
         require(iPerMille == 1000,"Initial shares do not add up");
         uint256 rPerMille = 0;
         for (uint j = 0; j < _resaleEntries.length; j++) {
             PoolEntry memory p = _resaleEntries[j];
-            resalePool.push(p);
+            resalePools[thisPool].push(p);
             rPerMille += p.share;
         }
         require(rPerMille == 1000,"Resale shares do not add up");
+        poolNames[thisPool] = _poolName;
+        emit PoolAdded(thisPool,_poolName);
     }
 
-
-    
     function setContractURI(string memory _uri) external onlyAuth {
         contractURI = _uri;
     } 
@@ -75,19 +98,23 @@ contract pMintyMultiToken is ERC1155 {
         return string(abi.encodePacked(base, _tokenURI));
     }
 
-    function mint(uint tokenId, uint quantity, string memory hash) external onlyAuth {
+    function mint(uint tokenId, uint quantity, string memory hash, uint poolId) external onlyAuth {
+        require(poolId < numPools,"Invalid Pool Number");
         bytes memory data;
         _tokenURIs[tokenId] = hash;
         minted[tokenId] = true;
         _mint(owner, tokenId, quantity, data);
+        poolByTokenId[tokenId] = poolId;
     }
 
-    function mintBatch(uint [] memory tokenIds, uint [] memory quantities, string[] memory hashes) external onlyAuth {
+    function mintBatch(uint [] memory tokenIds, uint [] memory quantities, string[] memory hashes, uint256 poolId) external onlyAuth {
         bytes memory data;
         require(tokenIds.length == hashes.length,"array lengths do not match");
+        require(poolId < numPools,"Invalid Pool Number");
         for (uint j = 0; j < tokenIds.length; j++) {
             _tokenURIs[tokenIds[j]] = hashes[j];
             minted[tokenIds[j]] = true;
+            poolByTokenId[tokenIds[j]] = poolId;
         }
         _mintBatch(owner, tokenIds, quantities, data);
     }
@@ -109,9 +136,10 @@ contract pMintyMultiToken is ERC1155 {
         require(locs.length == 0,lockError);
     }
 
-    function getRoyalties(uint saleNumber) external view returns (PoolEntry[] memory) {
-        if (saleNumber == 0) return initialPool;
-        return resalePool;
+    function getRoyalties(uint saleNumber, uint tokenId) external view returns (PoolEntry[] memory) {
+        uint thisPool = poolByTokenId[tokenId];
+        if (saleNumber == 0) return initialPools[thisPool];
+        return resalePools[thisPool];
     } 
 
 

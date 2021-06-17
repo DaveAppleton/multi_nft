@@ -1350,7 +1350,7 @@ contract pMintyMultiToken is ERC1155 {
         return string(abi.encodePacked(base, _tokenURI));
     }
 
-    function mintPool(uint tokenId, uint quantity, string memory hash, uint poolId) external onlyAuth {
+    function mint(uint tokenId, uint quantity, string memory hash, uint poolId) external onlyAuth {
         require(poolId < numPools,"Invalid Pool Number");
         bytes memory data;
         _tokenURIs[tokenId] = hash;
