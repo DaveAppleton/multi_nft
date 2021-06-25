@@ -1,0 +1,207 @@
+fmt.Println("Aprove Project")
+if *royalty < 0 {
+	fmt.Println("royalty not set")
+	flag.Usage()
+	return
+}
+if *royalty > 150 {
+	fmt.Println("royalty > 150 / 1000 (15%)")
+	flag.Usage()
+	return
+}
+if len(records) == 0 {
+	fmt.Println("no records found")
+	return
+}
+fmt.Println(len(records), " projects found")
+
+isha := strings.Split(*initialStakeHolders, ",")
+Lsha := strings.Split(*laterStakeHolders, ",")
+issa := strings.Split(*initialStakeShares, ",")
+Lssa := strings.Split(*laterStakeShares, ",")
+initialArray := makeSHA3(isha, issa)
+laterArray := makeSHA3(Lsha, Lssa)
+records, err := getProjectsForUser(*userName)
+if err != nil {
+	fmt.Println(err)
+	log.Fatal(err)
+}
+
+done := false
+for _, rec := range records {
+	if rec.ProjectID == *projectID {
+		fmt.Println(rec.Title)
+		if rec.ProjectToken.Valid && !*override {
+			msg := fmt.Sprintln("Project ",
+				rec.Title,
+				"already has a token ",
+				rec.ProjectToken.String)
+			fmt.Println(msg)
+			log.Println(msg)
+			return
+		}
+		fmt.Println("Approving ", rec.Title, "by", rec.Name)
+		owner := common.HexToAddress(rec.Address)
+		pMSaleA := common.HexToAddress(viper.GetString("P_M_SALE"))
+		locking := common.HexToAddress(viper.GetString("LOCKING"))
+		royaltyPerMille := big.NewInt(int64(*royalty))
+
+		pMMTA, tx, _, err := pMintyMultiToken.DeployPMintyMultiToken(
+			bankerTx,
+			client,
+			owner,
+			pMSaleA,
+			[]common.Address{locking},
+			"You need to be a MINTY patron",
+			royaltyPerMille,
+			initialArray,
+			laterArray,
+			"initialPool",
+		)
+		if err != nil {
+			fmt.Println(err)
+			log.Fatal(err)
+		}
+		fmt.Println(pMMTA.Hex(), tx.Hash().Hex())
+		ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
+		defer cancel()
+		depA, err := bind.WaitDeployed(ctx, client, tx)
+		if err != nil {
+			fmt.Println(err)
+			log.Fatal(err)
+		}
+		fmt.Println("deployed at ", depA.Hex())
+		err = updateProjectWithContract(*projectID, pMMTA)
+		if err != nil {
+			fmt.Println(err)
+			log.Fatal(err)
+		}
+		fmt.Println("database updated")
+		done = true
+	}
+	if done {
+		break
+	}
+	fmt.Println("Not ", rec.Title, "(", rec.ProjectID, ")")
+}
+if !done {
+	fmt.Println()
+	log.Println()
+}
+return
+
+
+
+
+
+func makeSHA3(strAddrA []string, strShareA []string) (pe []pMintyMultiToken.PoolEntry) {
+	if len(strAddrA) != len(strShareA) {
+		fmt.Println(len(strAddrA), "addresses but ", len(strShareA), "shares")
+		log.Fatal(len(strAddrA), "addresses but ", len(strShareA), "shares")
+	}
+	for pos, addrStr := range strAddrA {
+		addr := common.HexToAddress(addrStr)
+		share, err := strconv.ParseInt(strShareA[pos], 10, 64)
+		if err != nil {
+			fmt.Println(err)
+			log.Fatal(err)
+		}
+		pe = append(pe, pMintyMultiToken.PoolEntry{addr, big.NewInt(share)})
+	}
+	return
+}
+
+
+
+---- OLD Project
+
+if *action == "approve_project" {
+	fmt.Println("Aprove Project")
+	if *royalty < 0 {
+		fmt.Println("royalty not set")
+		flag.Usage()
+		return
+	}
+	if *royalty > 150 {
+		fmt.Println("royalty > 150 / 1000 (15%)")
+		flag.Usage()
+		return
+	}
+	isha := strings.Split(*initialStakeHolders, ",")
+	Lsha := strings.Split(*laterStakeHolders, ",")
+	issa := strings.Split(*initialStakeShares, ",")
+	Lssa := strings.Split(*laterStakeShares, ",")
+	initialArray := makeSHA2(isha, issa)
+	laterArray := makeSHA2(Lsha, Lssa)
+	records, err := getProjectsForUser(*userName)
+	if err != nil {
+		fmt.Println(err)
+		log.Fatal(err)
+	}
+	if len(records) == 0 {
+		fmt.Println("no records found")
+		return
+	}
+	fmt.Println(len(records), " projects found")
+	done := false
+	for _, rec := range records {
+		if rec.ProjectID == *projectID {
+			fmt.Println(rec.Title)
+			if rec.ProjectToken.Valid && !*override {
+				msg := fmt.Sprintln("Project ",
+					rec.Title,
+					"already has a token ",
+					rec.ProjectToken.String)
+				fmt.Println(msg)
+				log.Println(msg)
+				return
+			}
+			fmt.Println("Approving ", rec.Title, "by", rec.Name)
+			owner := common.HexToAddress(rec.Address)
+			pMSaleA := common.HexToAddress(viper.GetString("P_M_SALE"))
+			locking := common.HexToAddress(viper.GetString("LOCKING"))
+			royaltyPerMille := big.NewInt(int64(*royalty))
+
+			pMMTA, tx, _, err := oldMultiToken.DeployPMintyMultiToken(
+				bankerTx,
+				client,
+				owner,
+				pMSaleA,
+				[]common.Address{locking},
+				"You need to be a MINTY patron",
+				royaltyPerMille,
+				initialArray,
+				laterArray,
+			)
+			if err != nil {
+				fmt.Println(err)
+				log.Fatal(err)
+			}
+			fmt.Println(pMMTA.Hex(), tx.Hash().Hex())
+			ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
+			defer cancel()
+			depA, err := bind.WaitDeployed(ctx, client, tx)
+			if err != nil {
+				fmt.Println(err)
+				log.Fatal(err)
+			}
+			fmt.Println("deployed at ", depA.Hex())
+			err = updateProjectWithContract(*projectID, pMMTA)
+			if err != nil {
+				fmt.Println(err)
+				log.Fatal(err)
+			}
+			fmt.Println("database updated")
+			done = true
+		}
+		if done {
+			break
+		}
+		fmt.Println("Not ", rec.Title, "(", rec.ProjectID, ")")
+	}
+	if !done {
+		fmt.Println()
+		log.Println()
+	}
+	return
+}

@@ -24,12 +24,25 @@ async function deployStuff() {
     const SALE2   = await ethers.getContractFactory("contracts/flat/pMintyMultiSale.sol:pMintyMultiSale")
     //const M1155   = await ethers.getContractFactory("mintyMultiTokens")
     
-    let weth = "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619"     // Main Net 
-    let wallet = "0x31EFd75bc0b5fbafc6015Bd50590f4fDab6a3F22"
+    let weth =   "0x7ceB23fD6bC0adD59E62ac25578270cFf1b9f619"     // Main Net 
+    let wallet = "0xa653d4C79200f4983b5eE0E61F068bDE90F42Db7"
     let minty = "0x474Ba20088174612427cf8440ac5712e98652AD2"
     let locking = "0x756fe78b65A400F07b6fcA2F92E0482f6DcBF25B"
-    let sale = "0x37a8De5647D5a71e2508991A033D3E46765d92af"
-    let mintyunique = "0x1332690FC3AB1C5434E5C252C5BA71Ac7A72F964"
+    let sale = "0x6F6C3f7cB3050751797c720Fa805e4343f9B0788"
+    let mintyunique = "0x53d7D3D2d29D4B7C67E0434424A9998574C6619B"
+
+    let newSale2 = "0xF63FC5757cc8e2f290AfA0c8386c800dc7cc834d"
+
+    let wethContract = MINTY.attach(weth)
+    wethName = await wethContract.name()
+    if (wethName != "Wrapped Ether")
+    {
+        console.log("WETH wrong")
+        process.exit(0);
+    } 
+
+
+    process.exit(0)
 
     let s1 = false
     if (s1) {
@@ -52,11 +65,33 @@ async function deployStuff() {
         process.exit(0)
     }
 
-
     let s2 = false
     if (s2) {
+        oldSale = "0xdf4837218075c62e1B631BEE0a3c6e8df66cF8C8"
+        oldToken = "0x0c110d076e7f0caef33f1670945f4d8ca7d86793"
+        tokens = [1,10,9,45,44,43] //[43,44,45,9,10,1]
         let sale2 = await SALE2.deploy(wallet,weth,1025)
         console.log("MULTI SALE",sale2.address, sale2.deployTransaction.hash)
+        for (j = 0; j < tokens.length; j++) {
+            tx = await sale2.transferItems(oldSale,oldToken,token[j])
+        }
+        process.exit(0)
+    }
+
+    let s2X = false
+    if (s2X) {
+        oldSale = "0xdf4837218075c62e1B631BEE0a3c6e8df66cF8C8"
+        oldToken = "0x0c110d076e7f0caef33f1670945f4d8ca7d86793"
+        let tokens = [1,10,9,45,44,43] //[43,44,45,9,10,1]
+        let sale2 = await SALE2.attach(newSale2)
+        console.log(await sale2.weth())
+        console.log(await sale2.numberOfOffers(oldToken,1))
+        offer = await sale2.items(oldToken,1,0)
+        console.log(offer)
+        for (j = 1; j < tokens.length; j++) {
+            tx = await sale2.transferItems(oldSale,oldToken,tokens[j])
+            console.log(j,tx.hash)
+        }
         process.exit(0)
     }
 
@@ -64,10 +99,12 @@ async function deployStuff() {
     if (s3) {
         let m721 = await M721.deploy(sale)
         console.log("MINTY UNIQUE",m721.address, m721.deployTransaction.hash)
+        process.exit(0)
     }
 
-    let s4 = true
+    let s4 = false
     if (s4) {
+        console.log("setting minty unique of",sale," to ",mintyunique)
         saleContract = await SALE.attach(sale)
         tx = await saleContract.setMintyUnique(mintyunique)
         console.log(tx.hash)

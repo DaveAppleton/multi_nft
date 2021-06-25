@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script>
+            function update(pid) {
+                
+            
+
+                el = document.getElementById("inp"+pid)
+               
+                window.open("/setPoolID?project_art="+pid+"&value="+el.value)
+            }
+            
+        </script>
+
+        <title>
+            WOT
+        </title>
+    </head>
+    <Body>
+        
+        <table class="table">
+            <thead>
+              <tr>
+                <th>ID</th>
+                <th>Project ID</th>
+                <th>Name</th>
+                <th>Pool ID</th>
+              </tr>
+            </thead>
+            <tbody>
+                {{range .PArts}}
+              <tr>
+                <td>{{.ProjectArtID}}</td>
+                <td>{{.ProjectID}}</td>
+                <td>{{.Name}}</td>
+                <td><input id="inp{{.ProjectArtID}}" value="{{.PoolID}}"/><button onclick='javascript:update({{.ProjectArtID}});'>UPDATE</button></td>
+              </tr>
+              {{end}}
+            </tbody>
+        </table>
+       
+    </Body>
+</html>

@@ -34,6 +34,7 @@ func initDB() (dbx *sql.DB, err error) {
 		log.Println("database : ", err)
 		log.Println(connectString)
 	}
+	fmt.Println("connected to ", connectString)
 	return
 }
 
@@ -45,7 +46,7 @@ func updateProjectWithContract(projectID int, contract common.Address) (err erro
 	defer db.Close()
 	fmt.Println("update ", projectID, "with", contract.Hex())
 	query := "update project set token_address=$1, approved=true where id=$2"
-	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
 	defer cancel()
 	res, err := db.ExecContext(ctx, query, contract.Hex(), projectID)
 	if err != nil {
@@ -80,7 +81,7 @@ func getProjectsForUser(userName string) (pa []ProjectRecord, err error) {
 	}
 	defer db.Close()
 	query := "select a.id, a.nickname, a.address, b.id, b.approved, c.approved, c.title, c.id as project_id, c.token_address from users a, artist b, project c where a.id=b.user_id and b.id = c.artist_id and a.nickname=$1"
-	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
 	defer cancel()
 	row, err := db.QueryContext(ctx, query, userName)
 	if err != nil {
@@ -104,7 +105,7 @@ func getContractMetaData(projectID int) (str string, err error) {
 	}
 	defer db.Close()
 	query := "select metadata from project where id=$1"
-	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
 	defer cancel()
 	err = db.QueryRowContext(ctx, query, projectID).Scan(&str)
 	return str, err
@@ -131,7 +132,7 @@ func getArtists(start int) (pa []Artist, max int, err error) {
 	}
 	defer db.Close()
 	q1 := "select count(*) from users a, artist b where a.id=b.user_id order by 1"
-	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
 	defer cancel()
 	err = db.QueryRowContext(ctx, q1).Scan(&max)
 	if err != nil {
@@ -139,7 +140,7 @@ func getArtists(start int) (pa []Artist, max int, err error) {
 		return []Artist{}, 0, err
 	}
 	query := "select a.id, a.address, a.nickname, a.avatar, b.id, b.about_me, b.approved, b.facebook, b.twitter, b.instagram, b.portfolio from users a, artist b where a.id=b.user_id order by a.id limit 50 offset $1"
-	ctx, cancel = context.WithTimeout(context.Background(), 15*time.Second)
+	ctx, cancel = context.WithTimeout(context.Background(), 60*time.Second)
 	defer cancel()
 	row, err := db.QueryContext(ctx, query, start)
 	if err != nil {
@@ -168,25 +169,144 @@ func getArtists(start int) (pa []Artist, max int, err error) {
 }
 
 func findArtist(name string) (p *Artist, err error) {
+	var pp Artist
 	db, err := initDB()
 	if err != nil {
 		return nil, err
 	}
 	defer db.Close()
 	query := "select a.id, a.address, a.nickname, a.avatar, b.id, b.about_me, b.approved, b.facebook, b.twitter, b.instagram, b.portfolio from users a, artist b where a.id=b.user_id and a.nickname=$1"
-	ctx, cancel := context.WithTimeout(context.Background(), 15*time.Second)
+	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
 	defer cancel()
-	err = db.QueryRowContext(ctx, query, projectID).Scan(
-		&p.UserID,
-		&p.Address,
-		&p.Nickname,
-		&p.Avatar,
-		&p.ArtistID,
-		&p.AboutMe,
-		&p.Approved,
-		&p.Facebook,
-		&p.Twitter,
-		&p.Instagram,
-		&p.Portfolio)
+	err = db.QueryRowContext(ctx, query, name).Scan(
+		&pp.UserID,
+		&pp.Address,
+		&pp.Nickname,
+		&pp.Avatar,
+		&pp.ArtistID,
+		&pp.AboutMe,
+		&pp.Approved,
+		&pp.Facebook,
+		&pp.Twitter,
+		&pp.Instagram,
+		&pp.Portfolio)
+	return &pp, err
+}
+
+func findArtistAddress(name string) (id int, addr string, err error) {
+	fmt.Println("DB finding ", name)
+	db, err := initDB()
+	if err != nil {
+		return 0, "", err
+	}
+	defer db.Close()
+	query := "select a.id, a.address from users a, artist b where a.id=b.user_id and a.nickname=$1"
+	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
+	defer cancel()
+	err = db.QueryRowContext(ctx, query, name).Scan(
+		&id,
+		&addr,
+	)
 	return
 }
+
+func approveUser(id int) (updated bool, err error) {
+	fmt.Println("DB approve ", id)
+	db, err := initDB()
+	if err != nil {
+		return
+	}
+	defer db.Close()
+	query := "update artist set approved=true where user_id=$1"
+	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
+	defer cancel()
+	res, err := db.ExecContext(ctx, query, id)
+	if err != nil {
+		return
+	}
+	count, err := res.RowsAffected()
+	if err != nil {
+		return
+	}
+	updated = count == 1
+	return
+}
+
+func getProjectToken(projectID int) (token string, err error) {
+	fmt.Println("get token for ptoject ", projectID)
+	db, err := initDB()
+	if err != nil {
+		return "", err
+	}
+	defer db.Close()
+	query := "select token_address from project where id=$1"
+	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
+	defer cancel()
+	err = db.QueryRowContext(ctx, query, projectID).Scan(&token)
+	return
+}
+
+type ProjectArt struct {
+	ProjectArtID int
+	ProjectID    int
+	Name         string
+	PoolID       int
+}
+
+func getProjectArt(projectID int) (pas []ProjectArt, err error) {
+	db, err := initDB()
+	if err != nil {
+		return []ProjectArt{}, err
+	}
+	defer db.Close()
+
+	query := "select id, project_id, name, pool_id from project_arts where project_id=$1"
+	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
+	defer cancel()
+	row, err := db.QueryContext(ctx, query, projectID)
+	if err != nil {
+		return []ProjectArt{}, err
+	}
+	for row.Next() {
+		var p ProjectArt
+		err = row.Scan(
+			&p.ProjectArtID,
+			&p.ProjectID,
+			&p.Name,
+			&p.PoolID)
+		if err != nil {
+			return []ProjectArt{}, err
+		}
+		pas = append(pas, p)
+	}
+	return
+}
+
+func setPoolID(pArtID int, poolID int) (updated bool, err error) {
+	db, err := initDB()
+	if err != nil {
+		return
+	}
+	defer db.Close()
+	query := "update project_arts set pool_id=$1 where id=$2"
+	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
+	defer cancel()
+	res, err := db.ExecContext(ctx, query, poolID, pArtID)
+	if err != nil {
+		return
+	}
+	count, err := res.RowsAffected()
+	if err != nil {
+		return
+	}
+	fmt.Println(count, " rows changed")
+	return count == 1, nil
+}
+
+/*
+
+GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA public TO mintyadmin;
+
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA public to mintyadmin;
+
+*/

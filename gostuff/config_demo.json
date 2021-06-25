@@ -1,0 +1,10 @@
+{
+    "log" : "util_demo.log",
+    "DB_HOST" : "host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname='minty-demo' connect_timeout=10",
+    "P_SALE_" : "0x383a9962A1f55eF866297A7606427639a34B16B7",
+    "P_SALE" : "0xAf88Fa766e085Ea1601926A89aE96e6C670A9160",
+    "HOST" : "https://rpc-mumbai.maticvigil.com/v1/d03dabf19f8c885bd8b48cbd1e8a7aadced7a3ab",
+    "LOCKING" : "0xBFDA191CE9ea5442c35330738Bb6aF9C225b442E",
+    "P_M_SALE" : "0x6F2a567826554D2526703a6BD265C42E53FdF4C2"
+
+}

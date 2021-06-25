@@ -1,0 +1,8 @@
+{
+    "name": "Minty Art - Marketplace",
+    "description": "At Minty we are powering creativity for the next generation of artists.  We are supporting digital artists, helping them fund and sell their works and connecting them with collectors who share their passions and value their output.  And we’re doing so in a transparent, modern, technologically-enabled way that empowers both artist and collector.  Fuelling the creation and appreciation of art that will help to define a generation.",
+    "image": "https://minty.mypinata.cloud/ipfs/QmQGhQ5Xk52n1co7BnWbcpbJHqEowb44XqmZaweyCEpXHs",
+    "external_link": "https://app.minty.art",
+    "seller_fee_basis_points": 1250, 
+    "fee_recipient": "0xa653d4C79200f4983b5eE0E61F068bDE90F42Db7" 
+  }

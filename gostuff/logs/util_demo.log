@@ -1,0 +1,75 @@
+2021/06/20 06:04:18 viper config changed config_demo.json
+2021/06/20 07:31:25 viper config changed config_demo.json
+2021/06/20 07:36:02 viper config changed config_demo.json
+2021/06/20 07:46:52 Find Artistsql: no rows in result set
+2021/06/20 07:47:21 Find Artistsql: no rows in result set
+2021/06/20 07:47:44 Find Artistsql: no rows in result set
+2021/06/20 07:49:47 Find Artistsql: no rows in result set
+2021/06/20 07:57:51 Find Artistsql: no rows in result set
+2021/06/20 07:58:34 Find Artistsql: no rows in result set
+2021/06/20 08:00:25 Find Artistsql: Scan error on column index 0, name "id": destination not a pointer
+2021/06/20 20:41:41 database :  dial tcp [::1]:5432: connect: connection refused
+2021/06/20 20:41:41 host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname='minty-demo' connect_timeout=10
+2021/06/20 20:41:41 dial tcp [::1]:5432: connect: connection refused
+2021/06/20 20:46:57 failed to estimate gas needed: gas required exceeds allowance (685802)
+2021/06/21 09:06:14 database :  pq: database "minty-demo" does not exist
+2021/06/21 09:06:14 host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname='minty-demo' connect_timeout=10
+2021/06/21 19:15:04 database :  read tcp [::1]:64081->[::1]:5432: read: connection reset by peer
+2021/06/21 19:15:04 host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname='minty-demo' connect_timeout=10
+2021/06/21 19:15:04 read tcp [::1]:64081->[::1]:5432: read: connection reset by peer
+2021/06/22 03:36:59 Sale deployed at  0xfC871e50ca8870caB76cACa500711dc4060433Ab in tx 0x863ba3401643b6b7f3d0385ddedf507c116adad31054035c6f79781736de7e44
+2021/06/22 03:37:04 failed to estimate gas needed: gas required exceeds allowance (686212)
+2021/06/22 03:44:07 failed to estimate gas needed: gas required exceeds allowance (686212)
+2021/06/22 03:46:09 failed to estimate gas needed: gas required exceeds allowance (686212)
+2021/06/22 03:47:07 failed to estimate gas needed: gas required exceeds allowance (686212)
+2021/06/22 03:49:09 deploy token 0xAFB8A8888C92B3F4FC71d039EcdC068De06Ff879 0x89d0c40e0e96e730edbce6e89e971e1661471660c28aa6d64b71a203c2d47187
+2021/06/22 03:49:14 Add Yellowfailed to estimate gas needed: execution reverted: Unauthorised
+2021/06/22 03:56:12 Add Yellowfailed to estimate gas needed: execution reverted: Unauthorised
+2021/06/22 03:57:38 deploy token 0x16429506d9695E3FDeF312C2421931Dd3F84d0b4 0x7ebf80b05300357e7dad6ca6b6bc611fff0431e0753c3f9cb1d3f956cebcfed2
+2021/06/22 03:58:14 Accept offerfailed to estimate gas needed: execution reverted: You need to be a MINTY patron
+2021/06/24 20:01:30 database :  read tcp [::1]:60909->[::1]:5432: read: connection reset by peer
+2021/06/24 20:01:30 host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname='minty-demo' connect_timeout=10
+2021/06/24 20:01:33 database :  read tcp [::1]:60926->[::1]:5432: read: connection reset by peer
+2021/06/24 20:01:33 host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname='minty-demo' connect_timeout=10
+2021/06/24 20:01:33 database :  read tcp [::1]:60936->[::1]:5432: read: connection reset by peer
+2021/06/24 20:01:33 host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname='minty-demo' connect_timeout=10
+2021/06/24 20:01:34 database :  read tcp [::1]:60937->[::1]:5432: read: connection reset by peer
+2021/06/24 20:01:34 host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname='minty-demo' connect_timeout=10
+2021/06/24 20:01:34 database :  read tcp [::1]:60946->[::1]:5432: read: connection reset by peer
+2021/06/24 20:01:34 host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname='minty-demo' connect_timeout=10
+2021/06/24 20:01:35 database :  read tcp [::1]:60947->[::1]:5432: read: connection reset by peer
+2021/06/24 20:01:35 host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname='minty-demo' connect_timeout=10
+2021/06/24 20:01:35 database :  read tcp [::1]:60948->[::1]:5432: read: connection reset by peer
+2021/06/24 20:01:35 host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname='minty-demo' connect_timeout=10
+2021/06/24 20:01:35 database :  read tcp [::1]:60949->[::1]:5432: read: connection reset by peer
+2021/06/24 20:01:35 host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname='minty-demo' connect_timeout=10
+2021/06/24 20:01:35 database :  read tcp [::1]:60958->[::1]:5432: read: connection reset by peer
+2021/06/24 20:01:35 host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname='minty-demo' connect_timeout=10
+2021/06/24 20:01:35 database :  read tcp [::1]:60959->[::1]:5432: read: connection reset by peer
+2021/06/24 20:01:35 host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname='minty-demo' connect_timeout=10
+2021/06/24 20:01:36 database :  read tcp [::1]:60960->[::1]:5432: read: connection reset by peer
+2021/06/24 20:01:36 host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname='minty-demo' connect_timeout=10
+2021/06/24 20:01:36 database :  read tcp [::1]:60961->[::1]:5432: read: connection reset by peer
+2021/06/24 20:01:36 host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname='minty-demo' connect_timeout=10
+2021/06/24 20:02:27 database :  read tcp [::1]:61406->[::1]:5432: read: connection reset by peer
+2021/06/24 20:02:27 host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname='minty-demo' connect_timeout=10
+2021/06/24 20:02:30 database :  read tcp [::1]:61431->[::1]:5432: read: connection reset by peer
+2021/06/24 20:02:30 host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname='minty-demo' connect_timeout=10
+2021/06/24 20:02:31 database :  read tcp [::1]:61440->[::1]:5432: read: connection reset by peer
+2021/06/24 20:02:31 host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname='minty-demo' connect_timeout=10
+2021/06/24 20:02:32 database :  read tcp [::1]:61449->[::1]:5432: read: connection reset by peer
+2021/06/24 20:02:32 host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname='minty-demo' connect_timeout=10
+2021/06/24 20:02:32 database :  read tcp [::1]:61454->[::1]:5432: read: connection reset by peer
+2021/06/24 20:02:32 host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname='minty-demo' connect_timeout=10
+2021/06/24 20:02:33 database :  read tcp [::1]:61459->[::1]:5432: read: connection reset by peer
+2021/06/24 20:02:33 host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname='minty-demo' connect_timeout=10
+2021/06/24 20:02:33 database :  read tcp [::1]:61461->[::1]:5432: read: connection reset by peer
+2021/06/24 20:02:33 host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname='minty-demo' connect_timeout=10
+2021/06/24 20:02:41 database :  read tcp [::1]:61539->[::1]:5432: read: connection reset by peer
+2021/06/24 20:02:41 host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname='minty-demo' connect_timeout=10
+2021/06/24 20:02:47 database :  read tcp [::1]:61592->[::1]:5432: read: connection reset by peer
+2021/06/24 20:02:47 host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname='minty-demo' connect_timeout=10
+2021/06/24 20:04:38 set minter  AbdullahIsa 32 0x1E989cD65Fec9961EC26A3492B940045244e4893 demo
+2021/06/24 20:36:12 set minter  AbdullahIsa 32 0x1E989cD65Fec9961EC26A3492B940045244e4893 demo
+2021/06/24 23:20:25 database :  pq: database "minty-demo" does not exist
+2021/06/24 23:20:25 host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname='minty-demo' connect_timeout=10

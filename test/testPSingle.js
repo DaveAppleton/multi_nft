@@ -1,7 +1,7 @@
 //const { ZERO_ADDRESS, ROLE, Data } = require('./helpers/common');
 const { BigNumber } = require("@ethersproject/bignumber");
 const { expect } = require("chai");
-const { ethers } = require("hardhat");
+const { ethers, network } = require("hardhat");
 //const { time } = require('@openzeppelin/test-helpers');
 
 
@@ -40,11 +40,16 @@ describe("Token contract", function () {
     
 
     it("beforeAll",async function() {
+        if (network.name != "hardhat") {
+            console.log("PLEASE USE --network hardhat")
+            process.exit(0)
+        }
         console.log("start");
         [owner,addr1, addr2,addr3, ...addrs] = await ethers.getSigners();
         console.log("OWNER",owner.address)
         console.log("ADDR1",addr1.address)
 
+        console.log("deploy WETH")
         WETH = await ethers.getContractFactory("WETH9")
         weth = await WETH.deploy()
 
@@ -52,10 +57,17 @@ describe("Token contract", function () {
        
         alice = "0x31EFd75bc0b5fbafc6015Bd50590f4fDab6a3F22"
 
-        SALE = await ethers.getContractFactory("pMintysale")
+        //SALE = await ethers.getContractFactory("pMintysale")
+
+        console.log("Start...")
+
+         M721    = await ethers.getContractFactory("contracts/flat/pMintyUnique.sol:pMintyUnique")
+         SALE    = await ethers.getContractFactory("contracts/flat/psale.sol:pMintysale")
+    
+        console.log("deploy sale")
         sale = await SALE.deploy(weth.address,alice,900,100,1025)
 
-        M721 = await ethers.getContractFactory("pMintyUnique")
+        console.log("deploy M721")
         m721 = await M721.deploy(sale.address)
         console.log("ERC721 ",m721.address)
         console.log
@@ -152,12 +164,36 @@ describe("Token contract", function () {
     it("Check when No 3 does something naughty", async function() {
         await weth.connect(addr1).approve(sale.address,ethers.utils.parseEther("1.0"))
         expect(await m721.ownerOf(11)).to.equal(addr3.address);
-        await expect(sale.connect(addr3).offerResale(11,ethers.utils.parseEther("0.5"))).to.emit(sale,'ResaleOffer');
+        await expect(sale.connect(addr3).offerResale(11,ethers.utils.parseEther("1.025"))).to.emit(sale,'ResaleOffer');
         expect(await sale.available(11)).to.equal(true);
         await (expect(m721.connect(addr3).transferFrom(addr3.address,addr1.address,11))).to.emit(m721,'Transfer')
         expect(await m721.ownerOf(11)).to.equal(addr1.address);
         expect(await sale.available(11)).to.equal(false);  // sale should check balance
-        await expect( sale.connect(addr1).acceptOffer(11)).to.be.revertedWith("Item not owned by offerer");
+        await expect( sale.connect(addr1).acceptOffer(11)).to.be.reverted;
+    })
+
+    it("Transfer it back", async function() {
+        await (expect(m721.connect(addr1).transferFrom(addr1.address,addr3.address,11))).to.emit(m721,'Transfer')
+        expect(await m721.ownerOf(11)).to.equal(addr3.address);
+    })
+
+    it("number 2 buys it", async function() {
+        expect(await m721.artist(11)).to.equal(addr1.address)
+        let bal1b4 = await weth.balanceOf(addr1.address)
+        let bal2b4 = await weth.balanceOf(addr2.address)
+        let bal3b4 = await weth.balanceOf(addr3.address)
+        let balAb4 = await weth.balanceOf(alice)
+        await expect( sale.connect(addr2).acceptOffer(11)).to.emit(m721, 'Transfer')
+        let bal1x = await weth.balanceOf(addr1.address)
+        let bal2x = await weth.balanceOf(addr2.address)
+        let bal3x = await weth.balanceOf(addr3.address)
+        let balAx = await weth.balanceOf(alice)
+
+        console.log("addr1 ^",ethers.utils.formatEther(bal1x.sub(bal1b4)))
+        console.log("addr2 v",ethers.utils.formatEther(bal2b4.sub(bal2x)))
+        console.log("addr3 ^",ethers.utils.formatEther(bal3x.sub(bal3b4)))
+        console.log("alice ^",ethers.utils.formatEther(balAx.sub(balAb4)))
+
     })
 
     async function bid(signer, amount, residual) {

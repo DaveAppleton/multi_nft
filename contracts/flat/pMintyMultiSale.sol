@@ -46,7 +46,10 @@ interface IMintyMultiToken {
     function royaltyPerMille() external view returns (uint256);
 }
 
-
+abstract contract oldContract  {
+    mapping(IMintyMultiToken      => mapping(uint256 => Offer1155[]))   public items; 
+    function numberOfOffers(IMintyMultiToken token,uint tokenId) external view virtual returns (uint);
+}
 
 struct Offer1155 {
     address           creator;
@@ -73,6 +76,9 @@ contract pMintyMultiSale {
     uint                           public divisor;
     address                        public minty;
 
+    bool                           public paused;
+
+
     //mapping(IMintyMultiToken => mapping(uint => mapping(address => uint256))) public bids;
 
     event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
@@ -94,8 +100,15 @@ contract pMintyMultiSale {
 
     event Payment(address wallet,address creator, address _owner,uint256 amount);
 
+    event Paused(bool isPaused);
+
     modifier onlyOwner() {
         require(msg.sender == owner, "unauthorised");
+        _;
+    }
+
+    modifier notPaused() {
+        require(!paused,"operation not permitted when sale is paused");
         _;
     }
 
@@ -114,7 +127,7 @@ contract pMintyMultiSale {
         emit FeeUpdated(_divisor);
     }
 
-    function offerNew(IMintyMultiToken token, uint256 tokenId, string memory ipfsString, uint256 quantity, uint256 price, uint256 poolId) external {
+    function offerNew(IMintyMultiToken token, uint256 tokenId, string memory ipfsString, uint256 quantity, uint256 price, uint256 poolId) external notPaused {
         require(token.isApprovedForAll(msg.sender,address(this)),"You have not approved this contract to sell your tokens");
         require(!token.minted(tokenId),"Token ID already minted");
         require(token.owner() == msg.sender,"Unauthorised");
@@ -125,7 +138,7 @@ contract pMintyMultiSale {
         return;        
     }
 
-    function offerNewBatch(IMintyMultiToken token, uint256[] memory tokenIds, string[] memory ipfsStrings, uint256[] memory quantities, uint256[] memory prices, uint256 poolId) external {
+    function offerNewBatch(IMintyMultiToken token, uint256[] memory tokenIds, string[] memory ipfsStrings, uint256[] memory quantities, uint256[] memory prices, uint256 poolId) external notPaused {
         require(token.isApprovedForAll(msg.sender,address(this)),"You have not approved this contract to sell your tokens");
         require(token.owner() == msg.sender,"Unauthorised");
         for (uint j = 0; j < tokenIds.length; j++) {
@@ -141,7 +154,7 @@ contract pMintyMultiSale {
     //   SistineToken--->132-->[(initial Offer)]
 
  
-    function offerResale(IMintyMultiToken token, uint256 tokenId, uint256 quantity, uint256 price) external {
+    function offerResale(IMintyMultiToken token, uint256 tokenId, uint256 quantity, uint256 price) external notPaused {
         require((quantity <= token.balanceOf(msg.sender,tokenId) && (quantity > 0)),"You do not own enough of this token");
         require(token.isApprovedForAll(msg.sender,address(this)),"You have not approved this contract to sell your tokens");
         uint pos = items[token][tokenId].length;
@@ -166,7 +179,7 @@ contract pMintyMultiSale {
         emit SaleRetracted(token,tokenId, pos, msg.sender);
     }
 
-    function reSubmitOffer(IMintyMultiToken token, uint256 tokenId, uint256 pos, uint256 price) external {
+    function reSubmitOffer(IMintyMultiToken token, uint256 tokenId, uint256 pos, uint256 price) external notPaused {
         require(pos < items[token][tokenId].length,"invalid offer position");
         Offer1155 memory offer = items[token][tokenId][pos];
         require(msg.sender == offer.creator, "not your offer");
@@ -175,7 +188,7 @@ contract pMintyMultiSale {
         emit SaleRepriced(token,tokenId, pos, price, msg.sender);
     }
 
-    function acceptOffer(IMintyMultiToken token,uint tokenId, uint256 pos, uint256 quantity) external  {
+    function acceptOffer(IMintyMultiToken token,uint tokenId, uint256 pos, uint256 quantity) external notPaused {
         require(!entered,"No reentrancy please");
         if (pos == 0) {
             token.validateBuyer(msg.sender);
@@ -266,5 +279,22 @@ contract pMintyMultiSale {
         minty = newWallet;
     }
 
+    // don't over engineer this - just the offers
+    function transferItems(oldContract old, IMintyMultiToken token, uint256 tokenId) external onlyOwner {
+        require(1 == old.numberOfOffers(token,tokenId),"Only when there is a single offer");
+        // address           creator;
+        // uint256           quantity;
+        // string            itemHash;
+        // uint256           unitPrice;
+        Offer1155   memory   theOffer;
+        (theOffer.creator,theOffer.quantity,theOffer.itemHash,theOffer.unitPrice) = old.items(token,tokenId,0);
+
+        items[token][tokenId].push(theOffer);
+    }
+
+    function PauseSale(bool putOnHold) external onlyOwner {
+        paused = putOnHold;
+        emit Paused(putOnHold);
+    }
 
 }

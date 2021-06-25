@@ -3,6 +3,7 @@ pragma solidity ^0.7.5;
 
 import "@openzeppelin/contracts/token/ERC20/IERC20.sol";
 
+
     struct Offer {
         address  creator;
         string   itemHash;
@@ -16,7 +17,7 @@ interface IMintyToken {
 
     function safeTransferFrom(address from, address to, uint256 tokenId, bytes calldata data) external;
 
-    function creator(uint256 tokenId) external view returns (address);
+    function artist(uint256 tokenId) external view returns (address);
 
     function tokenExists(uint256 tokenId) external view returns (bool);
 
@@ -168,13 +169,15 @@ contract pMintysale {
         }
         offer.available = false;
         items[tokenId] = offer;
-        emit Payment(minty,offer.creator,_owner);
-        splitFee(offer.creator, _owner, value);
+        address creator = token.artist(tokenId); 
+        emit Payment(minty,creator,_owner);
+        splitFee(creator, _owner, value);
         entered = false;
         emit OfferAccepted(msg.sender, tokenId, value);
     }
 
     function splitFee(address  creator, address  _owner, uint value) internal {
+        
         uint creatorPart = value * creatorPerMille / divisor;
         uint ownerPart   = value * ownerPerMille / divisor;
         uint mintyPart   = value - (creatorPart + ownerPart);

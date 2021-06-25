@@ -1,0 +1,9 @@
+{
+    "log" : "util-live.log",
+    "DB_HOST" : "host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname=minty connect_timeout=10",
+    "P_SALE" : "0x6F6C3f7cB3050751797c720Fa805e4343f9B0788",
+    "HOST" : "https://polygon-mainnet.infura.io/v3/a1a92273c03b4c9b83c5b2470058464f",
+    "LOCKING" : "0x756fe78b65A400F07b6fcA2F92E0482f6DcBF25B",
+    "P_M_SALE" : "0xad1B4F45293390A118a61500F655d59934B62998"
+
+}

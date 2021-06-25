@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Ethercards : Devcon 6 - the Movie</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>    
+        <script type="module">
+            import { ethers } from "/js/ethers-5.1.esm.min.js";
+            const provider = new ethers.providers.Web3Provider(window.ethereum)
+            const signer = provider.getSigner()
+            //const accounts = await ethereum.request({ method: 'eth_accounts' });
+
+            ethereum.on('chainChanged', (chainId) => {
+                if (chainId != 80001){
+                    alert("Please switch to Mumbai Testnet")
+                }
+                /* handle the chainId */
+            });
+            if (ethereum.isConnected()) 
+                console.log("connected");
+        </script>
+        <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
+        <script src="js/abi.js" type="application/javascript"></script>
+        <script language="javascript">
+           function init() {
+                const ethereumButton = document.getElementById('connect');
+
+                const wethABI = [
+                        // Some details about the token
+                        "function name() view returns (string)",
+                        "function symbol() view returns (string)",
+
+                        // Get the account balance
+                        "function balanceOf(address) view returns (uint)",
+
+                        // Send some of your tokens to someone else
+                        "function transfer(address to, uint amount)",
+
+                        "function approve(address spender, uint256 amount) public returns (bool)",
+
+                        // An event triggered whenever anyone transfers to someone else
+                        "event Transfer(address indexed from, address indexed to, uint amount)",
+
+                        "function allowance(address owner, address spender) public view returns (uint256)"
+                    ];
+
+                
+                const Alice  = "0x31EFd75bc0b5fbafc6015Bd50590f4fDab6a3F22"
+                const Sale = "0x82999Ec1Ea6D4c3cB88f69eFE43041f280DFc1c3"
+                const daiAddress = '0xA6FA4fB5f76172d178d61B04b0ecd319C5d1C0aa'
+                
+
+                ethereumButton.addEventListener('click', () => {
+                    //Will Start the metamask extension
+                    ethereum.request({ method: 'eth_requestAccounts' })
+                    .then((result)=>{
+                        console.log(ethereum.selectedAddress)
+                    })
+                    .catch((error) => {
+                        if (error.code == 4001) {
+                            console.log("rejected")
+                        } else
+                            console.log(error)
+                    });
+                    const provider = new ethers.providers.Web3Provider(window.ethereum)
+                    saleContract = new ethers.Contract(Sale,saleABI,provider);
+                    now = Date.now() / 1000
+                    saleContract.start()
+                    .then((result)=>{
+                        console.log("start",result.toNumber())
+                        if (result.toNumber() < now) {
+                            wait = now - result.toNumber()
+                            hour = wait / 60 / 60
+                            min = wait / 60 % 60
+                            console.log("not started :",hour,":",min)
+                        }
+                    })
+                    console.log("now",now)
+                    saleContract.end()
+                    .then((result)=>{
+                        console.log("end",result.toNumber())
+                        if (result.toNumber() > now) {
+                            wait = now - result.toNumber()
+                            hour = wait / 60 / 60
+                            min = wait / 60 % 60
+                            console.log("sale finished ",hour,":",min)
+                        }
+
+                    })
+
+                    saleContract.bidEntry()
+                    .then((result)=>{
+                        br = document.getElementById("bids_received")
+                        br.value = result
+                    })
+
+                    saleContract.reserve()
+                    .then((result)=>{
+                        br = document.getElementById("min_bid")
+                        br.value = ethers.utils.formatEther(result)+" ETH"
+                    })
+
+                    saleContract.increment()
+                    .then((result)=>{
+                        br = document.getElementById("min_inc")
+                        br.value = ethers.utils.formatEther(result)+" ETH"
+                    })
+
+                    saleContract.entries(ethereum.selectedAddress)
+                    .then((result)=>{
+                        br = document.getElementById("current_bid")
+                        br.value = ethers.utils.formatEther(result.amount)+" ETH"
+                        if (result.amount > 0) {
+                            label_inc = document.getElementById("spend_label")
+                            label_inc.innerHTML = "increment (ETH)"
+                        }
+                    })
+                    const daiContract = new ethers.Contract(daiAddress, daiAbi, provider);
+                    daiContract.allowance(ethereum.selectedAddress,Sale)
+                    .then((result)=>{
+                        console.log(result)
+                        br = document.getElementById("dai_status")
+                        br.value = ethers.utils.formatEther(result)+" ETH"
+
+                        if (result > 0) {
+                            console.log("enabling")
+                            document.getElementById("spend").readOnly = false;
+                            bidButton = document.getElementById("bid").disabled = false;
+
+                        }
+                    })
+
+                    daiContract.balanceOf(ethereum.selectedAddress)
+                    .then((result)=>{
+                        if (result == 0) {
+                            document.getElementById("bridge").disabled = false;
+                            document.getElementById("bridge").text = " GET WETH "
+                         }
+                    })
+
+                    document.getElementById("app_dai").disabled = false;
+                    document.getElementById("weth_allow").readOnly = false;
+                });
+                //'<a href="https://wallet.matic.today/bridge" target="_blank">get WETH at the bridge</a>'
+                const doit = document.getElementById('app_dai');
+
+                doit.addEventListener('click', () => {
+                    const provider = new ethers.providers.Web3Provider(window.ethereum)
+                    const signer = provider.getSigner()
+ 
+                    const daiContract = new ethers.Contract(daiAddress, daiAbi, provider);
+                    
+                    let amount = document.getElementById("weth_allow").value
+                    
+                    let oneThousandDai = ethers.utils.parseEther(amount);
+                    // The Contract object
+                    
+                    //const saleContract = new ethers.Contract(Sale,saleABI,provider);
+
+                    daiContract.connect(signer).approve(Sale,oneThousandDai)
+                    .then((result)=>{
+                        console.log(
+                            result
+                        );
+                        showHash(result)
+                    });
+
+                 });
+
+                 const bid = document.getElementById('bid');
+                 //const buy = document.querySelector('.buy');
+                 
+
+                 bid.addEventListener('click', () => {
+                    const provider = new ethers.providers.Web3Provider(window.ethereum)
+                    saleContract = new ethers.Contract(Sale,saleABI,provider);
+                    msg1 = document.getElementById("ex_1")
+                    msg1.innerHTML = "";
+                    msg2 = document.getElementById("ex_2")
+                    msg2.innerHTML = "";
+                    msg3 = document.getElementById("ex_3")
+                    msg3.innerHTML = "";
+                    msg4 = document.getElementById("ex_4")
+                    msg4.innerHTML = "";
+                    
+                    const signer = provider.getSigner()
+
+
+                    bidAmount = document.getElementById('spend').value
+
+                    amount = ethers.utils.parseEther(bidAmount)
+
+                    saleContract.connect(signer).bid(amount)
+                    .then((result)=>{
+                        console.log(
+                            result
+                        );
+                        showHash(result)
+                    }) 
+                    .catch((error) => {
+                        if (error.code == 4001) {
+                            console.log("rejected")
+                            msg1.innerHTML = "rejected"
+                        } else {
+                            console.log(error.data.message);
+                            
+                            msg1.innerHTML = error.data.message;
+                        }
+                    });
+
+                 })
+                
+               
+                 
+            }
+
+            function showHash(result) {
+                msg1 = document.getElementById("ex_1")
+                msg2 = document.getElementById("ex_2")
+                msg3 = document.getElementById("ex_3")
+                msg4 = document.getElementById("ex_4")
+ 
+                msg1.innerHTML = '<a href="https://polygon-explorer-mumbai.chainstacklabs.com/tx/'+result.hash+'" target=_blank> explorer 1 : '+result.hash+'</a>'; 
+                msg2.innerHTML = '<a href="https://explorer-mumbai.maticvigil.com/tx/'+result.hash+'" target=_blank> explorer 2 : '+result.hash+'</a>'; 
+                msg3.innerHTML = '<a href="https://mumbai-explorer.matic.today/tx/'+result.hash+'" target=_blank> explorer 3 : '+result.hash+'</a>'; 
+                msg4.innerHTML = '<a href="https://backup-mumbai-explorer.matic.today/tx/'+result.hash+'" target=_blank> explorer 4 : '+result.hash+'</a>'; 
+            }
+            
+
+        </script>
+    </head>
+    <body onload="init()">
+
+        <div class="container">
+            <h2><input type="button" class="btn btn-success" id="connect" value="CONNECT WALLET"> Devcon 6 Auction/Raffle by Ether Cards  </h2>
+            <div><a href="https://docs.matic.network/docs/develop/metamask/config-matic"  target=_blank>Setting up Metamask to work with Polygon (see Mumbai)</a></div>
+            <div><a href="https://docs.matic.network/docs/develop/wallets/matic-web-wallet/deposit-eth-dai-on-matic" target=_blank>getting WETH</a></div>
+            <div class="row">
+                <!-- https://wallet.matic.today/bridge -->
+                <div class="col-sm-3">
+                    <div class="well well-lg">
+                        <div class="form-group">
+                            <label for="bids_received">Bids Received :</label>
+                            <input type="text" class="form-control" id="bids_received" name="bids_received" readonly value="0">
+                            <label for="min_bid">Minimum Bid :</label>
+                            <input type="text" class="form-control" id="min_bid" name="min_bid" readonly value="0">
+                            <label for="min_inc">Minimum Increment :</label>
+                            <input type="text" class="form-control" id="min_inc" name="min_inc" readonly value="0">
+                        </div>
+                    </div>
+                </div>
+           
+                <div class="col-sm-3">
+                    <div class="well well-lg">
+                        <div class="form-group">
+                            <label for="dai_status" class="text-info">ALLOWANCE</label>
+                            <input type="text" class="form-control" id="dai_status" name="dai_status" readonly value="0">
+                            <label for="weth_allow" class="text-info">Amount to approve</label>
+                            <input type="text" class="form-control" id="weth_allow" name="weth_allow" readonly value="100.0">
+                            <p>&nbsp;</p>
+                            <input type="button" class="btn btn-success" id="app_dai" disabled value="APPROVE WETH">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="well well-lg">
+                        <div class="form-group">
+                            <h4>WETH</h4>
+                            <label for="bal_status" class="text-info">YOUR BALANCE</label>
+                            <input type="text" class="form-control" id="bal_status" name="bal_status" readonly value="0">
+                            <p>&nbsp;</p>
+                            <input type="button" class="btn btn-success" id="bridge" disabled value="GET WETH" onclick='javascript: window.open("https://wallet.matic.today/bridge")'>
+                            <p>&nbsp;</p>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="well well-lg">
+                        <div class="form-group">
+                            <label for="current_bid" class="text-info">Your Current Bid (ETH)</label>
+                            <input type="text" class="form-control" id="current_bid" name="current_bid" readonly value="0">
+                            <label for="user_comment" class="text-info" id="spend_label">Your Bid (ETH)</label>
+                            <input type="text" class="form-control" id="spend" name="spend" readonly value="">
+                            <p>&nbsp;</p>
+                            <input type="button" class="btn btn-success" id="bid" disabled value="SEND BID">
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div id="ex_1"></div>
+                    <div id="ex_2"></div>
+                    <div id="ex_3"></div>
+                    <div id="ex_4"></div>
+                </div>
+            </div>
+        </div>
+<!--
+        <h1>hello</h1>
+        <p><button id="connect_">CONNECT METAMASK</button></p>
+        <p><button class="doit">ENABLE SALE CONTRACT TO TAKE YOUR WETH</button></p>
+        <p><input class="spend" type=text placeholder="enter your bid e.g. 57"></p>
+        <p><button class="bid">PLACE YOUR BID</button></p>
+        <p><div id="msg"></div></p> -->
+    </body>
+</html>

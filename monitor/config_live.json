@@ -1,0 +1,16 @@
+{
+    "log" : "util-live.log",
+    "DB_HOST" : "host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname=minty connect_timeout=10",
+    "HOST" : "https://polygon-mainnet.infura.io/v3/a1a92273c03b4c9b83c5b2470058464f",
+    "WSSHOST" : "wss://mainnet.infura.io/ws/v3/4a39d44a7d7d4d8ea78a47b3d9e82ac3",
+
+    "MULTITOKEN" : "0x0C110D076E7f0CaEF33F1670945f4D8cA7D86793",
+    "MULTISALE"  : "0xad1B4F45293390A118a61500F655d59934B62998",
+    "SALE"       : "0x6F6C3f7cB3050751797c720Fa805e4343f9B0788",
+    "TOKEN"      : "0x53d7D3D2d29D4B7C67E0434424A9998574C6619B",
+    "LOCKING"    : "0x756fe78b65A400F07b6fcA2F92E0482f6DcBF25B",
+
+
+    "dummy" : "stuff"
+
+}

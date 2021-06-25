@@ -19,6 +19,7 @@ contract pMintyMultiToken is ERC1155 {
     string                 public contractURI;
     locking []             public locs;
     string                 public lockError;
+    address                public deployer = msg.sender;
 
     uint256                         public royaltyPerMille;
     uint256                         public numPools;
@@ -60,7 +61,8 @@ contract pMintyMultiToken is ERC1155 {
         PoolEntry [] memory _initialEntries,
         PoolEntry [] memory _resaleEntries,
         string       memory _poolName
-    ) public onlyAuth {
+    ) public  {
+        require ( msg.sender == deployer ||  auth[msg.sender] || (msg.sender == owner) , "Unauthorised");
         _addPools(_initialEntries, _resaleEntries,_poolName);
     }
 

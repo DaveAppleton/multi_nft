@@ -13,7 +13,7 @@ require("@nomiclabs/hardhat-waffle");
      hardhat: {
      },
      matic: {
-      url: "https://rpc-mainnet.maticvigil.com",
+      url: "https://polygon-mainnet.infura.io/v3/a1a92273c03b4c9b83c5b2470058464f",
       accounts: [ monkey ]
     },
     mumbai: {

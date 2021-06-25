@@ -11,7 +11,7 @@
           "type": "uint256"
         }
       ],
-      "name": "creator",
+      "name": "artist",
       "outputs": [
         {
           "internalType": "address",

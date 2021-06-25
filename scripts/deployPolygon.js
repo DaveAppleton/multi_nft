@@ -17,8 +17,8 @@ async function main() {
 async function deployStuff() {
     const [deployer] = await ethers.getSigners();
     const MINTY   = await ethers.getContractFactory("pMinty")
-    const M721    = await ethers.getContractFactory("pMintyUnique")
-    const SALE    = await ethers.getContractFactory("pMintysale")
+    const M721    = await ethers.getContractFactory("contracts/flat/pMintyUnique.sol:pMintyUnique")
+    const SALE    = await ethers.getContractFactory("contracts/flat/psale.sol:pMintysale")
     const LOCKING = await ethers.getContractFactory("contracts/locking/locking.sol:locking")
     const SALE2   = await ethers.getContractFactory("contracts/flat/pMintyMultiSale.sol:pMintyMultiSale")
     //const M1155   = await ethers.getContractFactory("mintyMultiTokens")
@@ -26,7 +26,7 @@ async function deployStuff() {
 
     let wallet = "0x31EFd75bc0b5fbafc6015Bd50590f4fDab6a3F22"
 
-    let s2 = true
+    let s2 = false
     if (s2) {
         let weth = "0xf738b83Fa52A7Ab570918Afe61b78b8E2DC6F4EF"
         let sale2 = await SALE2.deploy(wallet,weth,1025)

@@ -4,6 +4,7 @@
 
 // SPDX-License-Identifier: MIT
 
+
 pragma solidity >=0.6.0 <0.8.0;
 
 /**
@@ -85,7 +86,6 @@ interface IERC20 {
 
 pragma solidity ^0.7.5;
 
-
     struct Offer {
         address  creator;
         string   itemHash;
@@ -99,7 +99,7 @@ interface IMintyToken {
 
     function safeTransferFrom(address from, address to, uint256 tokenId, bytes calldata data) external;
 
-    function creator(uint256 tokenId) external view returns (address);
+    function artist(uint256 tokenId) external view returns (address);
 
     function tokenExists(uint256 tokenId) external view returns (bool);
 
@@ -126,11 +126,7 @@ contract pMintysale {
     uint                        public creatorPerMille;
     uint                        public divisor;
     address                     public minty;
-
     mapping(uint => mapping(address => uint256)) public bids;
-
-    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
-    event WalletTransferred(address indexed previousWallet, address indexed newWallet);
 
     event SharesUpdated(uint256 ownerShare, uint256 creatorShare, uint256 divisor);
     event NewOffer(uint256 tokenId, address owner, uint256 price, string hash);
@@ -252,12 +248,14 @@ contract pMintysale {
         offer.available = false;
         items[tokenId] = offer;
         emit Payment(minty,offer.creator,_owner);
-        splitFee(offer.creator, _owner, value);
+        address creator = token.artist(tokenId);
+        splitFee(creator, _owner, value);
         entered = false;
         emit OfferAccepted(msg.sender, tokenId, value);
     }
 
     function splitFee(address  creator, address  _owner, uint value) internal {
+       
         uint creatorPart = value * creatorPerMille / divisor;
         uint ownerPart   = value * ownerPerMille / divisor;
         uint mintyPart   = value - (creatorPart + ownerPart);
@@ -336,17 +334,4 @@ contract pMintysale {
         if (token.isApprovedForAll(offer.creator, address(this))) return true;
         return (token.getApproved(tokenId) == address(this));
     }
-
-    function transferOwnership(address newOwner) public onlyOwner {
-        require(newOwner != address(0),"Do not set to address zero");
-        emit OwnershipTransferred(owner, newOwner);
-        owner = newOwner;
-    }
-
-    function changeWallet(address newWallet) public onlyOwner {
-        require(newWallet != address(0),"Do not set to address zero");
-        emit WalletTransferred(minty, newWallet);
-        minty = newWallet;
-    }
-
 }

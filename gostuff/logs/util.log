@@ -263,3 +263,30 @@
 2021/06/17 07:20:03 failed to estimate gas needed: insufficient funds for transfer
 2021/06/17 12:50:50 failed to estimate gas needed: insufficient funds for transfer
 2021/06/17 12:54:57 failed to estimate gas needed: insufficient funds for transfer
+2021/06/18 11:35:39 Sale deployed at  0x9Fc01f15B04781D334794AdcF5d722c042ab43c2 in tx 0x0fa71d895cae84b993795c8151e2a828e0e0f2d44f2dad9b20aad5a13a7321cf
+2021/06/18 12:56:30 Sale deployed at  0xc7c22a3dEb4E97705272E95E94E037852a1B391a in tx 0x3cd387b3947c749d90ef649a49ae29c24a6d774aba7fd695c0b3431019e17bb5
+2021/06/18 13:24:59 Sale deployed at  0x4AFFAa2225EC43b0B1B44f8f8F4D9036DCba0C7F in tx 0xca68a7ec74ee642db9b95b42466609262f4f02d8efb2af751967dd06843222ea
+2021/06/18 13:34:40 Sale deployed at  0x312D9789A3Cdb47674366d733A53AEa09AE856F1 in tx 0xd847cb76782fb2189227b7e4be115e4fe7c5418e7d08f1ffd10796de208ff1c9
+2021/06/18 13:34:46 deploy token 0x1D7A730849645BC333e5e08DBf08a53797c22997 0x8ed17621dc94c7512da3152b1572a4917282475b870da77ce15ac8f0e5408ac3
+2021/06/18 13:35:17 Offer Newfailed to estimate gas needed: execution reverted: You have not approved this contract to sell your tokens
+2021/06/18 14:07:32 Offer Newfailed to estimate gas needed: execution reverted: You have not approved this contract to sell your tokens
+2021/06/18 14:46:52 Offer Newfailed to estimate gas needed: execution reverted
+2021/06/18 14:51:04 Offer Newfailed to estimate gas needed: execution reverted
+2021/06/18 15:00:28 deploy token 0x91C01Ca2b233aB80F9D55245af65544B1f1B72B4 0x7139550582ecec79f57b35a20234dfbf004416f2d60711b8840662ed0affbd27
+2021/06/18 15:01:06 Offer Newfailed to estimate gas needed: execution reverted
+2021/06/18 15:02:08 deploy token 0xc2778fD9d61646E4d5Da696Bf8d85C5d6Cd37D86 0x2e6db23e9d734f2cfeae8bf473e5a3f248ab94cec46d9be23a762928f4d12c9c
+2021/06/18 15:02:44 Offer Newfailed to estimate gas needed: execution reverted: unauthorised
+2021/06/18 15:10:41 deploy token 0xcD58B5A9d3CE63a9cd7940cBE5Bc7F3e6c566EfE 0xbcc018e70ae98d01714ae208076ac694e4de68537fd0e861e0258f55e453f534
+2021/06/18 15:11:29 Accept offerfailed to estimate gas needed: execution reverted: You need to be a MINTY patron
+2021/06/21 05:49:01 xfer msigfailed to estimate gas needed: execution reverted
+2021/06/22 04:02:17 deploy token 0x74e6Dfe65f9068D5bf3c4fEe18214C1f4d38D95D 0xfb1d74ecd564b2090b505fe92fc647ef1628e7d0816ad84262b83324e31e8694
+2021/06/22 04:02:52 Accept offerfailed to estimate gas needed: invalid opcode: opcode 0xfe not defined
+2021/06/22 04:08:01 deploy token 0x1B126Ef8e53d3A2a038120728df64D7a1728767C 0xe3468d218b787a1326fde69bf21340db21bf313b65edc5ee489f8cd59db29f9d
+2021/06/22 04:47:25 deploy token 0x6F6e9Dca30FD363e8188c6935B62076dAa39DEF6 0x3f0728fe3122d54544d61d087d26a4bc8fa04e6384b058569f7e1a4ce8037729
+2021/06/22 04:48:21 Sale deployed at  0xa18FDd759cb5337Bd0990a37e6084C41Bf9CC868 in tx 0x831e0281db0d63e7b39911866284781572afb505472ea14a9935fdba65f6a303
+2021/06/22 04:48:24 deploy token 0x619856a61A7C21AE6Bc2a9F02538BB3d6039D9dd 0x49d5fde6389a592d7dc01c6c957397db8623b615e685051449a929c86666b024
+2021/06/22 04:49:16 Accept offerfailed to estimate gas needed: execution reverted: ERC20: transfer amount exceeds allowance
+2021/06/22 04:49:51 Deploy MultiSalefailed to estimate gas needed: contract creation code storage out of gas
+2021/06/22 04:50:57 Sale deployed at  0xc7B516ca68f9479fE420D6409ADccC28Ec50F2D2 in tx 0xddc89e42bacf0c1b7ed4b66f014217a4eeca41dcaac9de872d85226d39b26bd4
+2021/06/22 04:51:11 deploy token 0xFe6217312545538dcFF8Dc41e41450D39D0f34e9 0x38e402457deac7e4f070c010a58b6dfd9d1af14bccdc3adbdffcb9d49194e4af
+2021/06/22 05:09:20 WaitMinedcontext deadline exceeded

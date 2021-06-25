@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>Ethercards : Devcon 6 - the Movie</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+
+        <div class="container">
+            <h2><input type="button" class="btn btn-success" id="connect" value="CONNECT WALLET"> POOL TABLES  </h2>
+            <div><a href="https://docs.matic.network/docs/develop/metamask/config-matic"  target=_blank> </a></div>
+            <div><a href="https://docs.matic.network/docs/develop/wallets/matic-web-wallet/deposit-eth-dai-on-matic" target=_blank> </a></div>
+            <div class="row">
+                <!-- https://wallet.matic.today/bridge -->
+                <div class="col-sm-2">
+                    <div class="well well-lg">
+                        <div class="form-group">
+                            <h3>POOLS</h3>
+                            {{range .Pools}}
+                            <label for="wallet_{{.Num}}">Pool {{.Num}} :</label>
+                            <input type="text" class="form-control" id="wallet_{{.Num}}" name="wallet_{{.Num}}" value="{{.Name}}">
+                            {{end}}
+                        </div>
+                    </div>
+                </div>
+           
+                <div class="col-sm-5">
+                    <div class="well well-lg">
+                        <div class="form-group">
+                            <h3>Wallet Addresses</h3>
+                            {{range .Wallets}}
+                            <label for="wallet_a_{{.Num}}">Wallet {{.Num}} :</label>
+                            <input type="text" class="form-control" id="wallet_a_{{.Num}}" name="wallet_a_{{.Num}}">
+                            {{end}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="row"> 
+                {{range .Pools}}
+                <div class="col-sm-2">
+                    <div class="well well-lg">
+                        <div class="form-group">
+                            <h3 id="W1">{{.Name}}</h3>
+                            <label for="pool_{{.Num}}_1">Percentage 1 :</label>
+                            <input type="text" class="form-control" id="pool_{{.Num}}_1" name="pool_{{.Num}}_1">
+                            <label for="pool_{{.Num}}_2">Percentage 2 :</label>
+                            <input type="text" class="form-control" id="pool_{{.Num}}_2" name="pool_{{.Num}}_2">
+                            <label for="pool_{{.Num}}_3">Percentage 3 :</label>
+                            <input type="text" class="form-control" id="pool_{{.Num}}_3" name="pool_{{.Num}}_3">
+                            <label for="pool_{{.Num}}_4">Percentage 4 :</label>
+                            <input type="text" class="form-control" id="pool_{{.Num}}_4" name="pool_{{.Num}}_4">
+                            <label for="pool_{{.Num}}_5">Percentage 5 :</label>
+                            <input type="text" class="form-control" id="pool_{{.Num}}_5" name="pool_{{.Num}}_5">
+                            <label for="pool_{{.Num}}_6">Percentage 6 :</label>
+                            <input type="text" class="form-control" id="pool_{{.Num}}_6" name="pool_{{.Num}}_6">
+                        </div>
+                    </div>
+                </div>
+                {{end}}
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div id="ex_1"></div>
+                    <div id="ex_2"></div>
+                    <div id="ex_3"></div>
+                    <div id="ex_4"></div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
