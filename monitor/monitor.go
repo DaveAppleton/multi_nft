@@ -4,15 +4,10 @@ import (
 	"flag"
 	"fmt"
 	"log"
-	"math/big"
+	"os"
 	"sync"
 
-	"art.minty.monitor/pMintyMultiSale"
-	"art.minty.monitor/pMintyMultiToken"
-	"art.minty.monitor/pMintyUnique"
-	"art.minty.monitor/pSale"
-	"github.com/ethereum/go-ethereum/accounts/abi/bind"
-	"github.com/ethereum/go-ethereum/common"
+	"art.minty.monitor/etherdb"
 	"github.com/ethereum/go-ethereum/ethclient"
 	"github.com/spf13/viper"
 	"gopkg.in/natefinch/lumberjack.v2"
@@ -21,6 +16,7 @@ import (
 var (
 	client   *ethclient.Client
 	database *string = flag.String("database", "", "which DB to load")
+	newMulti         = flag.String("new_multi", "", "new multi token")
 )
 
 func initViper() {
@@ -34,15 +30,16 @@ func initViper() {
 
 }
 
-func chkErrX(msg string, err error, term bool) {
+func chkErrX(msg string, err error, term bool) bool {
 	if err == nil {
-		return
+		return false
 	}
 	fmt.Println(msg, err)
 	if term {
 		log.Fatal(msg, err)
 	}
 	log.Println(msg, err)
+	return true
 }
 
 func chkErr(msg string, err error) {
@@ -65,39 +62,25 @@ func main() {
 	fmt.Println("Dialling ", host)
 	client, err = ethclient.Dial(host)
 	chkErr("Get Client", err)
+	etherdb.InitDB(viper.GetString("TOKEN_HOST"))
 
-	multiSaleAddress := common.HexToAddress(viper.GetString("MULTISALE"))
-	multiTokenAddress := common.HexToAddress(viper.GetString("MULTITOKEN"))
-	saleAddress := common.HexToAddress(viper.GetString("SALE"))
-	tokenAddress := common.HexToAddress(viper.GetString("TOKEN"))
-
-	multisale, err := pMintyMultiSale.NewPMintyMultiSale(multiSaleAddress, client)
-	multitoken, err := pMintyMultiToken.NewPMintyMultiToken(multiTokenAddress, client)
-	sale, err := pSale.NewPMintysale(saleAddress, client)
-	token, err := pMintyUnique.NewPMintyUnique(tokenAddress, client)
-
-	emptyAddresses := []common.Address{}
-	emptyIds := []*big.Int{}
-
-	tokenOpts := bind.FilterOpts{Start: 0}
-	token.FilterTransfer(&tokenOpts, emptyAddresses, emptyAddresses, emptyIds)
-
-	multitokenOpts := bind.FilterOpts{Start: 15999837}
-	multitoken.FilterTransferSingle(&multitokenOpts, emptyAddresses, emptyAddresses, emptyAddresses)
-
-	mutisaleOpts := bind.FilterOpts{Start: 16042696}
-	multisale.FilterNewOffer(&mutisaleOpts)
-
-	saleOpts := bind.FilterOpts{Start: 0}
-	sale.FilterNewOffer(&saleOpts)
-	sale.FilterOfferAccepted(&saleOpts)
-	sale.FilterResaleOffer(&saleOpts)
-	sale.FilterPayment(&saleOpts)
+	if len(*newMulti) > 0 {
+		fmt.Println("create new Multi Table : ", *newMulti)
+		err := etherdb.CreateMultiTokenTable()
+		if err != nil {
+			fmt.Println("Status : ", err)
+		}
+		os.Exit(0)
+	}
 
 	wg.Add(1)
-	go uniqueTransfers(&token.PMintyUniqueFilterer, &wg)
+	go uniqueTransfers(client, &wg)
 	wg.Add(1)
-	go multiTransfers(&multitoken.PMintyMultiTokenFilterer, multiTokenAddress, &wg)
+	go uniqueSales(client, &wg)
+	wg.Add(1)
+	go multiTransfers(client, &wg)
+	wg.Add(1)
+	go multiSales(client, &wg)
 
 	wg.Wait()
 }

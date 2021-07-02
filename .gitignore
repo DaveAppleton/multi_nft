@@ -29,15 +29,7 @@ artifacts/contracts/mintyMultiToken/mintyMultiToken.sol/mintyMultiToken.dbg.json
 artifacts/contracts/mintyMultiToken/pMintyMultiToken.sol/pMintyMultiToken.dbg.json
 artifacts/contracts/mintyMultiToken/pMintyMultiToken.sol/pMintyMultiToken.json
 artifacts/contracts/sale/pSale.sol/IMintyToken.dbg.json
-artifacts/contracts/sale/pSale.sol/IMintyToken.json
 artifacts/contracts/sale/pSale.sol/pMintysale.dbg.json
-artifacts/contracts/sale/pSale.sol/pMintysale.json
-artifacts/contracts/sale2M/pMintyMultiSale.sol/IERC20.dbg.json
-artifacts/contracts/sale2M/pMintyMultiSale.sol/IMintyMultiToken.dbg.json
-artifacts/contracts/sale2M/pMintyMultiSale.sol/oldContract.dbg.json
-artifacts/contracts/sale2M/pMintyMultiSale.sol/oldContract.json
-artifacts/contracts/sale2M/pMintyMultiSale.sol/pMintyMultiSale.dbg.json
-artifacts/contracts/sale2M/pMintyMultiSale.sol/pMintyMultiSale.json
 artifacts/contracts/weth9/dweth.sol/dummyWeth.dbg.json
 artifacts/contracts/weth9/dweth.sol/ERC677.dbg.json
 artifacts/contracts/weth9/dweth.sol/ERC677Receiver.dbg.json

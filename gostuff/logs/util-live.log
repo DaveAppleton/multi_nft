@@ -5,3 +5,65 @@
 2021/06/23 21:14:30 viper config changed config_live.json
 2021/06/23 21:15:25 set minter  REMO 6 0xd9f7FA14dA177ff68bAD47ab30fE933Db75c3e43 live
 2021/06/24 23:21:22 set minter  Akkrin 37 0x0906a2995c515C502Ff2Ce99e661C2574E0F5F30 live
+2021/06/25 14:46:38 set minter  polygonyogurt 44 0x4cCDc99522AE2F2DAa6C451ADd99539D199d1D27 live
+2021/06/25 14:47:35 set minter  meratakeru 38 0x7bEED30332656CA4220CB2ce8E4508fb18013E8d live
+2021/06/25 14:49:35 database :  read tcp [::1]:56022->[::1]:5432: i/o timeout
+2021/06/25 14:49:35 host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname=minty connect_timeout=10
+2021/06/25 14:50:37 set minter  ejthek 34 0x5C2b25C2FD3bd98F6ed0628238077f84916ea74A live
+2021/06/25 14:50:50 set minter  limn 33 0x4BD255eDb981d90f7ca4A0C80b910A0ee184e08C live
+2021/06/25 14:51:05 set minter  CesarYague 31 0xF756bea54192EEff7Ac69BFbaA063De113381881 live
+2021/06/25 14:51:26 set minter  lastprince 28 0x1f9d2882C21Ab9F0336c39681aD8C36c70ad5496 live
+2021/06/25 14:54:36 set minter  grebenshyo 103 0x7a35a82eC21812559A016AaE24Ced68D0193100B live
+2021/06/25 14:54:49 set minter  StefanoBagnoli 97 0xfb45E0F8E465A8520FFB6856D1c1b365D06d10F6 live
+2021/06/25 14:55:26 set minter  LimboMask 96 0x7AAa95EE9fb4eC3bb8B9f95BDCB3eaf50342C40E live
+2021/06/25 14:55:53 set minter  Chigg 93 0x81fffd53c28bf7d51Fc9B346382457c7380C3154 live
+2021/06/25 14:56:21 set minter  GiacomoFumo 77 0x8AeeD6e54797E8646Fdf659ECD9A8501E359Ca75 live
+2021/06/25 14:57:03 set minter  SpeakCryptic 56 0xD8f4061Fc5BE9EdD407f5c03361d2324b5bf5503 live
+2021/06/28 12:59:32 database :  dial tcp [::1]:5432: connect: connection refused
+2021/06/28 12:59:32 host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname=minty connect_timeout=10
+2021/06/28 12:59:51 database :  dial tcp [::1]:5432: connect: connection refused
+2021/06/28 12:59:51 host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname=minty connect_timeout=10
+2021/06/28 12:59:53 database :  dial tcp [::1]:5432: connect: connection refused
+2021/06/28 12:59:53 host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname=minty connect_timeout=10
+2021/06/28 12:59:54 database :  dial tcp [::1]:5432: connect: connection refused
+2021/06/28 12:59:54 host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname=minty connect_timeout=10
+2021/06/28 12:59:54 database :  dial tcp [::1]:5432: connect: connection refused
+2021/06/28 12:59:54 host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname=minty connect_timeout=10
+2021/06/28 12:59:55 database :  dial tcp [::1]:5432: connect: connection refused
+2021/06/28 12:59:55 host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname=minty connect_timeout=10
+2021/06/28 12:59:55 database :  dial tcp [::1]:5432: connect: connection refused
+2021/06/28 12:59:55 host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname=minty connect_timeout=10
+2021/06/28 12:59:55 database :  dial tcp [::1]:5432: connect: connection refused
+2021/06/28 12:59:55 host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname=minty connect_timeout=10
+2021/06/28 12:59:55 database :  dial tcp [::1]:5432: connect: connection refused
+2021/06/28 12:59:55 host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname=minty connect_timeout=10
+2021/06/28 13:11:56 set minter  Aditya 35 0xe8B631882E7a9EdDbc7aDd510f0682B5289b6dcd live
+2021/06/28 13:12:29 set minter  ZAM 65 0x390EE2f50ce16972E3FFC8ef2a0B47E500F5cA46 live
+2021/06/28 13:12:45 set minter  Magusz 89 0xF91Ba1faf962B672A7Ae12815aFD2F432BC74186 live
+2021/06/28 13:13:29 set minter  KiriakiMoulinou 113 0x915Df4ec98eAb030Dd225991E834EB0074D9D43a live
+2021/06/28 13:13:34 set minter  GALAMIRISSA 121 0x4cA6ed614BAb8e01AC1fb0f28Fe4A4CC1C8e4eA6 live
+2021/07/01 01:12:14 database :  dial tcp [::1]:5432: connect: connection refused
+2021/07/01 01:12:14 host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname=minty connect_timeout=10
+2021/07/01 01:12:18 database :  dial tcp [::1]:5432: connect: connection refused
+2021/07/01 01:12:18 host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname=minty connect_timeout=10
+2021/07/01 01:12:18 database :  dial tcp [::1]:5432: connect: connection refused
+2021/07/01 01:12:18 host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname=minty connect_timeout=10
+2021/07/01 01:12:19 database :  dial tcp [::1]:5432: connect: connection refused
+2021/07/01 01:12:19 host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname=minty connect_timeout=10
+2021/07/01 01:12:20 database :  dial tcp [::1]:5432: connect: connection refused
+2021/07/01 01:12:20 host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname=minty connect_timeout=10
+2021/07/01 01:12:20 database :  dial tcp [::1]:5432: connect: connection refused
+2021/07/01 01:12:20 host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname=minty connect_timeout=10
+2021/07/01 01:12:20 database :  dial tcp [::1]:5432: connect: connection refused
+2021/07/01 01:12:20 host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname=minty connect_timeout=10
+2021/07/01 01:12:20 database :  dial tcp [::1]:5432: connect: connection refused
+2021/07/01 01:12:20 host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname=minty connect_timeout=10
+2021/07/01 01:12:21 database :  dial tcp [::1]:5432: connect: connection refused
+2021/07/01 01:12:21 host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname=minty connect_timeout=10
+2021/07/01 01:12:21 database :  dial tcp [::1]:5432: connect: connection refused
+2021/07/01 01:12:21 host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname=minty connect_timeout=10
+2021/07/01 01:12:21 database :  dial tcp [::1]:5432: connect: connection refused
+2021/07/01 01:12:21 host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname=minty connect_timeout=10
+2021/07/01 01:12:21 database :  dial tcp [::1]:5432: connect: connection refused
+2021/07/01 01:12:21 host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname=minty connect_timeout=10
+2021/07/01 01:13:30 set minter  benedictocernaliii 126 0x38D8746Ddbd958cC5d4B44C381C3a4F07ebF3801 live

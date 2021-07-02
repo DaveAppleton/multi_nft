@@ -73,3 +73,11 @@
 2021/06/24 20:36:12 set minter  AbdullahIsa 32 0x1E989cD65Fec9961EC26A3492B940045244e4893 demo
 2021/06/24 23:20:25 database :  pq: database "minty-demo" does not exist
 2021/06/24 23:20:25 host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname='minty-demo' connect_timeout=10
+2021/07/02 13:04:13 set minter  Yacine 3 0xa1EFF0887B93e18bB0f59334a0CB57148BC2086f demo
+2021/07/02 13:14:25 set minter  Amir 38 0x963090E9776BF84a7bc7508B06597cb21D9DCFaC demo
+2021/07/02 14:47:09 Project  Mine Mine Mine already has a token  0xbed26FB7584DA0e0e2bFE77ef906206902F44b4b
+
+2021/07/02 14:49:50 Project  Mine Mine Mine already has a token  
+
+2021/07/02 15:35:00 set minter  Cat 52 0xd08132BC96bBe55E33a61E5a55cA0a237F515bf0 demo
+2021/07/02 20:56:14 set minter  Libra 39 0x08ef5C04D2F93d9858F0d87697f22cBeCD990076 demo

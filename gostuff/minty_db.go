@@ -131,19 +131,21 @@ func getArtists(start int) (pa []Artist, max int, err error) {
 		return []Artist{}, 0, err
 	}
 	defer db.Close()
-	q1 := "select count(*) from users a, artist b where a.id=b.user_id order by 1"
+	q1 := "select count(*) from users a, artist b where a.id=b.user_id and a.nickname is not null order by 1"
 	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
 	defer cancel()
 	err = db.QueryRowContext(ctx, q1).Scan(&max)
 	if err != nil {
 		fmt.Println("cannot get max")
+		log.Println("cannot get max")
 		return []Artist{}, 0, err
 	}
-	query := "select a.id, a.address, a.nickname, a.avatar, b.id, b.about_me, b.approved, b.facebook, b.twitter, b.instagram, b.portfolio from users a, artist b where a.id=b.user_id order by a.id limit 50 offset $1"
+	query := "select a.id, a.address, a.nickname, a.avatar, b.id, b.about_me, b.approved, b.facebook, b.twitter, b.instagram, b.portfolio from users a, artist b where a.id=b.user_id and a.nickname is not null order by a.id limit 50 offset $1"
 	ctx, cancel = context.WithTimeout(context.Background(), 60*time.Second)
 	defer cancel()
 	row, err := db.QueryContext(ctx, query, start)
 	if err != nil {
+		log.Println("Get Artists: ", err)
 		return []Artist{}, 0, err
 	}
 	for row.Next() {
@@ -161,6 +163,7 @@ func getArtists(start int) (pa []Artist, max int, err error) {
 			&p.Instagram,
 			&p.Portfolio)
 		if err != nil {
+			log.Println("Get Artists: ", err)
 			return []Artist{}, 0, err
 		}
 		pa = append(pa, p)

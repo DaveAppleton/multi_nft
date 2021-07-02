@@ -822,7 +822,20 @@ go run . -action approve_project -database demo -user_name Jahanzaib -royalty 10
 go run . -action approve_project -database demo -user_name Jahanzaib -royalty 100 -initial_share_addrs 0xA7722c27a0eAaa4690358eE3D31a4D38F20c38A1 -later_share_addrs 0xA7722c27a0eAaa4690358eE3D31a4D38F20c38A1,0x6e93Deb7FDa0E5A4CA8A3566785F0c7f4D0A2cb3 -initial_share_shares 1000 -later_share_shares 500,500  -project_id 19
 go run . -action approve_project -database demo -user_name Jahanzaib -royalty 100 -initial_share_addrs 0xA7722c27a0eAaa4690358eE3D31a4D38F20c38A1 -later_share_addrs 0xA7722c27a0eAaa4690358eE3D31a4D38F20c38A1,0x6e93Deb7FDa0E5A4CA8A3566785F0c7f4D0A2cb3 -initial_share_shares 1000 -later_share_shares 500,500  -project_id 20
 
+go run . -action approve_project -database demo -user_name sinister -royalty 100 -initial_share_addrs 0xa454515041892eB78132293ABd5763a730412F65 -later_share_addrs 0xa454515041892eB78132293ABd5763a730412F65,0x6e93Deb7FDa0E5A4CA8A3566785F0c7f4D0A2cb3 -initial_share_shares 1000 -later_share_shares 500,500  -project_id 34
+
+go run . -action approve_project -database demo -user_name Virgo -royalty 100 -initial_share_addrs 0x39d07f321cAF5b0668459DB5Bcf039A462A9273d -later_share_addrs 0x39d07f321cAF5b0668459DB5Bcf039A462A9273d,0x6e93Deb7FDa0E5A4CA8A3566785F0c7f4D0A2cb3 -initial_share_shares 1000 -later_share_shares 500,500  -project_id 39
+
+go run . -action approve_project -database demo -user_name Cat -royalty 100 -initial_share_addrs 0xd08132BC96bBe55E33a61E5a55cA0a237F515bf0 -later_share_addrs 0xd08132BC96bBe55E33a61E5a55cA0a237F515bf0,0x6e93Deb7FDa0E5A4CA8A3566785F0c7f4D0A2cb3 -initial_share_shares 1000 -later_share_shares 500,500  -project_id 41
+go run . -action approve_project -database demo -user_name LaylaHifi -royalty 100 -initial_share_addrs 0xcad809e60e7B93fF7343E25F891A4959F0a2BBC7 -later_share_addrs 0xcad809e60e7B93fF7343E25F891A4959F0a2BBC7,0x6e93Deb7FDa0E5A4CA8A3566785F0c7f4D0A2cb3 -initial_share_shares 1000 -later_share_shares 500,500  -project_id 37
+
+go run . -action approve_project -database demo -user_name Libra -royalty 100 -initial_share_addrs 0x08ef5C04D2F93d9858F0d87697f22cBeCD990076 -later_share_addrs 0x08ef5C04D2F93d9858F0d87697f22cBeCD990076,0x6e93Deb7FDa0E5A4CA8A3566785F0c7f4D0A2cb3 -initial_share_shares 1000 -later_share_shares 500,500  -project_id 42
+
+go run . -action approve_project -database demo -user_name Sinister -royalty 100 -initial_share_addrs 0xa454515041892eB78132293ABd5763a730412F65 -later_share_addrs 0xa454515041892eB78132293ABd5763a730412F65,0x6e93Deb7FDa0E5A4CA8A3566785F0c7f4D0A2cb3 -initial_share_shares 1000 -later_share_shares 500,500  -project_id 43
+
 select nickname from users a, artist b, project c where a.id=b.user_id and b.id = c.artist_id and c.id=19;
+
+
 
 Note : need warning that artist should have nickname set
 */

@@ -12,25 +12,27 @@
                 const next = document.getElementById("next")
                 const prev = document.getElementById("prev")
                 if (next) {
-                    next.onclick(()=>{
-                        alert("next")
+                    console.log("setting next")
+                    next.addEventListener('click', ()=>{
+                        window.location.href = "/artists?start=5"
                     })
                 }
                 if (prev) {
-                    prev.onclick(()=>{
+                    console.log("setting prev")
+                    prev.addEventListener('click', ()=>{
                         alert("prev")
                     })
                 }
                 
             }
-            window.onload=init();
+            //window.onload=init();
         </script>
 
         <title>
             WOT
         </title>
     </head>
-    <Body>
+    <Body onload="init();">
         <h2>USERS from {{.Start}} to {{.End}} out of {{.Max}}</h2>
         <table class="table">
             <thead>

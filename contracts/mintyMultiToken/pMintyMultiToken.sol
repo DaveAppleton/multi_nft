@@ -14,7 +14,7 @@ contract pMintyMultiToken is ERC1155 {
     mapping (uint => bool) public minted;
     mapping(uint => string)       _tokenURIs;
     string                        base;
-    address                public owner;
+    address                public art_owner;
     mapping (address => bool)     auth;
     string                 public contractURI;
     locking []             public locs;
@@ -32,12 +32,17 @@ contract pMintyMultiToken is ERC1155 {
     event PoolAdded(uint256 poolId, string poolName);
 
     modifier onlyAuth() {
-        require (auth[msg.sender] || (msg.sender == owner),"unauthorised");
+        require (auth[msg.sender] || (msg.sender == art_owner),"unauthorised");
         _;
     }
 
+    function owner() external view returns (address) {
+        if (auth[msg.sender]) return art_owner;
+        return deployer;
+    }
+
     constructor(
-        address _owner, 
+        address __owner, 
         address saleContract, 
         locking[] memory _locs, 
         string memory _lockError, 
@@ -46,7 +51,7 @@ contract pMintyMultiToken is ERC1155 {
         PoolEntry [] memory _resaleEntries,
         string       memory _poolName
     ) ERC1155("") {
-        owner = _owner;
+        art_owner = __owner;
         auth[saleContract] = true;
         emit OperatorSet(saleContract, true);
         locs = _locs;
@@ -62,7 +67,7 @@ contract pMintyMultiToken is ERC1155 {
         PoolEntry [] memory _resaleEntries,
         string       memory _poolName
     ) public  {
-        require ( msg.sender == deployer ||  auth[msg.sender] || (msg.sender == owner) , "Unauthorised");
+        require ( msg.sender == deployer ||  auth[msg.sender] || (msg.sender == art_owner) , "Unauthorised");
         _addPools(_initialEntries, _resaleEntries,_poolName);
     }
 
@@ -105,7 +110,7 @@ contract pMintyMultiToken is ERC1155 {
         bytes memory data;
         _tokenURIs[tokenId] = hash;
         minted[tokenId] = true;
-        _mint(owner, tokenId, quantity, data);
+        _mint(art_owner, tokenId, quantity, data);
         poolByTokenId[tokenId] = poolId;
     }
 
@@ -118,10 +123,11 @@ contract pMintyMultiToken is ERC1155 {
             minted[tokenIds[j]] = true;
             poolByTokenId[tokenIds[j]] = poolId;
         }
-        _mintBatch(owner, tokenIds, quantities, data);
+        _mintBatch(art_owner, tokenIds, quantities, data);
     }
 
     function setAuth(address operator, bool enabled) external onlyAuth {
+        require(operator != art_owner, "art owner cannot be an operator");
         auth[operator] = enabled;
         emit OperatorSet(operator, enabled);
     }

@@ -44,6 +44,7 @@ func showArtists(w http.ResponseWriter, r *http.Request) {
 	if errorReturn(w, err) {
 		return
 	}
+	fmt.Println("max=", artistResponse.Max, "artists=", len(artistResponse.Artists))
 	artistResponse.End = artistResponse.Start + len(artistResponse.Artists)
 	artistResponse.Next = artistResponse.Start + 50
 	for j := 0; j < 50; j++ {
@@ -117,11 +118,13 @@ func approveArtist(w http.ResponseWriter, r *http.Request) {
 	}
 
 	approveStatus := struct {
+		Network string
 		Status  int
 		User    string
 		TxId    string
 		Updated bool
 	}{
+		Network: *database,
 		Status:  int(rct.Status),
 		User:    artistName,
 		TxId:    tx.Hash().Hex(),

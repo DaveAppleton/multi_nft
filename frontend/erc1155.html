@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <title>ERC1155 info</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>    
+        <script type="module">
+            import { ethers } from "/js/ethers-5.1.esm.min.js";
+            const provider = new ethers.providers.Web3Provider(window.ethereum)
+            const signer = provider.getSigner()
+            //const accounts = await ethereum.request({ method: 'eth_accounts' });
+
+            ethereum.on('chainChanged', (chainId) => {
+                if (chainId != 80001){
+                    alert("Please switch to Mumbai Testnet")
+                }
+                /* handle the chainId */
+            });
+            if (ethereum.isConnected()) 
+                console.log("connected");
+        </script>
+        <script src="https://cdn.ethers.io/lib/ethers-5.2.umd.min.js" type="application/javascript"></script>
+        <script src="js/erc1155.js" type="application/javascript"></script>
+        <script language="javascript">
+            var oXHR = new XMLHttpRequest();
+            function init() {
+                const ethereumButton = document.getElementById('connect');
+
+                const wethABI = [
+                        // Some details about the token
+                        "function name() view returns (string)",
+                        "function symbol() view returns (string)",
+
+                        // Get the account balance
+                        "function balanceOf(address) view returns (uint)",
+
+                        // Send some of your tokens to someone else
+                        "function transfer(address to, uint amount)",
+
+                        "function approve(address spender, uint256 amount) public returns (bool)",
+
+                        // An event triggered whenever anyone transfers to someone else
+                        "event Transfer(address indexed from, address indexed to, uint amount)",
+
+                        "function allowance(address owner, address spender) public view returns (uint256)"
+                    ];
+
+                
+                const Alice  = "0x31EFd75bc0b5fbafc6015Bd50590f4fDab6a3F22"
+                const Sale = "0x82999Ec1Ea6D4c3cB88f69eFE43041f280DFc1c3"
+                const daiAddress = '0xA6FA4fB5f76172d178d61B04b0ecd319C5d1C0aa'
+                
+
+                ethereumButton.addEventListener('click', () => {
+                    //Will Start the metamask extension
+                    ethereum.request({ method: 'eth_requestAccounts' })
+                    .then((result)=>{
+                        console.log(ethereum.selectedAddress)
+                    })
+                    .catch((error) => {
+                        if (error.code == 4001) {
+                            console.log("rejected")
+                        } else
+                            console.log(error)
+                    });
+                    const provider = new ethers.providers.Web3Provider(window.ethereum)
+
+                    
+                });
+                //'<a href="https://wallet.matic.today/bridge" target="_blank">get WETH at the bridge</a>'
+                const doit = document.getElementById('get_URI');
+                const tAddr = document.getElementById("contract_address")
+                const tID = document.getElementById("token_id")
+                const mData = document.getElementById("MetaData")
+                
+
+                doit.addEventListener('click', () => {
+                    const provider = new ethers.providers.Web3Provider(window.ethereum)
+                    const signer = provider.getSigner()
+                    
+                   
+                    
+                    let tokenAddress = tAddr.value
+                    console.log("contract",tokenAddress)
+                    let tokenId = tID.value
+                    console.log("token ID",tokenId)
+                    erc1155 = new ethers.Contract(tokenAddress,erc1155ABI,provider);
+
+                    erc1155.uri(tokenId)
+                    .then((result)=>{
+                        mData.value = result
+                        //document.getElementById("metalink").onclick = function() {
+                        document.getElementById("metalink").href=result; 
+                        document.getElementById("metalink").innerHTML = "link"
+                        
+                        // Initiate request.
+                        oXHR.onreadystatechange = reportStatus;
+                        oXHR.open("GET",result, true);  // get json file.
+                        oXHR.send();
+                        console.log(result)
+                    })
+                    .catch((error) => {
+                        console.log(error)
+                    })
+
+                 });
+
+
+                
+               
+                 
+            }
+            function reportStatus() {
+                if (oXHR.readyState == 4) {		// Check if request is complete.
+                    //Write data to a DIV element.
+                    document.getElementById("MetaData").value = this.responseText;
+                }
+            }
+
+            function showHash(result) {
+                msg1 = document.getElementById("ex_1")
+                msg2 = document.getElementById("ex_2")
+                msg3 = document.getElementById("ex_3")
+                msg4 = document.getElementById("ex_4")
+ 
+                msg1.innerHTML = '<a href="https://polygon-explorer-mumbai.chainstacklabs.com/tx/'+result.hash+'" target=_blank> explorer 1 : '+result.hash+'</a>'; 
+                msg2.innerHTML = '<a href="https://explorer-mumbai.maticvigil.com/tx/'+result.hash+'" target=_blank> explorer 2 : '+result.hash+'</a>'; 
+                msg3.innerHTML = '<a href="https://mumbai-explorer.matic.today/tx/'+result.hash+'" target=_blank> explorer 3 : '+result.hash+'</a>'; 
+                msg4.innerHTML = '<a href="https://backup-mumbai-explorer.matic.today/tx/'+result.hash+'" target=_blank> explorer 4 : '+result.hash+'</a>'; 
+            }
+            
+
+        </script>
+    </head>
+    <body onload="init()">
+
+        <div class="container">
+            <h2><input type="button" class="btn btn-success" id="connect" value="CONNECT WALLET"> ERC1155 Info  </h2>
+            <div class="row">
+                <!-- https://wallet.matic.today/bridge -->
+                <div class="col-sm-6">
+                    <div class="well well-lg">
+                        <h3>token URI</h3>
+                        <div class="form-group">
+                            <label for="contract_address">Contract Address :</label>
+                            <input type="text" class="form-control" id="contract_address" name="contract_address" Value="_">
+                            <label for="token_id">tokenID :</label>
+                            <input type="text" class="form-control" id="token_id" name="token_id">
+                            <input type="button" class="btn btn-success" id="get_URI" value="GET METDATA">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6">
+                    <div class="well well-lg">
+                        <h3>Metadata</h3>
+                        <div><a href="" id="metalink" target="_blank"></a></div>
+                        <div class="form-group">
+                            <label for="MetaData">Comment:</label>
+                            <textarea class="form-control" rows="5" id="MetaData"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <!---
+                <div class="col-sm-3">
+                    <div class="well well-lg">
+                        <div class="form-group">
+                            <label for="dai_status" class="text-info">ALLOWANCE</label>
+                            <input type="text" class="form-control" id="dai_status" name="dai_status" readonly value="0">
+                            <label for="weth_allow" class="text-info">Amount to approve</label>
+                            <input type="text" class="form-control" id="weth_allow" name="weth_allow" readonly value="100.0">
+                            <p>&nbsp;</p>
+                            <input type="button" class="btn btn-success" id="app_dai" disabled value="APPROVE WETH">
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="well well-lg">
+                        <div class="form-group">
+                            <h4>WETH</h4>
+                            <label for="bal_status" class="text-info">YOUR BALANCE</label>
+                            <input type="text" class="form-control" id="bal_status" name="bal_status" readonly value="0">
+                            <p>&nbsp;</p>
+                            <input type="button" class="btn btn-success" id="bridge" disabled value="GET WETH" onclick='javascript: window.open("https://wallet.matic.today/bridge")'>
+                            <p>&nbsp;</p>
+                            
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="well well-lg">
+                        <div class="form-group">
+                            <label for="current_bid" class="text-info">Your Current Bid (ETH)</label>
+                            <input type="text" class="form-control" id="current_bid" name="current_bid" readonly value="0">
+                            <label for="user_comment" class="text-info" id="spend_label">Your Bid (ETH)</label>
+                            <input type="text" class="form-control" id="spend" name="spend" readonly value="">
+                            <p>&nbsp;</p>
+                            <input type="button" class="btn btn-success" id="bid" disabled value="SEND BID">
+                        </div>
+                    </div>
+                </div>
+                -->
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
+                    <div id="ex_1"></div>
+                    <div id="ex_2"></div>
+                    <div id="ex_3"></div>
+                    <div id="ex_4"></div>
+                </div>
+            </div>
+        </div>
+<!--
+        <h1>hello</h1>
+        <p><button id="connect_">CONNECT METAMASK</button></p>
+        <p><button class="doit">ENABLE SALE CONTRACT TO TAKE YOUR WETH</button></p>
+        <p><input class="spend" type=text placeholder="enter your bid e.g. 57"></p>
+        <p><button class="bid">PLACE YOUR BID</button></p>
+        <p><div id="msg"></div></p> -->
+    </body>
+</html>

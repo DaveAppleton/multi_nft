@@ -14,7 +14,11 @@
             <div class="col-sm-3">
                 <div class="well well-lg">
                     <h1>Approving {{.User}}</h1>
-                    <h2>Tx ID : {{.TxId}}</h2>
+                    {{if ne .Network "live"}}
+                    <h2>Tx ID : <a href="https://mumbai.polygonscan.com/tx/{{.TxId}}" target="_blank">{{.TxId}}</a></h2>
+                    {{else}}
+                    <h2>Tx ID : <a href="https://polygonscan.com/tx/{{.TxId}}" target="_blank">{{.TxId}}</a></h2>
+                    {{end}}
                     <h2>Status: {{.Status}}</h2>
                     <h2>Database updated : {{.Updated}}</h2>
                     <button onclick="javascript:window.close();">CLOSE</button>

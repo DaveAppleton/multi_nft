@@ -30,7 +30,7 @@ interface IERC165 {
 
 // File @openzeppelin/contracts/token/ERC1155/IERC1155.sol@v3.4.0
 
-// 
+// SPDX-License-Identifier: MIT
 
 pragma solidity >=0.6.2 <0.8.0;
 
@@ -135,7 +135,7 @@ interface IERC1155 is IERC165 {
 
 // File @openzeppelin/contracts/token/ERC1155/IERC1155MetadataURI.sol@v3.4.0
 
-// 
+// SPDX-License-Identifier: MIT
 
 pragma solidity >=0.6.2 <0.8.0;
 
@@ -158,7 +158,7 @@ interface IERC1155MetadataURI is IERC1155 {
 
 // File @openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol@v3.4.0
 
-// 
+// SPDX-License-Identifier: MIT
 
 pragma solidity >=0.6.0 <0.8.0;
 
@@ -217,7 +217,7 @@ interface IERC1155Receiver is IERC165 {
 
 // File @openzeppelin/contracts/utils/Context.sol@v3.4.0
 
-// 
+// SPDX-License-Identifier: MIT
 
 pragma solidity >=0.6.0 <0.8.0;
 
@@ -245,7 +245,7 @@ abstract contract Context {
 
 // File @openzeppelin/contracts/introspection/ERC165.sol@v3.4.0
 
-// 
+// SPDX-License-Identifier: MIT
 
 pragma solidity >=0.6.0 <0.8.0;
 
@@ -301,7 +301,7 @@ abstract contract ERC165 is IERC165 {
 
 // File @openzeppelin/contracts/math/SafeMath.sol@v3.4.0
 
-// 
+// SPDX-License-Identifier: MIT
 
 pragma solidity >=0.6.0 <0.8.0;
 
@@ -519,7 +519,7 @@ library SafeMath {
 
 // File @openzeppelin/contracts/utils/Address.sol@v3.4.0
 
-// 
+// SPDX-License-Identifier: MIT
 
 pragma solidity >=0.6.2 <0.8.0;
 
@@ -712,7 +712,7 @@ library Address {
 
 // File @openzeppelin/contracts/token/ERC1155/ERC1155.sol@v3.4.0
 
-// 
+// SPDX-License-Identifier: MIT
 
 pragma solidity >=0.6.0 <0.8.0;
 
@@ -1128,7 +1128,7 @@ contract ERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI {
 
 // File contracts/locking/locking.sol
 
-//
+//SPDX-License-Identifier: MIT
 pragma solidity ^0.7.3;
 
 
@@ -1266,11 +1266,12 @@ contract pMintyMultiToken is ERC1155 {
     mapping (uint => bool) public minted;
     mapping(uint => string)       _tokenURIs;
     string                        base;
-    address                public owner;
+    address                public _owner;
     mapping (address => bool)     auth;
     string                 public contractURI;
     locking []             public locs;
     string                 public lockError;
+    address                public deployer = msg.sender;
 
     uint256                         public royaltyPerMille;
     uint256                         public numPools;
@@ -1283,12 +1284,17 @@ contract pMintyMultiToken is ERC1155 {
     event PoolAdded(uint256 poolId, string poolName);
 
     modifier onlyAuth() {
-        require (auth[msg.sender] || (msg.sender == owner),"unauthorised");
+        require (auth[msg.sender] || (msg.sender == _owner),"unauthorised");
         _;
     }
 
+    function owner() external returns (address) {
+        if (auth[msg.sender]) return _owner;
+        return deployer;
+    }
+
     constructor(
-        address _owner, 
+        address __owner, 
         address saleContract, 
         locking[] memory _locs, 
         string memory _lockError, 
@@ -1297,7 +1303,7 @@ contract pMintyMultiToken is ERC1155 {
         PoolEntry [] memory _resaleEntries,
         string       memory _poolName
     ) ERC1155("") {
-        owner = _owner;
+        _owner = __owner;
         auth[saleContract] = true;
         emit OperatorSet(saleContract, true);
         locs = _locs;
@@ -1312,7 +1318,8 @@ contract pMintyMultiToken is ERC1155 {
         PoolEntry [] memory _initialEntries,
         PoolEntry [] memory _resaleEntries,
         string       memory _poolName
-    ) public onlyAuth {
+    ) public  {
+        require ( msg.sender == deployer ||  auth[msg.sender] || (msg.sender == _owner) , "Unauthorised");
         _addPools(_initialEntries, _resaleEntries,_poolName);
     }
 
@@ -1350,12 +1357,12 @@ contract pMintyMultiToken is ERC1155 {
         return string(abi.encodePacked(base, _tokenURI));
     }
 
-    function mintPool(uint tokenId, uint quantity, string memory hash, uint poolId) external onlyAuth {
+    function mint(uint tokenId, uint quantity, string memory hash, uint poolId) external onlyAuth {
         require(poolId < numPools,"Invalid Pool Number");
         bytes memory data;
         _tokenURIs[tokenId] = hash;
         minted[tokenId] = true;
-        _mint(owner, tokenId, quantity, data);
+        _mint(_owner, tokenId, quantity, data);
         poolByTokenId[tokenId] = poolId;
     }
 
@@ -1368,7 +1375,7 @@ contract pMintyMultiToken is ERC1155 {
             minted[tokenIds[j]] = true;
             poolByTokenId[tokenIds[j]] = poolId;
         }
-        _mintBatch(owner, tokenIds, quantities, data);
+        _mintBatch(_owner, tokenIds, quantities, data);
     }
 
     function setAuth(address operator, bool enabled) external onlyAuth {
