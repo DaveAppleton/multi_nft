@@ -75,6 +75,13 @@ func CreateLookupTable() (err error) {
 	return create(query)
 }
 
+/*
+alter table multi_sales alter column price type numeric(22,18);
+alter table unique_sale alter column price type numeric(22,18);
+ALTER TABLE multi_tokens RENAME COLUMN token_ref TO lookup_id;
+ALTER TABLE unique_tokens RENAME COLUMN token_ref TO lookup_id;
+*/
+
 func CreateMultiSaleTable() (err error) {
 	query := `CREATE TABLE multi_sales
 	(
@@ -87,7 +94,7 @@ func CreateMultiSaleTable() (err error) {
 		txhash character varying(70) NOT NULL,
 		buyer character varying(44)  NOT NULL,
 		seller character varying(44) NOT NULL,
-		price numeric(20,18),
+		price numeric(22,18),
 		hash character varying(46),
 		"position" integer,
 		quantity integer,
@@ -108,7 +115,7 @@ func CreateUniqueSaleTable() (err error) {
 		txhash character varying(70) NOT NULL,
 		buyer character varying(44)  NOT NULL,
 		seller character varying(44) NOT NULL,
-		price numeric(20,18),
+		price numeric(22,18),
 		hash character varying(46),
 		"timestamp" integer
 	)`

@@ -88,10 +88,10 @@ func NewMultiSale(
 func (tt *MultiTokenSale) Add() (err error) {
 	//                                         1       2           3        4       5      6     7     8     9     10       11       12
 	statement := `insert into multi_sales (tokenid,lookup_id,operation,blocknumber,index,txhash,buyer,seller,price,hash,position,quantity,timestamp) 
-					values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13) returning id`
+					values                ($1,     $2,       $3,       $4,         $5,   $6,    $7,   $8,    $9,   $10,  $11,    $12,     $13) returning id`
 	ctx, cancel := context.WithTimeout(context.Background(), timeout())
 	defer cancel()
-	//                         1       2              3             4           5          6          7           8        9         10           11           12
+	//                                             1       2              3             4               5          6          7           8        9         10           11           12        13
 	err = db.QueryRowContext(ctx, statement, tt.TokenID, tt.LookupRef, tt.Operation, tt.BlockNumber, tt.TxIndex, tt.TxHash, tt.Buyer, tt.Seller, tt.Price, tt.Hash, tt.Position, tt.Quantity, tt.Timestamp).Scan(&tt.ID)
 	return
 }

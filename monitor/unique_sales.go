@@ -64,8 +64,8 @@ func uniqueSales(client *ethclient.Client, wg *sync.WaitGroup) {
 			fmt.Println("Offer New")
 			if filtErr("unique offer new", err) {
 				for filt1.Next() {
-					fmt.Println("MS Offer New", filt1.Event.Raw.TxHash.Hex(), filt1.Event.Owner.Hex(), filt1.Event.TokenId, etherUtils.EtherToStr(filt1.Event.Price), filt1.Event.Hash)
-					log.Println("MS Offer New", filt1.Event.Raw.TxHash.Hex(), filt1.Event.Owner.Hex(), filt1.Event.TokenId, etherUtils.EtherToStr(filt1.Event.Price), filt1.Event.Hash)
+					fmt.Println("Unique Offer New", filt1.Event.Raw.TxHash.Hex(), filt1.Event.Owner.Hex(), filt1.Event.TokenId, etherUtils.EtherToStr(filt1.Event.Price), filt1.Event.Hash)
+					log.Println("Unique Offer New", filt1.Event.Raw.TxHash.Hex(), filt1.Event.Owner.Hex(), filt1.Event.TokenId, etherUtils.EtherToStr(filt1.Event.Price), filt1.Event.Hash)
 					timestamp, _ := blockTimeStamp(filt1.Event.Raw.BlockHash)
 					sale := etherdb.NewUniqueSale(
 						salez[j].ID,
@@ -87,8 +87,8 @@ func uniqueSales(client *ethclient.Client, wg *sync.WaitGroup) {
 			filt2, err := psale.FilterOfferAccepted(&tokenOpts)
 			if filtErr("unique offer accepted", err) {
 				for filt2.Next() {
-					fmt.Println("Multi Sale", filt2.Event.Raw.TxHash.Hex(), filt2.Event.Buyer.Hex(), etherUtils.EtherToStr(filt2.Event.Price))
-					log.Println("Multi Sale", filt2.Event.Raw.TxHash.Hex(), filt2.Event.Buyer.Hex(), etherUtils.EtherToStr(filt2.Event.Price))
+					fmt.Println("Unique Sale acc", filt2.Event.Raw.TxHash.Hex(), filt2.Event.Buyer.Hex(), etherUtils.EtherToStr(filt2.Event.Price))
+					log.Println("Unique Sale acc", filt2.Event.Raw.TxHash.Hex(), filt2.Event.Buyer.Hex(), etherUtils.EtherToStr(filt2.Event.Price))
 					timestamp, _ := blockTimeStamp(filt2.Event.Raw.BlockHash)
 					sale := etherdb.NewUniqueSale(
 						salez[j].ID,
@@ -110,8 +110,8 @@ func uniqueSales(client *ethclient.Client, wg *sync.WaitGroup) {
 			filt3, err := psale.FilterResaleOffer(&tokenOpts)
 			if filtErr("unique resale offer", err) {
 				for filt3.Next() {
-					fmt.Println("Multi Sale", filt3.Event.Raw.TxHash.Hex(), filt3.Event.Owner.Hex(), filt3.Event.TokenId, etherUtils.EtherToStr(filt3.Event.Price))
-					log.Println("Multi Sale", filt3.Event.Raw.TxHash.Hex(), filt3.Event.Owner.Hex(), filt3.Event.TokenId, etherUtils.EtherToStr(filt3.Event.Price))
+					fmt.Println("unique resale offer", filt3.Event.Raw.TxHash.Hex(), filt3.Event.Owner.Hex(), filt3.Event.TokenId, etherUtils.EtherToStr(filt3.Event.Price))
+					log.Println("unique resale offer", filt3.Event.Raw.TxHash.Hex(), filt3.Event.Owner.Hex(), filt3.Event.TokenId, etherUtils.EtherToStr(filt3.Event.Price))
 					timestamp, _ := blockTimeStamp(filt3.Event.Raw.BlockHash)
 					sale := etherdb.NewUniqueSale(
 						salez[j].ID,

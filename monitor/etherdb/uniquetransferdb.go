@@ -57,7 +57,7 @@ func (tt *UniqueTokenTransfer) updateUniqueOwners() (err error) {
 
 // Add this token to the database
 func (tt *UniqueTokenTransfer) Add() (err error) {
-	query := `insert into unique_tokens (token_ref,tokenid,blocknumber,index,txhash,source,dest,timestamp) values ($1,$2,$3,$4,$5,$6,$7,$8) returning id`
+	query := `insert into unique_tokens (lookup_id,tokenid,blocknumber,index,txhash,source,dest,timestamp) values ($1,$2,$3,$4,$5,$6,$7,$8) returning id`
 	ctx, cancel := context.WithTimeout(context.Background(), timeout())
 	defer cancel()
 	err = db.QueryRowContext(ctx, query, tt.LookupRef, tt.TokenID, tt.BlockNumber, tt.TxIndex, tt.TxHash, tt.Source, tt.Dest, tt.Timestamp).Scan(&tt.ID)
@@ -69,7 +69,7 @@ func (tt *UniqueTokenTransfer) Add() (err error) {
 
 // AddIfNotFound only adds if the txhash is not found
 func (tt *UniqueTokenTransfer) AddIfNotFound() (err error) {
-	query := `insert into unique_tokens (token_ref,txhash,tokenid,blocknumber,index,source,dest,timestamp) 
+	query := `insert into unique_tokens (lookup_id,txhash,tokenid,blocknumber,index,source,dest,timestamp) 
 					values ($1,$2,$3,$4,$5,$6,$7,$8) on conflict do nothing`
 	ctx, cancel := context.WithTimeout(context.Background(), timeout())
 	defer cancel()
@@ -103,7 +103,7 @@ func (*UniqueTokenTransfer) getUniqueTransfers(rows *sql.Rows) (transfers []Uniq
 
 // Find transfers that match tokenID
 func (tt *UniqueTokenTransfer) Find() (transfers []UniqueTokenTransfer, err error) {
-	query := `select id,tokenid,token_ref,blocknumber,index,txhash,source,dest,timestamp from unique_tokens where tokenid=$1`
+	query := `select id,tokenid,lookup_id,blocknumber,index,txhash,source,dest,timestamp from unique_tokens where tokenid=$1`
 	ctx, cancel := context.WithTimeout(context.Background(), timeout())
 	defer cancel()
 	rows, err := db.QueryContext(ctx, query, tt.TokenID)
@@ -116,7 +116,7 @@ func (tt *UniqueTokenTransfer) Find() (transfers []UniqueTokenTransfer, err erro
 
 // FindByAddress returns transfers of specific token to or from an address
 func (tt *UniqueTokenTransfer) FindByAddress(addr string) (transfers []UniqueTokenTransfer, err error) {
-	query := `select id,token_ref,tokenid,blocknumber,index,txhash,source,dest,quantity,timestamp from unique_tokens  where tokenid=$1 and (source=$2 or dest=$2)`
+	query := `select id,lookup_id,tokenid,blocknumber,index,txhash,source,dest,quantity,timestamp from unique_tokens  where tokenid=$1 and (source=$2 or dest=$2)`
 	ctx, cancel := context.WithTimeout(context.Background(), timeout())
 	defer cancel()
 
@@ -129,7 +129,7 @@ func (tt *UniqueTokenTransfer) FindByAddress(addr string) (transfers []UniqueTok
 
 // FindAllByAddress returns transfers of any token to or from an address newest first
 func (tt *UniqueTokenTransfer) FindAllByAddress(addr string) (transfers []UniqueTokenTransfer, err error) {
-	query := `select id,token_ref,tokenid,blocknumber,index,txhash,source,dest,quantity,timestamp from unique_tokens
+	query := `select id,lookup_id,tokenid,blocknumber,index,txhash,source,dest,quantity,timestamp from unique_tokens
 		 where (source=$1 or dest=$1)
 		 order by blocknumber desc, index desc`
 	ctx, cancel := context.WithTimeout(context.Background(), timeout())
