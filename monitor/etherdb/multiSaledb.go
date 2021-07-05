@@ -86,7 +86,7 @@ func NewMultiSale(
 
 // Add this token to the database
 func (tt *MultiTokenSale) Add() (err error) {
-	//                                         1       2           3        4     5      6     7     8     9     10       11       12
+	//                                         1       2           3        4       5      6     7     8     9     10       11       12
 	statement := `insert into multi_sales (tokenid,lookup_id,operation,blocknumber,index,txhash,buyer,seller,price,hash,position,quantity,timestamp) 
 					values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13) returning id`
 	ctx, cancel := context.WithTimeout(context.Background(), timeout())
