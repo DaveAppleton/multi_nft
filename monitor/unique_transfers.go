@@ -38,7 +38,8 @@ func uniqueTransfers(client *ethclient.Client, wg *sync.WaitGroup) {
 		if len(tokenz) == 0 {
 			fmt.Println("NO UNIQUE TOKENS FOUND")
 			log.Println("NO UNIQUE TOKENS FOUND")
-			return
+			time.Sleep(5 * time.Minute)
+			continue
 		}
 		for j := 0; j < len(tokenz); j++ {
 
@@ -54,6 +55,11 @@ func uniqueTransfers(client *ethclient.Client, wg *sync.WaitGroup) {
 			if chkErrX("restore "+tokenz[j].Description, err, false) {
 				return
 			}
+			name, err := token.Name(nil)
+			if err != nil {
+				name = "Unknown"
+			}
+			fmt.Println("name : ", name)
 
 			tokenOpts := bind.FilterOpts{Start: tokenz[j].LastChecked + 1}
 			end := currentBlock - 60 // allow fo reorgs
@@ -70,7 +76,7 @@ func uniqueTransfers(client *ethclient.Client, wg *sync.WaitGroup) {
 				end = tokenOpts.Start + 10000
 			}
 			tokenOpts.End = &end
-			fmt.Println("filtering", tokenz[j].Description, "at", addr.Hex(), "from ", tokenOpts.Start, "to", *tokenOpts.End)
+			fmt.Println("filtering", tokenz[j].Description, "(", name, ") at", addr.Hex(), "from ", tokenOpts.Start, "to", *tokenOpts.End)
 			filt, err := token.FilterTransfer(&tokenOpts, emptyAddresses, emptyAddresses, nil)
 			if err != nil {
 				if err.Error() == "request failed or timed out" {
@@ -94,7 +100,7 @@ func uniqueTransfers(client *ethclient.Client, wg *sync.WaitGroup) {
 					filt.Event.TokenId.Uint64(),
 					timestamp,
 				)
-				if err = data.AddIfNotFound(); err != nil {
+				if err = data.Add(); err != nil {
 					log.Println("add unique", err)
 					fmt.Println("add unique", err)
 				}

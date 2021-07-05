@@ -29,7 +29,8 @@ func multiTransfers(client *ethclient.Client, wg *sync.WaitGroup) {
 		if len(tokenz) == 0 {
 			fmt.Println("NO MULTI TOKENS FOUND")
 			log.Println("NO MULTI TOKENS FOUND")
-			return
+			time.Sleep(5 * time.Minute)
+			continue
 		}
 		for j := 0; j < len(tokenz); j++ {
 

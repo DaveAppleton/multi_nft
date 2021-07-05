@@ -81,3 +81,6 @@
 
 2021/07/02 15:35:00 set minter  Cat 52 0xd08132BC96bBe55E33a61E5a55cA0a237F515bf0 demo
 2021/07/02 20:56:14 set minter  Libra 39 0x08ef5C04D2F93d9858F0d87697f22cBeCD990076 demo
+2021/07/05 00:59:43 database :  dial tcp [::1]:5432: connect: connection refused
+2021/07/05 00:59:43 host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname='minty-demo' connect_timeout=10
+2021/07/05 00:59:43 dial tcp [::1]:5432: connect: connection refused

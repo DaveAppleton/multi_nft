@@ -95,7 +95,8 @@ contract pMintyMultiToken is ERC1155 {
         emit PoolAdded(thisPool,_poolName);
     }
 
-    function setContractURI(string memory _uri) external onlyAuth {
+    function setContractURI(string memory _uri) external {
+        require(msg.sender == deployer,"This should be set as part of the deployment process");
         contractURI = _uri;
     } 
    

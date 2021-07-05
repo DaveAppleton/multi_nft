@@ -498,7 +498,7 @@ func main() {
 					locking := common.HexToAddress(viper.GetString("LOCKING"))
 					royaltyPerMille := big.NewInt(int64(*royalty))
 
-					pMMTA, tx, _, err := pMintyMultiToken.DeployPMintyMultiToken(
+					pMMTA, tx, pMMTC, err := pMintyMultiToken.DeployPMintyMultiToken(
 						bankerTx,
 						client,
 						owner,
@@ -523,6 +523,22 @@ func main() {
 						log.Fatal(err)
 					}
 					fmt.Println("deployed at ", depA.Hex())
+					tx, err = pMMTC.SetContractURI(bankerTx, "https://minty.mypinata.cloud/ipfs/"+rec.Hash)
+					if err != nil {
+						fmt.Println(err)
+						log.Fatal(err)
+					}
+					ctx, cancel = context.WithTimeout(context.Background(), 2*time.Minute)
+					defer cancel()
+					rct, err := bind.WaitMined(ctx, client, tx)
+					if err != nil {
+						fmt.Println(err)
+						log.Fatal(err)
+					}
+					if rct.Status == 0 {
+						fmt.Println("Setting Contract URI failed for", pMMTA.Hex())
+						log.Println("Setting Contract URI failed for", pMMTA.Hex())
+					}
 					err = updateProjectWithContract(*projectID, pMMTA)
 					if err != nil {
 						fmt.Println(err)
@@ -835,6 +851,7 @@ go run . -action approve_project -database demo -user_name Sinister -royalty 100
 
 select nickname from users a, artist b, project c where a.id=b.user_id and b.id = c.artist_id and c.id=19;
 
+go run . -action approve_project -database demo -user_name Virgo -royalty 100 -initial_share_addrs 0x39d07f321cAF5b0668459DB5Bcf039A462A9273d -later_share_addrs 0x39d07f321cAF5b0668459DB5Bcf039A462A9273d,0x6e93Deb7FDa0E5A4CA8A3566785F0c7f4D0A2cb3 -initial_share_shares 1000 -later_share_shares 500,500  -project_id 44
 
 
 Note : need warning that artist should have nickname set

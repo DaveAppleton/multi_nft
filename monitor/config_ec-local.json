@@ -1,0 +1,15 @@
+{
+    "log" : "util-live.log",
+    "DB_HOST___" : "host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname=minty connect_timeout=10",
+    "TOKEN_HOST" : "host=localhost user=token password='erc20' port=5432 sslmode=disable dbname=ether_cards connect_timeout=10",
+    "HOST" : "https://mainnet.infura.io/v3/a1a92273c03b4c9b83c5b2470058464f",
+    "WSSHOST" : "wss://mainnet.infura.io/ws/v3/4a39d44a7d7d4d8ea78a47b3d9e82ac3",
+
+
+    
+    "DB_TIMEOUT" : 100,
+
+
+    "dummy" : "stuff"
+
+}

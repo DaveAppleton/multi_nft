@@ -71,6 +71,7 @@ type ProjectRecord struct {
 	Title           string
 	ProjectID       int
 	ProjectApproved bool
+	Hash            string
 	ProjectToken    sql.NullString
 }
 
@@ -80,7 +81,7 @@ func getProjectsForUser(userName string) (pa []ProjectRecord, err error) {
 		return []ProjectRecord{}, err
 	}
 	defer db.Close()
-	query := "select a.id, a.nickname, a.address, b.id, b.approved, c.approved, c.title, c.id as project_id, c.token_address from users a, artist b, project c where a.id=b.user_id and b.id = c.artist_id and a.nickname=$1"
+	query := "select a.id, a.nickname, a.address, b.id, b.approved, c.approved, c.title, c.id as project_id, c.token_address, c.hash from users a, artist b, project c where a.id=b.user_id and b.id = c.artist_id and a.nickname=$1"
 	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
 	defer cancel()
 	row, err := db.QueryContext(ctx, query, userName)
@@ -89,7 +90,7 @@ func getProjectsForUser(userName string) (pa []ProjectRecord, err error) {
 	}
 	for row.Next() {
 		var p ProjectRecord
-		err = row.Scan(&p.UserID, &p.Name, &p.Address, &p.ArtistID, &p.ArtistApproved, &p.ProjectApproved, &p.Title, &p.ProjectID, &p.ProjectToken)
+		err = row.Scan(&p.UserID, &p.Name, &p.Address, &p.ArtistID, &p.ArtistApproved, &p.ProjectApproved, &p.Title, &p.ProjectID, &p.ProjectToken, &p.Hash)
 		if err != nil {
 			return []ProjectRecord{}, err
 		}

@@ -86,6 +86,8 @@ func multiSales(client *ethclient.Client, wg *sync.WaitGroup) {
 		if len(salez) == 0 {
 			fmt.Println("NO MULTI SALES FOUND")
 			log.Println("NO MULTI SALES FOUND")
+			time.Sleep(5 * time.Minute)
+			continue
 		}
 
 		for j := 0; j < len(salez); j++ {

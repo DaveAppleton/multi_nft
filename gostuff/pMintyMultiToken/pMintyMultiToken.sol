@@ -30,7 +30,7 @@ interface IERC165 {
 
 // File @openzeppelin/contracts/token/ERC1155/IERC1155.sol@v3.4.0
 
-// // MIT
+//  MIT
 
 pragma solidity >=0.6.2 <0.8.0;
 
@@ -135,7 +135,7 @@ interface IERC1155 is IERC165 {
 
 // File @openzeppelin/contracts/token/ERC1155/IERC1155MetadataURI.sol@v3.4.0
 
-// // MIT
+//  MIT
 
 pragma solidity >=0.6.2 <0.8.0;
 
@@ -158,7 +158,7 @@ interface IERC1155MetadataURI is IERC1155 {
 
 // File @openzeppelin/contracts/token/ERC1155/IERC1155Receiver.sol@v3.4.0
 
-// // MIT
+//  MIT
 
 pragma solidity >=0.6.0 <0.8.0;
 
@@ -217,7 +217,7 @@ interface IERC1155Receiver is IERC165 {
 
 // File @openzeppelin/contracts/utils/Context.sol@v3.4.0
 
-// // MIT
+//  MIT
 
 pragma solidity >=0.6.0 <0.8.0;
 
@@ -245,7 +245,7 @@ abstract contract Context {
 
 // File @openzeppelin/contracts/introspection/ERC165.sol@v3.4.0
 
-// // MIT
+//  MIT
 
 pragma solidity >=0.6.0 <0.8.0;
 
@@ -301,7 +301,7 @@ abstract contract ERC165 is IERC165 {
 
 // File @openzeppelin/contracts/math/SafeMath.sol@v3.4.0
 
-// // MIT
+//  MIT
 
 pragma solidity >=0.6.0 <0.8.0;
 
@@ -519,7 +519,7 @@ library SafeMath {
 
 // File @openzeppelin/contracts/utils/Address.sol@v3.4.0
 
-// // MIT
+//  MIT
 
 pragma solidity >=0.6.2 <0.8.0;
 
@@ -712,7 +712,7 @@ library Address {
 
 // File @openzeppelin/contracts/token/ERC1155/ERC1155.sol@v3.4.0
 
-// // MIT
+//  MIT
 
 pragma solidity >=0.6.0 <0.8.0;
 
@@ -1128,7 +1128,7 @@ contract ERC1155 is Context, ERC165, IERC1155, IERC1155MetadataURI {
 
 // File contracts/locking/locking.sol
 
-//// MIT
+// MIT
 pragma solidity ^0.7.3;
 
 
@@ -1347,7 +1347,8 @@ contract pMintyMultiToken is ERC1155 {
         emit PoolAdded(thisPool,_poolName);
     }
 
-    function setContractURI(string memory _uri) external onlyAuth {
+    function setContractURI(string memory _uri) external {
+        require(msg.sender == deployer,"This should be set as part of the deployment process");
         contractURI = _uri;
     } 
    

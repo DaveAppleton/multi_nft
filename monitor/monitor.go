@@ -1,10 +1,12 @@
 package main
 
 import (
+	"encoding/csv"
 	"flag"
 	"fmt"
 	"log"
 	"os"
+	"strconv"
 	"sync"
 
 	"art.minty.monitor/etherdb"
@@ -14,10 +16,21 @@ import (
 )
 
 var (
-	client   *ethclient.Client
-	database *string = flag.String("database", "", "which DB to load")
-	newMulti         = flag.String("new_multi", "", "new multi token")
+	client      *ethclient.Client
+	database    *string = flag.String("database", "", "which DB to load")
+	newDatabase *bool   = flag.Bool("new_db", false, "new database")
+	initUnique  *string = flag.String("init_unique_tokens", "", "load unique tokens to Lookup")
 )
+
+func readCSV(input string) (data [][]string, err error) {
+	sf, err := os.Open(input)
+	if err != nil {
+		fmt.Println(err, "[", input, "]")
+		log.Fatal(err, input)
+	}
+	data, err = csv.NewReader(sf).ReadAll()
+	return
+}
 
 func initViper() {
 	fmt.Println("using ./config_" + *database + ".json")
@@ -64,11 +77,57 @@ func main() {
 	chkErr("Get Client", err)
 	etherdb.InitDB(viper.GetString("TOKEN_HOST"))
 
-	if len(*newMulti) > 0 {
-		fmt.Println("create new Multi Table : ", *newMulti)
+	if *newDatabase {
+		fmt.Println("create Lookup : ")
+		err = etherdb.CreateLookupTable()
+		if err != nil {
+			fmt.Println("Lookup : ", err)
+		}
+		fmt.Println("create Multi Token : ")
 		err := etherdb.CreateMultiTokenTable()
 		if err != nil {
-			fmt.Println("Status : ", err)
+			fmt.Println("Multi Token : ", err)
+		}
+		fmt.Println("create Unique Token : ")
+		err = etherdb.CreateUniqueTokenTable()
+		if err != nil {
+			fmt.Println("Unique Token : ", err)
+		}
+		fmt.Println("create Multi Sale : ")
+		err = etherdb.CreateMultiSaleTable()
+		if err != nil {
+			fmt.Println("Multi Sale : ", err)
+		}
+		fmt.Println("create Unique Sale : ")
+		err = etherdb.CreateUniqueSaleTable()
+		if err != nil {
+			fmt.Println("Unique Sale : ", err)
+		}
+		fmt.Println("create Unique Owners : ")
+		err = etherdb.CreateUniqueOwnersTable()
+		if err != nil {
+			fmt.Println("Unique Owners : ", err)
+		}
+
+		os.Exit(0)
+	}
+
+	if len(*initUnique) > 0 {
+		data, err := readCSV(*initUnique)
+		if err != nil {
+			log.Fatal(err)
+		}
+		for _, line := range data {
+			startAt, err := strconv.ParseUint(line[0], 10, 64)
+			if err != nil {
+				log.Println("Adding ", *initUnique, "to", *database, line[0], err)
+				continue
+			}
+			_, err = etherdb.AddUniqueTokenToLookup(startAt, line[1], line[2])
+			if err != nil {
+				log.Println("Adding ", *initUnique, "to", *database, line[0], line[1], line[2], err)
+				continue
+			}
 		}
 		os.Exit(0)
 	}
