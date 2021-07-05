@@ -119,7 +119,7 @@ func multiSales(client *ethclient.Client, wg *sync.WaitGroup) {
 			fmt.Println("filtering", salez[j].Description, "at", addr.Hex(), "from ", tokenOpts.Start, "to", *tokenOpts.End)
 			filt1, err := multisale.FilterNewOffer(&tokenOpts)
 			fmt.Println("Offer New")
-			if filtErr("offer new", err) {
+			if filtErr("multi offer new", err) {
 				for filt1.Next() {
 					fmt.Println("MS Offer New", filt1.Event.Raw.TxHash.Hex(), filt1.Event.Token.Hex(), filt1.Event.Owner.Hex(), filt1.Event.TokenId, filt1.Event.Quantity, etherUtils.EtherToStr(filt1.Event.Price), filt1.Event.Hash)
 					log.Println("MS Offer New", filt1.Event.Raw.TxHash.Hex(), filt1.Event.Token.Hex(), filt1.Event.Owner.Hex(), filt1.Event.TokenId, filt1.Event.Quantity, etherUtils.EtherToStr(filt1.Event.Price), filt1.Event.Hash)
@@ -140,12 +140,12 @@ func multiSales(client *ethclient.Client, wg *sync.WaitGroup) {
 						filt1.Event.Hash,
 						timestamp)
 
-					chkErrX("Offer New", sale.Add(), false)
+					chkErrX("Multi Offer New", sale.Add(), false)
 				}
 			}
 			fmt.Println("Offer Accepted")
 			filt2, err := multisale.FilterOfferAccepted(&tokenOpts)
-			if filtErr("offer accepted", err) {
+			if filtErr("multi offer accepted", err) {
 				for filt2.Next() {
 					fmt.Println("Multi Sale", filt2.Event.Raw.TxHash.Hex(), filt2.Event.Token.Hex(), filt2.Event.Buyer.Hex(), filt2.Event.Pos, filt2.Event.Quantity, etherUtils.EtherToStr(filt2.Event.Price))
 					log.Println("Multi Sale", filt2.Event.Raw.TxHash.Hex(), filt2.Event.Token.Hex(), filt2.Event.Buyer.Hex(), filt2.Event.Pos, filt2.Event.Quantity, etherUtils.EtherToStr(filt2.Event.Price))
@@ -166,12 +166,12 @@ func multiSales(client *ethclient.Client, wg *sync.WaitGroup) {
 						"",
 						timestamp)
 
-					chkErrX("Sale Accepted", sale.Add(), false)
+					chkErrX("Multi Sale Accepted", sale.Add(), false)
 				}
 			}
 			fmt.Println("Resale")
 			filt3, err := multisale.FilterResaleOffer(&tokenOpts)
-			if filtErr("resale offer", err) {
+			if filtErr("Multi resale offer", err) {
 				for filt3.Next() {
 					fmt.Println("Multi Sale", filt3.Event.Raw.TxHash.Hex(), filt3.Event.Token.Hex(), filt3.Event.Owner.Hex(), filt3.Event.TokenId, filt3.Event.Position, filt3.Event.Quantity, etherUtils.EtherToStr(filt3.Event.Price))
 					log.Println("Multi Sale", filt3.Event.Raw.TxHash.Hex(), filt3.Event.Token.Hex(), filt3.Event.Owner.Hex(), filt3.Event.TokenId, filt3.Event.Position, filt3.Event.Quantity, etherUtils.EtherToStr(filt3.Event.Price))
@@ -192,7 +192,7 @@ func multiSales(client *ethclient.Client, wg *sync.WaitGroup) {
 						"",
 						timestamp)
 
-					chkErrX("Resale", sale.Add(), false)
+					chkErrX("Multi Resale", sale.Add(), false)
 
 				}
 			}

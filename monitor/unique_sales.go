@@ -62,7 +62,7 @@ func uniqueSales(client *ethclient.Client, wg *sync.WaitGroup) {
 			fmt.Println("filtering", salez[j].Description, "at", addr.Hex(), "from ", tokenOpts.Start, "to", *tokenOpts.End)
 			filt1, err := psale.FilterNewOffer(&tokenOpts)
 			fmt.Println("Offer New")
-			if filtErr("offer new", err) {
+			if filtErr("unique offer new", err) {
 				for filt1.Next() {
 					fmt.Println("MS Offer New", filt1.Event.Raw.TxHash.Hex(), filt1.Event.Owner.Hex(), filt1.Event.TokenId, etherUtils.EtherToStr(filt1.Event.Price), filt1.Event.Hash)
 					log.Println("MS Offer New", filt1.Event.Raw.TxHash.Hex(), filt1.Event.Owner.Hex(), filt1.Event.TokenId, etherUtils.EtherToStr(filt1.Event.Price), filt1.Event.Hash)
@@ -80,12 +80,12 @@ func uniqueSales(client *ethclient.Client, wg *sync.WaitGroup) {
 						filt1.Event.Hash,
 						timestamp)
 
-					chkErrX("Offer New", sale.Add(), false)
+					chkErrX("unique Offer New", sale.Add(), false)
 				}
 			}
 			fmt.Println("Offer Accepted")
 			filt2, err := psale.FilterOfferAccepted(&tokenOpts)
-			if filtErr("offer accepted", err) {
+			if filtErr("unique offer accepted", err) {
 				for filt2.Next() {
 					fmt.Println("Multi Sale", filt2.Event.Raw.TxHash.Hex(), filt2.Event.Buyer.Hex(), etherUtils.EtherToStr(filt2.Event.Price))
 					log.Println("Multi Sale", filt2.Event.Raw.TxHash.Hex(), filt2.Event.Buyer.Hex(), etherUtils.EtherToStr(filt2.Event.Price))
@@ -103,12 +103,12 @@ func uniqueSales(client *ethclient.Client, wg *sync.WaitGroup) {
 						"",
 						timestamp)
 
-					chkErrX("Sale Accepted", sale.Add(), false)
+					chkErrX("unique Sale Accepted", sale.Add(), false)
 				}
 			}
 			fmt.Println("Resale")
 			filt3, err := psale.FilterResaleOffer(&tokenOpts)
-			if filtErr("resale offer", err) {
+			if filtErr("unique resale offer", err) {
 				for filt3.Next() {
 					fmt.Println("Multi Sale", filt3.Event.Raw.TxHash.Hex(), filt3.Event.Owner.Hex(), filt3.Event.TokenId, etherUtils.EtherToStr(filt3.Event.Price))
 					log.Println("Multi Sale", filt3.Event.Raw.TxHash.Hex(), filt3.Event.Owner.Hex(), filt3.Event.TokenId, etherUtils.EtherToStr(filt3.Event.Price))
@@ -126,7 +126,7 @@ func uniqueSales(client *ethclient.Client, wg *sync.WaitGroup) {
 						"",
 						timestamp)
 
-					chkErrX("Resale", sale.Add(), false)
+					chkErrX("unique Resale", sale.Add(), false)
 
 				}
 			}

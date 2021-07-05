@@ -1,5 +1,15 @@
 package main
 
+/*
+CREATE DATABASE blockchain;
+CREATE USER token with password 'erc20';
+GRANT ALL PRIVILEGES ON DATABASE blockchain TO token;
+
+./art.minty.monitor -database minty-node -new_db true
+
+Then set up tokens in lookup table
+*/
+
 import (
 	"encoding/csv"
 	"flag"
@@ -16,10 +26,13 @@ import (
 )
 
 var (
-	client      *ethclient.Client
-	database    *string = flag.String("database", "", "which DB to load")
-	newDatabase *bool   = flag.Bool("new_db", false, "new database")
-	initUnique  *string = flag.String("init_unique_tokens", "", "load unique tokens to Lookup")
+	client          *ethclient.Client
+	database        *string = flag.String("database", "", "which DB to load")
+	newDatabase     *bool   = flag.Bool("new_db", false, "new database")
+	initUniqueToken *string = flag.String("init_unique_token", "", "load unique tokens to Lookup")
+	initMultiToken  *string = flag.String("init_multi_token", "", "load unique tokens to Lookup")
+	initUniqueSale  *string = flag.String("init_unique_sale", "", "load unique tokens to Lookup")
+	initMultiSale   *string = flag.String("init_multi_sale", "", "load unique tokens to Lookup")
 )
 
 func readCSV(input string) (data [][]string, err error) {
@@ -112,26 +125,44 @@ func main() {
 		os.Exit(0)
 	}
 
-	if len(*initUnique) > 0 {
-		data, err := readCSV(*initUnique)
-		if err != nil {
-			log.Fatal(err)
-		}
-		for _, line := range data {
-			startAt, err := strconv.ParseUint(line[0], 10, 64)
-			if err != nil {
-				log.Println("Adding ", *initUnique, "to", *database, line[0], err)
-				continue
-			}
-			_, err = etherdb.AddUniqueTokenToLookup(startAt, line[1], line[2])
-			if err != nil {
-				log.Println("Adding ", *initUnique, "to", *database, line[0], line[1], line[2], err)
-				continue
-			}
-		}
-		os.Exit(0)
+	type adder struct {
+		ParamPointer *string
+		FuncPointer  func(uint64, string, string) (*etherdb.Lookup, error)
 	}
 
+	adders := []adder{
+		{initUniqueToken, etherdb.AddUniqueTokenToLookup},
+		{initMultiToken, etherdb.AddMultiTokenToLookup},
+		{initUniqueSale, etherdb.AddUniqueSaleToLookup},
+		{initMultiSale, etherdb.AddMultiSaleToLookup},
+	}
+
+	loaded := false
+	for _, adx := range adders {
+		pp := *adx.ParamPointer
+		if len(pp) > 0 {
+			data, err := readCSV(pp)
+			if err != nil {
+				log.Fatal(err)
+			}
+			for _, line := range data {
+				startAt, err := strconv.ParseUint(line[0], 10, 64)
+				if err != nil {
+					log.Println("Adding ", pp, "to", *database, line[0], err)
+					continue
+				}
+				_, err = adx.FuncPointer(startAt, line[1], line[2])
+				if err != nil {
+					log.Println("Adding ", pp, "to", *database, line[0], line[1], line[2], err)
+					continue
+				}
+			}
+			loaded = true
+		}
+	}
+	if loaded {
+		os.Exit(0)
+	}
 	wg.Add(1)
 	go uniqueTransfers(client, &wg)
 	wg.Add(1)

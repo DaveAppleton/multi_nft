@@ -115,6 +115,7 @@ func getContractMetaData(projectID int) (str string, err error) {
 type Artist struct {
 	UserID    int
 	Address   string
+	Email     sql.NullString
 	Nickname  sql.NullString
 	Avatar    sql.NullString
 	ArtistID  int
@@ -141,7 +142,7 @@ func getArtists(start int) (pa []Artist, max int, err error) {
 		log.Println("cannot get max")
 		return []Artist{}, 0, err
 	}
-	query := "select a.id, a.address, a.nickname, a.avatar, b.id, b.about_me, b.approved, b.facebook, b.twitter, b.instagram, b.portfolio from users a, artist b where a.id=b.user_id and a.nickname is not null order by a.id limit 50 offset $1"
+	query := "select a.id, a.address, a.email, a.nickname, a.avatar, b.id, b.about_me, b.approved, b.facebook, b.twitter, b.instagram, b.portfolio from users a, artist b where a.id=b.user_id and a.nickname is not null order by a.id limit 50 offset $1"
 	ctx, cancel = context.WithTimeout(context.Background(), 60*time.Second)
 	defer cancel()
 	row, err := db.QueryContext(ctx, query, start)
@@ -154,6 +155,7 @@ func getArtists(start int) (pa []Artist, max int, err error) {
 		err = row.Scan(
 			&p.UserID,
 			&p.Address,
+			&p.Email,
 			&p.Nickname,
 			&p.Avatar,
 			&p.ArtistID,

@@ -31,7 +31,7 @@ func timeout() time.Duration {
 func CreateMultiTokenTable() (err error) {
 	query := `create table multi_tokens (
 		id serial not null primary key,
-		token_ref int not null,
+		lookup_id int not null,
 		tokenid int not null,
 		blocknumber int,
 		index int,
@@ -48,7 +48,7 @@ func CreateMultiTokenTable() (err error) {
 func CreateUniqueTokenTable() (err error) {
 	query := `create table unique_tokens (
 		id serial not null primary key,
-		token_ref int not null,
+		lookup_id int not null,
 		tokenid int not null,
 		blocknumber int,
 		index int,
