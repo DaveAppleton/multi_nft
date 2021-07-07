@@ -42,6 +42,8 @@ var (
 	laterStakeShares    *string = flag.String("later_share_shares", "", "shares (/1000) of those who share later royalties")
 	override            *bool   = flag.Bool("override", false, "override empty field checks")
 	abi                 *bool   = flag.Bool("abi", false, "print the abi of pMintyMultiToken")
+	contract            *string = flag.String("contract", "", "contract address")
+	description         *string = flag.String("description", "", "pool description")
 	bankerTx            *bind.TransactOpts
 )
 
@@ -675,6 +677,38 @@ func main() {
 		chkErr("Web Server", err)
 
 	}
+	if *action == "add_pools" {
+		if len(*contract) == 0 {
+			fmt.Println("Contract required")
+			os.Exit(1)
+		}
+		if len(*description) == 0 {
+			fmt.Println("description required")
+			os.Exit(1)
+		}
+		isha := strings.Split(*initialStakeHolders, ",")
+		Lsha := strings.Split(*laterStakeHolders, ",")
+		issa := strings.Split(*initialStakeShares, ",")
+		Lssa := strings.Split(*laterStakeShares, ",")
+		initialArray := makeSHA3(isha, issa)
+		laterArray := makeSHA3(Lsha, Lssa)
+		pMMTA := common.HexToAddress(*contract)
+		pMMTC, err := pMintyMultiToken.NewPMintyMultiToken(pMMTA, client)
+		chkErr("Restore", err)
+		tx, err := pMMTC.AddPools(bankerTx, initialArray, laterArray, *description)
+		chkErr("AddPools", err)
+		fmt.Println(tx.Hash().Hex())
+		ctx, cancel := context.WithTimeout(context.Background(), 2*time.Minute)
+		defer cancel()
+		rct, err := bind.WaitMined(ctx, client, tx)
+		if err != nil {
+			fmt.Println(err)
+			log.Fatal(err)
+		}
+		fmt.Println("status", rct.Status)
+		os.Exit(0)
+
+	}
 	// if *action == "set_metadata" {
 	// 	hash, err := getContractMetaData(*projectID)
 	// 	if err != nil {
@@ -853,6 +887,24 @@ select nickname from users a, artist b, project c where a.id=b.user_id and b.id 
 
 go run . -action approve_project -database demo -user_name Virgo -royalty 100 -initial_share_addrs 0x39d07f321cAF5b0668459DB5Bcf039A462A9273d -later_share_addrs 0x39d07f321cAF5b0668459DB5Bcf039A462A9273d,0x6e93Deb7FDa0E5A4CA8A3566785F0c7f4D0A2cb3 -initial_share_shares 1000 -later_share_shares 500,500  -project_id 44
 
+go run . -action approve_project -database demo -user_name Sinister -royalty 100 -initial_share_addrs 0xa454515041892eB78132293ABd5763a730412F65 -later_share_addrs 0xa454515041892eB78132293ABd5763a730412F65,0x6e93Deb7FDa0E5A4CA8A3566785F0c7f4D0A2cb3 -initial_share_shares 1000 -later_share_shares 500,500  -project_id 45
+
+go run . -action add_pools -database demo  -initial_share_addrs 0xa454515041892eB78132293ABd5763a730412F65 -later_share_addrs 0xa454515041892eB78132293ABd5763a730412F65,0x6e93Deb7FDa0E5A4CA8A3566785F0c7f4D0A2cb3 -initial_share_shares 1000 -later_share_shares 300,700   -contract 0xe8769f37C98104bA5b77C0d622349121432E5604 -description 30-70
+
+go run . -action add_pools -database demo -initial_share_addrs 0xa454515041892eB78132293ABd5763a730412F65 -later_share_addrs 0xa454515041892eB78132293ABd5763a730412F65,0x6e93Deb7FDa0E5A4CA8A3566785F0c7f4D0A2cb3 -initial_share_shares 1000 -later_share_shares 200,800  -contract 0xe8769f37C98104bA5b77C0d622349121432E5604 -description 20-80
 
 Note : need warning that artist should have nickname set
+
+go run . -action add_pools -database demo -initial_share_addrs 0x39d07f321cAF5b0668459DB5Bcf039A462A9273d,0x6e93Deb7FDa0E5A4CA8A3566785F0c7f4D0A2cb3 -later_share_addrs 0x39d07f321cAF5b0668459DB5Bcf039A462A9273d,0x6e93Deb7FDa0E5A4CA8A3566785F0c7f4D0A2cb3 -initial_share_shares 300,700 -later_share_shares 300,700  -contract 0x192868863028d6bc9A076D60C55567831B97cAEf -description sea-30-70
+
+go run . -action add_pools -database demo -initial_share_addrs 0x39d07f321cAF5b0668459DB5Bcf039A462A9273d,0x6e93Deb7FDa0E5A4CA8A3566785F0c7f4D0A2cb3 -later_share_addrs 0x39d07f321cAF5b0668459DB5Bcf039A462A9273d,0x6e93Deb7FDa0E5A4CA8A3566785F0c7f4D0A2cb3 -initial_share_shares 200,800 -later_share_shares 200,800  -contract 0x192868863028d6bc9A076D60C55567831B97cAEf -description sea-20-80
+
+//
+go run . -action approve_project -database demo -user_name Virgo -royalty 100 -initial_share_addrs 0x39d07f321cAF5b0668459DB5Bcf039A462A9273d -later_share_addrs 0x39d07f321cAF5b0668459DB5Bcf039A462A9273d -initial_share_shares 1000 -later_share_shares 1000  -project_id 46
+
+go run . -action add_pools -database demo -initial_share_addrs 0x39d07f321cAF5b0668459DB5Bcf039A462A9273d,0x6e93Deb7FDa0E5A4CA8A3566785F0c7f4D0A2cb3 -later_share_addrs 0x39d07f321cAF5b0668459DB5Bcf039A462A9273d,0x6e93Deb7FDa0E5A4CA8A3566785F0c7f4D0A2cb3 -initial_share_shares 300,700 -later_share_shares 300,700  -contract 0x36c5e21902d04902B577EcBF9B2273675C6c738E -description sea-30-70
+
+go run . -action add_pools -database demo -initial_share_addrs 0x39d07f321cAF5b0668459DB5Bcf039A462A9273d,0x6e93Deb7FDa0E5A4CA8A3566785F0c7f4D0A2cb3 -later_share_addrs 0x39d07f321cAF5b0668459DB5Bcf039A462A9273d,0x6e93Deb7FDa0E5A4CA8A3566785F0c7f4D0A2cb3 -initial_share_shares 200,800 -later_share_shares 200,800  -contract 0x36c5e21902d04902B577EcBF9B2273675C6c738E -description sea-20-80
+
+
 */

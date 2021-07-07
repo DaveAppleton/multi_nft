@@ -173,8 +173,8 @@ func multiSales(client *ethclient.Client, wg *sync.WaitGroup) {
 			filt3, err := multisale.FilterResaleOffer(&tokenOpts)
 			if filtErr("Multi resale offer", err) {
 				for filt3.Next() {
-					fmt.Println("Multi Sale", filt3.Event.Raw.TxHash.Hex(), filt3.Event.Token.Hex(), filt3.Event.Owner.Hex(), filt3.Event.TokenId, filt3.Event.Position, filt3.Event.Quantity, etherUtils.EtherToStr(filt3.Event.Price))
-					log.Println("Multi Sale", filt3.Event.Raw.TxHash.Hex(), filt3.Event.Token.Hex(), filt3.Event.Owner.Hex(), filt3.Event.TokenId, filt3.Event.Position, filt3.Event.Quantity, etherUtils.EtherToStr(filt3.Event.Price))
+					fmt.Println("Multi ReSale", filt3.Event.Raw.TxHash.Hex(), filt3.Event.Token.Hex(), filt3.Event.Owner.Hex(), filt3.Event.TokenId, filt3.Event.Position, filt3.Event.Quantity, etherUtils.EtherToStr(filt3.Event.Price))
+					log.Println("Multi ReSale", filt3.Event.Raw.TxHash.Hex(), filt3.Event.Token.Hex(), filt3.Event.Owner.Hex(), filt3.Event.TokenId, filt3.Event.Position, filt3.Event.Quantity, etherUtils.EtherToStr(filt3.Event.Price))
 					timestamp, _ := blockTimeStamp(filt3.Event.Raw.BlockHash)
 					sale := etherdb.NewMultiSale(
 						salez[j].ID,

@@ -40,6 +40,7 @@
                 <th>ID</th>
                 <th>Artist</th>
                 <th>Address</th>
+                <th>EMAIL</th>
                 <th>Approved</th>
               </tr>
             </thead>
@@ -53,6 +54,11 @@
                 <td>NOT SET</td>
                 {{end}}
                 <td>{{.Address}}</td>
+                {{if .Email.Valid}}
+                <td>{{.Email.String}}</td>
+                {{else}}
+                <td>NOT SET</td>
+                {{end}}
                 <td>{{if .Approved}}YES{{else}}<button onclick='javascript:window.open("/approve_artist?name={{.Nickname.String}}");'>APPROVE NOW</button>{{end}}</td>
               </tr>
               {{end}}
