@@ -6,68 +6,16 @@ import (
 	"net/http"
 	"strconv"
 	"text/template"
-	"time"
 
 	"art.minty.monitor/etherdb"
 	"github.com/spf13/viper"
 )
 
-func chkErrW(w http.ResponseWriter, msg string, err error) bool {
-	if err == nil {
-		return false
-	}
-	fmt.Fprintln(w, msg, err)
-	return true
-}
-
-func projectIndex(w http.ResponseWriter, r *http.Request) {
-	var data struct {
-		ERC721s     []etherdb.Lookup
-		ERC1155s    []etherdb.Lookup
-		MultiSales  []etherdb.Lookup
-		UniqueSales []etherdb.Lookup
-		Network     string
-	}
+func uniqueSalePage(w http.ResponseWriter, r *http.Request) {
 	var err error
-	data.ERC721s, err = etherdb.GetAllUniqueTokenIds()
-	if chkErrW(w, "GetUniqueTokenIds", err) {
-		return
-	}
-	data.ERC1155s, err = etherdb.GetAllMultiTokenIds()
-	if chkErrW(w, "GetMultiTokenIds", err) {
-		return
-	}
-	data.MultiSales, err = etherdb.GetAllMultiSaleIds()
-	if chkErrW(w, "GetMultiTokenIds", err) {
-		return
-	}
-	data.UniqueSales, err = etherdb.GetAllUniqueSaleIds()
-	if chkErrW(w, "GetMultiTokenIds", err) {
-		return
-	}
-	data.Network = viper.GetString("NETWORK")
-
-	index, err := template.ParseFiles("files/main.html")
-	if err != nil {
-		w.Write([]byte(err.Error()))
-		return
-	}
-	if err = index.Execute(w, data); err != nil {
-		w.Write([]byte(err.Error()))
-		return
-	}
-
-}
-
-func timeX(tm uint64) string {
-	return time.Unix(int64(tm), 0).Format("02 Jan 2006 15:04")
-}
-
-func projectUnique(w http.ResponseWriter, r *http.Request) {
-	var err error
-	var tt etherdb.UniqueTokenTransfer
+	var tt etherdb.UniqueSale
 	var data struct {
-		Transfers []etherdb.UniqueTokenTransfer
+		Transfers []etherdb.UniqueSale
 		Lookup    etherdb.Lookup
 		Name      string
 		PrevPage  string
@@ -106,7 +54,7 @@ func projectUnique(w http.ResponseWriter, r *http.Request) {
 		data.PrevPage = fmt.Sprintf(r.URL.Path+"?start=%d", nStart)
 	}
 	data.Name = viper.GetString("NAME")
-	expected := "/monitor/unique/"
+	expected := "/monitor/usales/"
 	idStr := r.URL.Path[len(expected):]
 	fmt.Println(idStr)
 	tt.LookupID, err = strconv.Atoi(idStr)
@@ -150,10 +98,10 @@ func projectUnique(w http.ResponseWriter, r *http.Request) {
 		data.Transfers, err = tt.FindAllByAddress(data.Search)
 	}
 
-	if chkErrW(w, "Get  Transfers", err) {
+	if chkErrW(w, "from MultiSelect", err) {
 		return
 	}
-	f, err := ioutil.ReadFile("files/unique.html")
+	f, err := ioutil.ReadFile("files/uniqueSale.html")
 	if chkErrW(w, "Get Unique Transfers", err) {
 		return
 	}
@@ -169,11 +117,11 @@ func projectUnique(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func projectMulti(w http.ResponseWriter, r *http.Request) {
+func multiSalePage(w http.ResponseWriter, r *http.Request) {
 	var err error
-	var tt etherdb.MultiTokenTransfer
+	var tt etherdb.MultiTokenSale
 	var data struct {
-		Transfers []etherdb.MultiTokenTransfer
+		Transfers []etherdb.MultiTokenSale
 		Lookup    etherdb.Lookup
 		Name      string
 		PrevPage  string
@@ -212,7 +160,7 @@ func projectMulti(w http.ResponseWriter, r *http.Request) {
 		data.PrevPage = fmt.Sprintf(r.URL.Path+"?start=%d", nStart)
 	}
 	data.Name = viper.GetString("NAME")
-	expected := "/monitor/multi/"
+	expected := "/monitor/msales/"
 	idStr := r.URL.Path[len(expected):]
 	fmt.Println(idStr)
 	tt.LookupID, err = strconv.Atoi(idStr)
@@ -259,7 +207,7 @@ func projectMulti(w http.ResponseWriter, r *http.Request) {
 	if chkErrW(w, "Get  Transfers", err) {
 		return
 	}
-	f, err := ioutil.ReadFile("files/multi.html")
+	f, err := ioutil.ReadFile("files/multiSale.html")
 	if chkErrW(w, "Get Unique Transfers", err) {
 		return
 	}

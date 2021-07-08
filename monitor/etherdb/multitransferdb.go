@@ -110,7 +110,7 @@ func (*MultiTokenTransfer) getUniqueTransfers(rows *sql.Rows) (transfers []Multi
 
 // Find transfers that match tokenID
 func (tt *MultiTokenTransfer) Find() (transfers []MultiTokenTransfer, err error) {
-	query := `select id,tokenid,blocknumber,index,txhash,operator,source,dest,quantity,timestamp from multi_tokens where tokenid=$1`
+	query := `select id,tokenid,blocknumber,index,txhash,operator,source,dest,amount,timestamp from multi_tokens where tokenid=$1`
 
 	ctx, cancel := context.WithTimeout(context.Background(), timeout())
 	defer cancel()
@@ -124,7 +124,7 @@ func (tt *MultiTokenTransfer) Find() (transfers []MultiTokenTransfer, err error)
 }
 
 func (tt *MultiTokenTransfer) ListAll(start int) (transfers []MultiTokenTransfer, err error) {
-	query := `select id,tokenid,blocknumber,index,txhash,operator,source,dest,quantity,timestamp from multi_tokens where lookup_id=$1  offset $2 limit $3`
+	query := `select id,tokenid,blocknumber,index,txhash,operator,source,dest,amount,timestamp from multi_tokens where lookup_id=$1  offset $2 limit $3`
 
 	ctx, cancel := context.WithTimeout(context.Background(), timeout())
 	defer cancel()
@@ -139,7 +139,7 @@ func (tt *MultiTokenTransfer) ListAll(start int) (transfers []MultiTokenTransfer
 
 // FindByAddress returns transfers of specific token to or from an address
 func (tt *MultiTokenTransfer) FindByAddress(addr string) (transfers []MultiTokenTransfer, err error) {
-	query := `select id,tokenid,blocknumber,index,txhash,operator,source,dest,quantity,timestamp from multi_tokens  where  (source=$1 or dest=$1)`
+	query := `select id,tokenid,blocknumber,index,txhash,operator,source,dest,amount,timestamp from multi_tokens  where  (source=$1 or dest=$1)`
 
 	ctx, cancel := context.WithTimeout(context.Background(), timeout())
 	defer cancel()
@@ -153,7 +153,7 @@ func (tt *MultiTokenTransfer) FindByAddress(addr string) (transfers []MultiToken
 
 // FindAllByAddress returns transfers of any token to or from an address newest first
 func (tt *MultiTokenTransfer) FindAllByAddress(addr string) (transfers []MultiTokenTransfer, err error) {
-	query := `select id,tokenid,blocknumber,index,txhash,operator,source,dest,quantity,timestamp from multi_tokens
+	query := `select id,tokenid,blocknumber,index,txhash,operator,source,dest,amount,timestamp from multi_tokens
 		 where (source=$1 or dest=$1) and lookup_id = $2
 		 order by blocknumber desc, index desc`
 	ctx, cancel := context.WithTimeout(context.Background(), timeout())
@@ -167,7 +167,7 @@ func (tt *MultiTokenTransfer) FindAllByAddress(addr string) (transfers []MultiTo
 }
 
 func (tt *MultiTokenTransfer) FindByTxHash() (transfers []MultiTokenTransfer, err error) {
-	query := `select id,tokenid,blocknumber,index,txhash,operator,source,dest,quantity,timestamp from multi_tokens
+	query := `select id,tokenid,blocknumber,index,txhash,operator,source,dest,amount,timestamp from multi_tokens
 		 where  lookup_id = $1 and txhash = $2
 		 order by blocknumber desc, index desc`
 	ctx, cancel := context.WithTimeout(context.Background(), timeout())
@@ -181,7 +181,7 @@ func (tt *MultiTokenTransfer) FindByTxHash() (transfers []MultiTokenTransfer, er
 }
 
 func (tt *MultiTokenTransfer) FindByTokenId() (transfers []MultiTokenTransfer, err error) {
-	query := `select id,tokenid,blocknumber,index,txhash,operator,source,dest,quantity,timestamp from multi_tokens
+	query := `select id,tokenid,blocknumber,index,txhash,operator,source,dest,amount,timestamp from multi_tokens
 		 where  lookup_id = $1 and tokenid = $2
 		 order by blocknumber desc, index desc`
 	ctx, cancel := context.WithTimeout(context.Background(), timeout())

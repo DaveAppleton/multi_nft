@@ -181,6 +181,8 @@ func main() {
 		http.HandleFunc("/monitor/", projectIndex)
 		http.HandleFunc("/monitor/unique/", projectUnique)
 		http.HandleFunc("/monitor/multi/", projectMulti)
+		http.HandleFunc("/monitor/usales/", uniqueSalePage)
+		http.HandleFunc("/monitor/msales/", multiSalePage)
 		http.Handle("/inc/", http.StripPrefix("/inc", http.FileServer(http.Dir("./public"))))
 		err = http.ListenAndServe(viper.GetString("PORT"), nil)
 		if err != nil {

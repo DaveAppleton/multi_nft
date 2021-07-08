@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <title>NFT Explorer</title>
+    <meta charset="utf-8">
+    <title>Transfers for Token {{.Lookup.Address}}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/dt/dt-1.10.16/datatables.min.css" />
+    <script language="javascript">
+        $(document).ready(function () {
+            var table = $('#example').DataTable();
+        });
+
+        function go() {
+            var x = document.getElementById("destinasi").value
+            var oxAddr = /^0x[0-9a-fA-F]{40}$/i;
+            var oxTx = /^0x[0-9a-fA-F]{64}$/i;
+            var Addr = /^[0-9a-fA-F]{40}$/i;
+            var Tx = /^[0-9a-fA-F]{64}$/i;
+            var LL = /^[0-9]{1,20}$/i;
+            var ad0 = x.match(Addr)
+            var ad1 = x.match(oxAddr)
+            var tx0 = x.match(Tx)
+            var tx1 = x.match(oxTx)
+            var lx0 = x.match(LL)
+            var dest = "/"
+            if (ad0 != null) {
+                window.location = "/monitor/msales/{{.Lookup.ID}}?search=0x" + x
+                return
+            } else if (ad1 != null) {
+                window.location = "/monitor/msales/{{.Lookup.ID}}?search=" + x
+                return
+            } else if (tx0 != null) {
+                window.location = "/monitor/msales/{{.Lookup.ID}}?tx=0x" + x
+                return
+            } else if (tx1 != null) {
+                window.location = "/monitor/msales/{{.Lookup.ID}}?tx=" + x
+                return
+            } else if (lx0 != null) {
+                window.open("/monitor/msales/{{.Lookup.ID}}?token_id=" + x)
+                return
+            }
+            alert("invalid address or TxID")
+        }
+
+    </script>
+    <style>
+        body {
+            font: 90%/1.45em "Helvetica Neue", HelveticaNeue, Verdana, Arial, Helvetica, sans-serif;
+            margin: 0;
+            padding: 0;
+            color: #333;
+            background-color: #fff;
+        }
+
+        div.container {
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        div.datatable-wide {
+            padding-left: 0;
+            padding-right: 0;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="container">
+        <div class="well">
+            <H1><a href="/monitor/">{{.Name}} Explorer</a></H1>
+            <H3>Token : {{.Lookup.Description}}</H3>
+            <H3>Address : {{.Lookup.Address}}</H3>
+            {{if .Searching}} 
+                <h3>Filter by address {{.Search}}</h3>
+            {{end}}
+            <h5>{{.Count}} transactions found</h5>
+            <div class="input-group">
+                <span class="input-group-addon">Search</span>
+                <input id="destinasi" type="text" class="form-control" name="msg" placeholder="Address, TokenID or TxHash">
+                <div class="input-group-btn">
+                    <button class="btn btn-default"  onclick="javascript:go()">
+                        <i class="glyphicon glyphicon-search"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <div class="container-fluid">
+        <div class="datatable-wide">
+ 
+            <div class="tab-content">
+                <div id="menu1" class="tab-pane fade in active">
+                    <table id="example" class="table table-striped" cellspacing="0" width="100%">
+                        <thead>
+                            <tr>
+                                <th>Block Number</th>
+                                <th>Date/Time</th>
+                                <th>Operation</th>
+                                <th>Tx Hash</th>
+                                <th>From</th>
+                                <th>To</th>
+                                <th>TokenID</th>
+                                <th>Position</th>
+                                <th>Quantity</th>
+                            </tr>
+                        </thead>
+                        <tfoot>
+                            <tr>
+                                <th>Block Number</th>
+                                <th>Date/Time</th>
+                                <th>Operation</th>
+                                <th>Tx Hash</th>
+                                <th>From</th>
+                                <th>To</th>
+                                <th>TokenID</th>
+                                <th>Position</th>
+                                <th>Quantity</th>
+                            </tr>
+                        </tfoot>
+                        <tbody>
+                            {{range .Transfers}}
+                            <tr>
+                                <td>{{.BlockNumber}}</td>
+                                <td>{{ timeX .Timestamp  }}</td>
+                                <td>{{.Operation}}</td>
+                                <td>{{ .TxHash }}</td>
+                                <td>
+                                    {{.Buyer}}
+                                </td>
+                                <td>
+                                    {{ .Seller }}
+                                </td>
+                                <td>
+                                    {{ .TokenID }}
+                                </td>
+                                <th>{{.Position}}</th>
+                                <th>{{.Quantity}}</th>
+                            </tr>
+                            {{end}}
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+        <div class="well">
+            <div class="row">
+
+                {{ if ne .PrevPage ""}}
+                <a href="{{.PrevPage}}" class="btn btn-info" role="button">Previous</a>
+                {{ end }} {{ if ne .NextPage ""}}
+                <a href="{{.NextPage}}" class="btn btn-info" role="button">Next</a>
+                {{ end }}
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
