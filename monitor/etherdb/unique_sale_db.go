@@ -11,7 +11,7 @@ import (
 //item := etherdb.UniqueSale{filt.Event.Raw.TxHash.Hex(), filt.Event.Buyer.Hex(), filt.Event.TokenId, etherUtils.EtherToStr(filt.Event.Price)}
 type UniqueSale struct {
 	ID          uint64
-	LookupRef   int
+	LookupID    int
 	Operation   string
 	BlockNumber uint64
 	TxIndex     uint
@@ -28,7 +28,7 @@ type UniqueSale struct {
 }
 
 func NewUniqueSale(
-	lookupRef int,
+	LookupID int,
 	operation string,
 	tokenid uint64,
 	blocknumber uint64,
@@ -40,7 +40,7 @@ func NewUniqueSale(
 	hash string,
 	timestamp uint64) (mt UniqueSale) {
 	mt = UniqueSale{
-		LookupRef:   lookupRef,
+		LookupID:    LookupID,
 		Operation:   operation,
 		TokenID:     tokenid,
 		BlockNumber: blocknumber,
@@ -66,7 +66,7 @@ func (tt *UniqueSale) Add() (err error) {
 	defer cancel()
 	//                         1       2              3             4           5          6          7           8        9         10           11           12
 	err = db.QueryRowContext(ctx, statement,
-		tt.TokenID, tt.LookupRef, tt.Operation, tt.BlockNumber, tt.TxIndex, tt.TxHash, tt.Buyer, tt.Seller, tt.Price, tt.Hash, tt.Timestamp).Scan(&tt.ID)
+		tt.TokenID, tt.LookupID, tt.Operation, tt.BlockNumber, tt.TxIndex, tt.TxHash, tt.Buyer, tt.Seller, tt.Price, tt.Hash, tt.Timestamp).Scan(&tt.ID)
 	return
 }
 

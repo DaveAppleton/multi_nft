@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <title>NFT Explorer</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <h3>NFT Explorer</h3>
+            <h4>{{.Network}}</h4>
+            <div class="input-group">
+                <span class="input-group-addon">Start here</span>
+                <input id="destinasi" type="text" class="form-control" name="msg" placeholder="Address, Layer or TxHash">
+                <div class="input-group-btn">
+                    <button class="btn btn-default">
+                        <i class="glyphicon glyphicon-search"></i>
+                    </button>
+                </div>
+            </div>
+                {{if gt (len .ERC721s) 0}}
+                <H4>Unique Tokens</H4> {{range .ERC721s}}
+                <div class="container well">
+                    <ul class="list-group">
+                        <li class="list-group-item"><a href="/monitor//unique/{{.ID}}">{{ .Description }}</a></li>
+                        <li class="list-group-item">{{ .Address }}</li>
+                       <li class="list-group-item">Last Checked at block : {{ .LastChecked }}</li>
+                    </ul>
+                </div>
+                 {{end}} 
+                {{end}}
+                {{if gt (len .ERC1155s) 0}}
+                <H4>Multi Tokens</H4>
+                {{range .ERC1155s}}
+                <div class="container well">
+                    <ul class="list-group">
+                        <li class="list-group-item"><a href="/monitor//unique/{{.ID}}">{{ .Description }}</a></li>
+                        <li class="list-group-item">{{ .Address }}</li>
+                       <li class="list-group-item">Last Checked at block : {{ .LastChecked }}</li>
+                    </ul>
+                </div>
+                {{end}}
+                {{end}}
+    
+           
+            <p>&nbsp;</p>
+    
+    </body>
+</html>

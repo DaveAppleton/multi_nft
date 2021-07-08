@@ -35,7 +35,7 @@ QmTVrehVAuuYNF6GCU4WUyu63gcNsjdLb1mPckR3Dfr5fc
 
 type MultiTokenSale struct {
 	ID          uint64
-	LookupRef   int
+	LookupID    int
 	Operation   string
 	BlockNumber uint64
 	TxIndex     uint
@@ -52,7 +52,7 @@ type MultiTokenSale struct {
 }
 
 func NewMultiSale(
-	lookupRef int,
+	LookupID int,
 	operation string,
 	tokenid uint64,
 	blocknumber uint64,
@@ -67,7 +67,7 @@ func NewMultiSale(
 	hash string,
 	timestamp uint64) (mt MultiTokenSale) {
 	mt = MultiTokenSale{
-		LookupRef:   lookupRef,
+		LookupID:    LookupID,
 		Operation:   operation,
 		TokenID:     tokenid,
 		BlockNumber: blocknumber,
@@ -92,7 +92,7 @@ func (tt *MultiTokenSale) Add() (err error) {
 	ctx, cancel := context.WithTimeout(context.Background(), timeout())
 	defer cancel()
 	//                                             1       2              3             4               5          6          7           8        9         10           11           12        13
-	err = db.QueryRowContext(ctx, statement, tt.TokenID, tt.LookupRef, tt.Operation, tt.BlockNumber, tt.TxIndex, tt.TxHash, tt.Buyer, tt.Seller, tt.Price, tt.Hash, tt.Position, tt.Quantity, tt.Timestamp).Scan(&tt.ID)
+	err = db.QueryRowContext(ctx, statement, tt.TokenID, tt.LookupID, tt.Operation, tt.BlockNumber, tt.TxIndex, tt.TxHash, tt.Buyer, tt.Seller, tt.Price, tt.Hash, tt.Position, tt.Quantity, tt.Timestamp).Scan(&tt.ID)
 	return
 }
 
@@ -102,7 +102,7 @@ func (tt *MultiTokenSale) AddIfNotFound() (err error) {
 					values ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11,$12,$13) on conflict do nothing`
 	ctx, cancel := context.WithTimeout(context.Background(), timeout())
 	defer cancel()
-	_, err = db.ExecContext(ctx, query, tt.TokenID, tt.LookupRef, tt.Operation, tt.BlockNumber, tt.TxIndex, tt.TxHash, tt.Buyer, tt.Seller, tt.Price, tt.Hash, tt.Position, tt.Quantity, tt.Timestamp)
+	_, err = db.ExecContext(ctx, query, tt.TokenID, tt.LookupID, tt.Operation, tt.BlockNumber, tt.TxIndex, tt.TxHash, tt.Buyer, tt.Seller, tt.Price, tt.Hash, tt.Position, tt.Quantity, tt.Timestamp)
 	return
 }
 

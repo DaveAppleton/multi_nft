@@ -114,3 +114,15 @@ func AddUniqueTokenToLookup(lastChecked uint64, address string, description stri
 func AddMultiTokenToLookup(lastChecked uint64, address string, description string) (tp *Lookup, err error) {
 	return addToLookup(lastChecked, address, description, 2, true)
 }
+
+func LookupFromID(ID int) (lup Lookup, err error) {
+	var L Lookup
+	query := "select id,description,address,lastchecked from lookup where ID=$1"
+	ctx, cancel := context.WithTimeout(context.Background(), timeout())
+	defer cancel()
+	err = db.QueryRowContext(ctx, query, ID).Scan(&L.ID, &L.Description, &L.Address, &L.LastChecked)
+	if err != nil {
+		return
+	}
+	return L, nil
+}

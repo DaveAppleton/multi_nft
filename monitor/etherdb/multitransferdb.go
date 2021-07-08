@@ -24,7 +24,7 @@ create table $1 (
 
 type MultiTokenTransfer struct {
 	ID           uint64
-	LookupRef    int
+	LookupID     int
 	TokenID      uint64
 	TokenAddress string
 	BlockNumber  uint64
@@ -38,7 +38,7 @@ type MultiTokenTransfer struct {
 }
 
 func NewMultiToken(
-	lookupRef int,
+	LookupID int,
 	tokenid uint64,
 	blocknumber uint64,
 	txIndex uint,
@@ -49,7 +49,7 @@ func NewMultiToken(
 	quantity uint64,
 	timestamp uint64) (mt MultiTokenTransfer) {
 	mt = MultiTokenTransfer{
-		LookupRef:   lookupRef,
+		LookupID:    LookupID,
 		TokenID:     tokenid,
 		BlockNumber: blocknumber,
 		TxIndex:     txIndex,
@@ -69,7 +69,7 @@ func (tt *MultiTokenTransfer) Add() (err error) {
 	ctx, cancel := context.WithTimeout(context.Background(), timeout())
 	defer cancel()
 
-	err = db.QueryRowContext(ctx, query, tt.TokenID, tt.LookupRef, tt.BlockNumber, tt.TxIndex, tt.TxHash, &tt.Operator, tt.Source, tt.Dest, tt.Quantity, tt.Timestamp).Scan(&tt.ID)
+	err = db.QueryRowContext(ctx, query, tt.TokenID, tt.LookupID, tt.BlockNumber, tt.TxIndex, tt.TxHash, &tt.Operator, tt.Source, tt.Dest, tt.Quantity, tt.Timestamp).Scan(&tt.ID)
 	return
 }
 
@@ -80,7 +80,7 @@ func (tt *MultiTokenTransfer) AddIfNotFound() (err error) {
 	ctx, cancel := context.WithTimeout(context.Background(), timeout())
 	defer cancel()
 
-	_, err = db.ExecContext(ctx, query, tt.TxHash, tt.LookupRef, tt.TokenID, tt.BlockNumber, tt.TxIndex, &tt.Operator, tt.Source, tt.Dest, tt.Quantity, tt.Timestamp)
+	_, err = db.ExecContext(ctx, query, tt.TxHash, tt.LookupID, tt.TokenID, tt.BlockNumber, tt.TxIndex, &tt.Operator, tt.Source, tt.Dest, tt.Quantity, tt.Timestamp)
 	return
 }
 
@@ -123,6 +123,20 @@ func (tt *MultiTokenTransfer) Find() (transfers []MultiTokenTransfer, err error)
 
 }
 
+func (tt *MultiTokenTransfer) ListAll(start int) (transfers []MultiTokenTransfer, err error) {
+	query := `select id,tokenid,blocknumber,index,txhash,operator,source,dest,quantity,timestamp from multi_tokens where lookup_id=$1  offset $2 limit $3`
+
+	ctx, cancel := context.WithTimeout(context.Background(), timeout())
+	defer cancel()
+
+	rows, err := db.QueryContext(ctx, query, tt.LookupID, start, 50)
+	if err != nil {
+		return
+	}
+	return tt.getTransfers(rows)
+
+}
+
 // FindByAddress returns transfers of specific token to or from an address
 func (tt *MultiTokenTransfer) FindByAddress(addr string) (transfers []MultiTokenTransfer, err error) {
 	query := `select id,tokenid,blocknumber,index,txhash,operator,source,dest,quantity,timestamp from multi_tokens  where  (source=$1 or dest=$1)`
@@ -140,12 +154,40 @@ func (tt *MultiTokenTransfer) FindByAddress(addr string) (transfers []MultiToken
 // FindAllByAddress returns transfers of any token to or from an address newest first
 func (tt *MultiTokenTransfer) FindAllByAddress(addr string) (transfers []MultiTokenTransfer, err error) {
 	query := `select id,tokenid,blocknumber,index,txhash,operator,source,dest,quantity,timestamp from multi_tokens
-		 where (source=$1 or dest=$1)
+		 where (source=$1 or dest=$1) and lookup_id = $2
 		 order by blocknumber desc, index desc`
 	ctx, cancel := context.WithTimeout(context.Background(), timeout())
 	defer cancel()
 
-	rows, err := db.QueryContext(ctx, query, addr)
+	rows, err := db.QueryContext(ctx, query, addr, tt.LookupID)
+	if err != nil {
+		return
+	}
+	return tt.getTransfers(rows)
+}
+
+func (tt *MultiTokenTransfer) FindByTxHash() (transfers []MultiTokenTransfer, err error) {
+	query := `select id,tokenid,blocknumber,index,txhash,operator,source,dest,quantity,timestamp from multi_tokens
+		 where  lookup_id = $1 and txhash = $2
+		 order by blocknumber desc, index desc`
+	ctx, cancel := context.WithTimeout(context.Background(), timeout())
+	defer cancel()
+
+	rows, err := db.QueryContext(ctx, query, tt.LookupID, tt.TxHash)
+	if err != nil {
+		return
+	}
+	return tt.getTransfers(rows)
+}
+
+func (tt *MultiTokenTransfer) FindByTokenId() (transfers []MultiTokenTransfer, err error) {
+	query := `select id,tokenid,blocknumber,index,txhash,operator,source,dest,quantity,timestamp from multi_tokens
+		 where  lookup_id = $1 and tokenid = $2
+		 order by blocknumber desc, index desc`
+	ctx, cancel := context.WithTimeout(context.Background(), timeout())
+	defer cancel()
+
+	rows, err := db.QueryContext(ctx, query, tt.LookupID, tt.TokenID)
 	if err != nil {
 		return
 	}
@@ -158,6 +200,59 @@ func (tt *MultiTokenTransfer) MaxBlock() (max uint64, err error) {
 	ctx, cancel := context.WithTimeout(context.Background(), timeout())
 	defer cancel()
 	err = db.QueryRowContext(ctx, query, tt.TokenID).Scan(&max)
+	if err != nil {
+		max = 0
+		err = nil
+	}
+	return
+}
+
+// MaxBlock for a specified token
+func (tt *MultiTokenTransfer) SearchCountOfThisToken(addr string) (max int, err error) {
+	query := `select count(*) from multi_tokens where (source=$1 or dest=$1) and lookup_id = $2`
+	ctx, cancel := context.WithTimeout(context.Background(), timeout())
+	defer cancel()
+
+	err = db.QueryRowContext(ctx, query, addr, tt.LookupID).Scan(&max)
+	if err != nil {
+		max = 0
+		err = nil
+	}
+	return
+}
+
+func (tt *MultiTokenTransfer) CountOfThisToken() (max int, err error) {
+	query := `select count(*) from multi_tokens where lookup_id = $1`
+	ctx, cancel := context.WithTimeout(context.Background(), timeout())
+	defer cancel()
+
+	err = db.QueryRowContext(ctx, query, tt.LookupID).Scan(&max)
+	if err != nil {
+		max = 0
+		err = nil
+	}
+	return
+}
+
+func (tt *MultiTokenTransfer) CountOfThisTokenID() (max int, err error) {
+	query := `select count(*) from multi_tokens where lookup_id = $1 and token_id = $2`
+	ctx, cancel := context.WithTimeout(context.Background(), timeout())
+	defer cancel()
+
+	err = db.QueryRowContext(ctx, query, tt.LookupID, tt.TokenID).Scan(&max)
+	if err != nil {
+		max = 0
+		err = nil
+	}
+	return
+}
+
+func (tt *MultiTokenTransfer) CountOfThisTxHash() (max int, err error) {
+	query := `select count(*) from multi_tokens where lookup_id = $1 and txhash = $2`
+	ctx, cancel := context.WithTimeout(context.Background(), timeout())
+	defer cancel()
+
+	err = db.QueryRowContext(ctx, query, tt.LookupID, tt.TxHash).Scan(&max)
 	if err != nil {
 		max = 0
 		err = nil

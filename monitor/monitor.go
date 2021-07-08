@@ -15,6 +15,7 @@ import (
 	"flag"
 	"fmt"
 	"log"
+	"net/http"
 	"os"
 	"strconv"
 	"sync"
@@ -33,6 +34,8 @@ var (
 	initMultiToken  *string = flag.String("init_multi_token", "", "load unique tokens to Lookup")
 	initUniqueSale  *string = flag.String("init_unique_sale", "", "load unique tokens to Lookup")
 	initMultiSale   *string = flag.String("init_multi_sale", "", "load unique tokens to Lookup")
+	web             *bool   = flag.Bool("web", false, "load webserver")
+	monitor         *bool   = flag.Bool("monitor", false, "token monitor")
 )
 
 func readCSV(input string) (data [][]string, err error) {
@@ -163,14 +166,33 @@ func main() {
 	if loaded {
 		os.Exit(0)
 	}
-	wg.Add(1)
-	go uniqueTransfers(client, &wg)
-	wg.Add(1)
-	go uniqueSales(client, &wg)
-	wg.Add(1)
-	go multiTransfers(client, &wg)
-	wg.Add(1)
-	go multiSales(client, &wg)
-
+	if *monitor {
+		wg.Add(1)
+		go uniqueTransfers(client, &wg)
+		wg.Add(1)
+		go uniqueSales(client, &wg)
+		wg.Add(1)
+		go multiTransfers(client, &wg)
+		wg.Add(1)
+		go multiSales(client, &wg)
+	}
+	if *web {
+		// web section
+		http.HandleFunc("/monitor/", projectIndex)
+		http.HandleFunc("/monitor/unique/", projectUnique)
+		http.HandleFunc("/monitor/multi/", projectMulti)
+		http.Handle("/inc/", http.StripPrefix("/inc", http.FileServer(http.Dir("./public"))))
+		err = http.ListenAndServe(viper.GetString("PORT"), nil)
+		if err != nil {
+			fmt.Println(err)
+			log.Fatal(err)
+		}
+	}
 	wg.Wait()
 }
+
+// daily tx
+// select id, name, image from project_arts where project_id = 1 order by id;
+//
+// select tokenid,operation,price,timestamp from unique_sale order by timestamp;
+//
