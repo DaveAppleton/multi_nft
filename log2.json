@@ -1,0 +1,1226 @@
+{
+    "level": "info",
+    "ts": 1626542684.085206,
+    "logger": "http.log.access.log1",
+    "msg": "handled request",
+    "request": {
+        "remote_addr": "35.197.113.121:54062",
+        "proto": "HTTP/2.0",
+        "method": "HEAD",
+        "host": "app.minty.art",
+        "uri": "/art/95",
+        "headers": {
+            "User-Agent": [
+                "Mozilla/5.0 (iPhone; CPU iPhone OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1 Mobile/15E148 Safari/604.1"
+            ]
+        },
+        "tls": {
+            "resumed": false,
+            "version": 772,
+            "cipher_suite": 4865,
+            "proto": "h2",
+            "proto_mutual": true,
+            "server_name": "app.minty.art"
+        }
+    },
+    "common_log": "35.197.113.121 - - [17/Jul/2021:17:24:44 +0000] \"HEAD /art/95 HTTP/2.0\" 200 0",
+    "duration": 0.000115513,
+    "size": 0,
+    "status": 200,
+    "resp_headers": {
+        "Last-Modified": [
+            "Tue, 06 Jul 2021 13:05:36 GMT"
+        ],
+        "Accept-Ranges": [
+            "bytes"
+        ],
+        "Content-Length": [
+            "11755"
+        ],
+        "Server": [
+            "Caddy"
+        ],
+        "Etag": [
+            "\"qvtr1c92j\""
+        ],
+        "Content-Type": [
+            "text/html; charset=utf-8"
+        ]
+    }
+}
+{
+    "level": "info",
+    "ts": 1626542684.5994928,
+    "logger": "http.log.access.log1",
+    "msg": "handled request",
+    "request": {
+        "remote_addr": "217.182.175.162:34900",
+        "proto": "HTTP/2.0",
+        "method": "HEAD",
+        "host": "app.minty.art",
+        "uri": "/art/95",
+        "headers": {
+            "User-Agent": [
+                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.67 Safari/537.36"
+            ]
+        },
+        "tls": {
+            "resumed": false,
+            "version": 771,
+            "cipher_suite": 49196,
+            "proto": "h2",
+            "proto_mutual": true,
+            "server_name": "app.minty.art"
+        }
+    },
+    "common_log": "217.182.175.162 - - [17/Jul/2021:17:24:44 +0000] \"HEAD /art/95 HTTP/2.0\" 200 0",
+    "duration": 0.000224969,
+    "size": 0,
+    "status": 200,
+    "resp_headers": {
+        "Etag": [
+            "\"qvtr1c92j\""
+        ],
+        "Content-Type": [
+            "text/html; charset=utf-8"
+        ],
+        "Last-Modified": [
+            "Tue, 06 Jul 2021 13:05:36 GMT"
+        ],
+        "Accept-Ranges": [
+            "bytes"
+        ],
+        "Content-Length": [
+            "11755"
+        ],
+        "Server": [
+            "Caddy"
+        ]
+    }
+}
+{
+    "level": "info",
+    "ts": 1626542684.6257596,
+    "logger": "http.log.access.log1",
+    "msg": "handled request",
+    "request": {
+        "remote_addr": "217.182.175.162:34898",
+        "proto": "HTTP/2.0",
+        "method": "HEAD",
+        "host": "app.minty.art",
+        "uri": "/art/95",
+        "headers": {
+            "User-Agent": [
+                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.67 Safari/537.36"
+            ]
+        },
+        "tls": {
+            "resumed": false,
+            "version": 771,
+            "cipher_suite": 49196,
+            "proto": "h2",
+            "proto_mutual": true,
+            "server_name": "app.minty.art"
+        }
+    },
+    "common_log": "217.182.175.162 - - [17/Jul/2021:17:24:44 +0000] \"HEAD /art/95 HTTP/2.0\" 200 0",
+    "duration": 0.000177494,
+    "size": 0,
+    "status": 200,
+    "resp_headers": {
+        "Accept-Ranges": [
+            "bytes"
+        ],
+        "Content-Length": [
+            "11755"
+        ],
+        "Server": [
+            "Caddy"
+        ],
+        "Etag": [
+            "\"qvtr1c92j\""
+        ],
+        "Content-Type": [
+            "text/html; charset=utf-8"
+        ],
+        "Last-Modified": [
+            "Tue, 06 Jul 2021 13:05:36 GMT"
+        ]
+    }
+}
+{
+    "level": "info",
+    "ts": 1626542698.6691222,
+    "logger": "http.log.access.log1",
+    "msg": "handled request",
+    "request": {
+        "remote_addr": "136.243.1.83:53336",
+        "proto": "HTTP/1.1",
+        "method": "HEAD",
+        "host": "app.minty.art",
+        "uri": "/art/95",
+        "headers": {
+            "Connection": [
+                "keep-alive"
+            ],
+            "User-Agent": [
+                "Mozilla/5.0 (compatible; um-LN/1.0; mailto: techinfo@ubermetrics-technologies.com; Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.1"
+            ],
+            "Accept": [
+                "text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2"
+            ]
+        },
+        "tls": {
+            "resumed": false,
+            "version": 771,
+            "cipher_suite": 49196,
+            "proto": "",
+            "proto_mutual": true,
+            "server_name": "app.minty.art"
+        }
+    },
+    "common_log": "136.243.1.83 - - [17/Jul/2021:17:24:58 +0000] \"HEAD /art/95 HTTP/1.1\" 200 0",
+    "duration": 0.000160898,
+    "size": 0,
+    "status": 200,
+    "resp_headers": {
+        "Last-Modified": [
+            "Tue, 06 Jul 2021 13:05:36 GMT"
+        ],
+        "Accept-Ranges": [
+            "bytes"
+        ],
+        "Content-Length": [
+            "11755"
+        ],
+        "Server": [
+            "Caddy"
+        ],
+        "Etag": [
+            "\"qvtr1c92j\""
+        ],
+        "Content-Type": [
+            "text/html; charset=utf-8"
+        ]
+    }
+}
+{
+    "level": "info",
+    "ts": 1626542699.4225256,
+    "logger": "http.log.access.log1",
+    "msg": "handled request",
+    "request": {
+        "remote_addr": "136.243.1.83:53339",
+        "proto": "HTTP/1.1",
+        "method": "GET",
+        "host": "app.minty.art",
+        "uri": "/robots.txt",
+        "headers": {
+            "User-Agent": [
+                "Mozilla/5.0 (compatible; um-LN/1.0; mailto: techinfo@ubermetrics-technologies.com; Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.1"
+            ],
+            "Accept-Encoding": [
+                "gzip,deflate"
+            ],
+            "Connection": [
+                "Keep-Alive"
+            ]
+        },
+        "tls": {
+            "resumed": false,
+            "version": 771,
+            "cipher_suite": 49196,
+            "proto": "",
+            "proto_mutual": true,
+            "server_name": "app.minty.art"
+        }
+    },
+    "common_log": "136.243.1.83 - - [17/Jul/2021:17:24:59 +0000] \"GET /robots.txt HTTP/1.1\" 200 70",
+    "duration": 0.000154852,
+    "size": 70,
+    "status": 200,
+    "resp_headers": {
+        "Server": [
+            "Caddy"
+        ],
+        "Etag": [
+            "\"qsemjy1y\""
+        ],
+        "Content-Type": [
+            "text/plain; charset=utf-8"
+        ],
+        "Last-Modified": [
+            "Sat, 01 May 2021 01:23:58 GMT"
+        ],
+        "Accept-Ranges": [
+            "bytes"
+        ],
+        "Content-Length": [
+            "70"
+        ]
+    }
+}
+{
+    "level": "info",
+    "ts": 1626542699.7091439,
+    "logger": "http.log.access.log1",
+    "msg": "handled request",
+    "request": {
+        "remote_addr": "136.243.1.83:53339",
+        "proto": "HTTP/1.1",
+        "method": "GET",
+        "host": "app.minty.art",
+        "uri": "/art/95",
+        "headers": {
+            "Connection": [
+                "Keep-Alive"
+            ],
+            "User-Agent": [
+                "Mozilla/5.0 (compatible; um-LN/1.0; mailto: techinfo@ubermetrics-technologies.com; Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.1"
+            ],
+            "Accept-Encoding": [
+                "gzip,deflate"
+            ]
+        },
+        "tls": {
+            "resumed": false,
+            "version": 771,
+            "cipher_suite": 49196,
+            "proto": "",
+            "proto_mutual": true,
+            "server_name": "app.minty.art"
+        }
+    },
+    "common_log": "136.243.1.83 - - [17/Jul/2021:17:24:59 +0000] \"GET /art/95 HTTP/1.1\" 200 11755",
+    "duration": 0.000227573,
+    "size": 11755,
+    "status": 200,
+    "resp_headers": {
+        "Last-Modified": [
+            "Tue, 06 Jul 2021 13:05:36 GMT"
+        ],
+        "Accept-Ranges": [
+            "bytes"
+        ],
+        "Content-Length": [
+            "11755"
+        ],
+        "Server": [
+            "Caddy"
+        ],
+        "Etag": [
+            "\"qvtr1c92j\""
+        ],
+        "Content-Type": [
+            "text/html; charset=utf-8"
+        ]
+    }
+}
+{
+    "level": "info",
+    "ts": 1626542711.9855413,
+    "logger": "http.log.access.log1",
+    "msg": "handled request",
+    "request": {
+        "remote_addr": "135.125.216.65:44868",
+        "proto": "HTTP/1.1",
+        "method": "GET",
+        "host": "app.minty.art",
+        "uri": "/art/95",
+        "headers": {
+            "Accept-Language": [
+                "en;q=0.9,*;q=0.1"
+            ],
+            "Accept": [
+                "*/*"
+            ],
+            "Accept-Encoding": [
+                "gzip, deflate"
+            ],
+            "Connection": [
+                "keep-alive"
+            ],
+            "User-Agent": [
+                "Mozilla/5.0 (compatible; PaperLiBot/2.1; https://support.paper.li/hc/en-us/articles/360006695637-PaperLiBot)"
+            ]
+        },
+        "tls": {
+            "resumed": false,
+            "version": 771,
+            "cipher_suite": 49196,
+            "proto": "",
+            "proto_mutual": true,
+            "server_name": "app.minty.art"
+        }
+    },
+    "common_log": "135.125.216.65 - - [17/Jul/2021:17:25:11 +0000] \"GET /art/95 HTTP/1.1\" 200 11755",
+    "duration": 0.000264209,
+    "size": 11755,
+    "status": 200,
+    "resp_headers": {
+        "Content-Type": [
+            "text/html; charset=utf-8"
+        ],
+        "Last-Modified": [
+            "Tue, 06 Jul 2021 13:05:36 GMT"
+        ],
+        "Accept-Ranges": [
+            "bytes"
+        ],
+        "Content-Length": [
+            "11755"
+        ],
+        "Server": [
+            "Caddy"
+        ],
+        "Etag": [
+            "\"qvtr1c92j\""
+        ]
+    }
+}
+{
+    "level": "info",
+    "ts": 1626542721.4228776,
+    "logger": "http.log.access.log1",
+    "msg": "handled request",
+    "request": {
+        "remote_addr": "88.99.195.199:47252",
+        "proto": "HTTP/1.1",
+        "method": "GET",
+        "host": "app.minty.art",
+        "uri": "/robots.txt",
+        "headers": {
+            "Accept": [
+                "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
+            ],
+            "Cache-Control": [
+                "max-age=0"
+            ],
+            "User-Agent": [
+                "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.1) Gecko/2008070208 Firefox/54.0"
+            ],
+            "Connection": [
+                "close"
+            ],
+            "Pragma": [
+                "no-cache"
+            ],
+            "Accept-Encoding": [
+                "gzip"
+            ],
+            "Accept-Charset": [
+                "ISO-8859-1,utf-8;q=0.7,*;q=0.7"
+            ],
+            "Accept-Language": [
+                "en-gb,en;q=0.5"
+            ],
+            "Refresh-Cache": [
+                "1"
+            ]
+        },
+        "tls": {
+            "resumed": false,
+            "version": 771,
+            "cipher_suite": 49196,
+            "proto": "",
+            "proto_mutual": true,
+            "server_name": "app.minty.art"
+        }
+    },
+    "common_log": "88.99.195.199 - - [17/Jul/2021:17:25:21 +0000] \"GET /robots.txt HTTP/1.1\" 200 70",
+    "duration": 0.000163537,
+    "size": 70,
+    "status": 200,
+    "resp_headers": {
+        "Etag": [
+            "\"qsemjy1y\""
+        ],
+        "Content-Type": [
+            "text/plain; charset=utf-8"
+        ],
+        "Last-Modified": [
+            "Sat, 01 May 2021 01:23:58 GMT"
+        ],
+        "Accept-Ranges": [
+            "bytes"
+        ],
+        "Content-Length": [
+            "70"
+        ],
+        "Server": [
+            "Caddy"
+        ]
+    }
+}
+{
+    "level": "info",
+    "ts": 1626542722.415,
+    "logger": "http.log.access.log1",
+    "msg": "handled request",
+    "request": {
+        "remote_addr": "88.99.195.199:47296",
+        "proto": "HTTP/1.1",
+        "method": "GET",
+        "host": "app.minty.art",
+        "uri": "/art/95",
+        "headers": {
+            "Accept": [
+                "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
+            ],
+            "Connection": [
+                "close"
+            ],
+            "Accept-Language": [
+                "en-gb,en;q=0.5"
+            ],
+            "Accept-Encoding": [
+                "gzip"
+            ],
+            "Accept-Charset": [
+                "ISO-8859-1,utf-8;q=0.7,*;q=0.7"
+            ],
+            "Cache-Control": [
+                "max-age=0"
+            ],
+            "User-Agent": [
+                "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.1) Gecko/2008070208 Firefox/54.0"
+            ],
+            "Refresh-Cache": [
+                "1"
+            ],
+            "Pragma": [
+                "no-cache"
+            ]
+        },
+        "tls": {
+            "resumed": false,
+            "version": 771,
+            "cipher_suite": 49196,
+            "proto": "",
+            "proto_mutual": true,
+            "server_name": "app.minty.art"
+        }
+    },
+    "common_log": "88.99.195.199 - - [17/Jul/2021:17:25:22 +0000] \"GET /art/95 HTTP/1.1\" 200 11755",
+    "duration": 0.000266099,
+    "size": 11755,
+    "status": 200,
+    "resp_headers": {
+        "Server": [
+            "Caddy"
+        ],
+        "Etag": [
+            "\"qvtr1c92j\""
+        ],
+        "Content-Type": [
+            "text/html; charset=utf-8"
+        ],
+        "Last-Modified": [
+            "Tue, 06 Jul 2021 13:05:36 GMT"
+        ],
+        "Accept-Ranges": [
+            "bytes"
+        ],
+        "Content-Length": [
+            "11755"
+        ]
+    }
+}
+{
+    "level": "info",
+    "ts": 1626542739.9676132,
+    "logger": "http.log.access.log1",
+    "msg": "handled request",
+    "request": {
+        "remote_addr": "213.186.4.78:33250",
+        "proto": "HTTP/1.1",
+        "method": "GET",
+        "host": "app.minty.art",
+        "uri": "/art/18",
+        "headers": {
+            "User-Agent": [
+                "Mediatoolkitbot (complaints@mediatoolkit.com)"
+            ],
+            "Accept-Encoding": [
+                "gzip, identity, *"
+            ],
+            "Accept": [
+                "text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2"
+            ],
+            "Connection": [
+                "keep-alive"
+            ]
+        },
+        "tls": {
+            "resumed": false,
+            "version": 771,
+            "cipher_suite": 49196,
+            "proto": "",
+            "proto_mutual": true,
+            "server_name": "app.minty.art"
+        }
+    },
+    "common_log": "213.186.4.78 - - [17/Jul/2021:17:25:39 +0000] \"GET /art/18 HTTP/1.1\" 200 11755",
+    "duration": 0.000260489,
+    "size": 11755,
+    "status": 200,
+    "resp_headers": {
+        "Etag": [
+            "\"qvtr1c92j\""
+        ],
+        "Content-Type": [
+            "text/html; charset=utf-8"
+        ],
+        "Last-Modified": [
+            "Tue, 06 Jul 2021 13:05:36 GMT"
+        ],
+        "Accept-Ranges": [
+            "bytes"
+        ],
+        "Content-Length": [
+            "11755"
+        ],
+        "Server": [
+            "Caddy"
+        ]
+    }
+}
+ *** MINTY LIVE ***  bitnami@ip-172-31-24-190:~$ tail /var/log/caddy/caddy-app.log 
+{
+    "level": "info",
+    "ts": 1626542721.4228776,
+    "logger": "http.log.access.log1",
+    "msg": "handled request",
+    "request": {
+        "remote_addr": "88.99.195.199:47252",
+        "proto": "HTTP/1.1",
+        "method": "GET",
+        "host": "app.minty.art",
+        "uri": "/robots.txt",
+        "headers": {
+            "Accept": [
+                "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
+            ],
+            "Cache-Control": [
+                "max-age=0"
+            ],
+            "User-Agent": [
+                "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.1) Gecko/2008070208 Firefox/54.0"
+            ],
+            "Connection": [
+                "close"
+            ],
+            "Pragma": [
+                "no-cache"
+            ],
+            "Accept-Encoding": [
+                "gzip"
+            ],
+            "Accept-Charset": [
+                "ISO-8859-1,utf-8;q=0.7,*;q=0.7"
+            ],
+            "Accept-Language": [
+                "en-gb,en;q=0.5"
+            ],
+            "Refresh-Cache": [
+                "1"
+            ]
+        },
+        "tls": {
+            "resumed": false,
+            "version": 771,
+            "cipher_suite": 49196,
+            "proto": "",
+            "proto_mutual": true,
+            "server_name": "app.minty.art"
+        }
+    },
+    "common_log": "88.99.195.199 - - [17/Jul/2021:17:25:21 +0000] \"GET /robots.txt HTTP/1.1\" 200 70",
+    "duration": 0.000163537,
+    "size": 70,
+    "status": 200,
+    "resp_headers": {
+        "Etag": [
+            "\"qsemjy1y\""
+        ],
+        "Content-Type": [
+            "text/plain; charset=utf-8"
+        ],
+        "Last-Modified": [
+            "Sat, 01 May 2021 01:23:58 GMT"
+        ],
+        "Accept-Ranges": [
+            "bytes"
+        ],
+        "Content-Length": [
+            "70"
+        ],
+        "Server": [
+            "Caddy"
+        ]
+    }
+}
+{
+    "level": "info",
+    "ts": 1626542722.415,
+    "logger": "http.log.access.log1",
+    "msg": "handled request",
+    "request": {
+        "remote_addr": "88.99.195.199:47296",
+        "proto": "HTTP/1.1",
+        "method": "GET",
+        "host": "app.minty.art",
+        "uri": "/art/95",
+        "headers": {
+            "Accept": [
+                "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
+            ],
+            "Connection": [
+                "close"
+            ],
+            "Accept-Language": [
+                "en-gb,en;q=0.5"
+            ],
+            "Accept-Encoding": [
+                "gzip"
+            ],
+            "Accept-Charset": [
+                "ISO-8859-1,utf-8;q=0.7,*;q=0.7"
+            ],
+            "Cache-Control": [
+                "max-age=0"
+            ],
+            "User-Agent": [
+                "Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.1) Gecko/2008070208 Firefox/54.0"
+            ],
+            "Refresh-Cache": [
+                "1"
+            ],
+            "Pragma": [
+                "no-cache"
+            ]
+        },
+        "tls": {
+            "resumed": false,
+            "version": 771,
+            "cipher_suite": 49196,
+            "proto": "",
+            "proto_mutual": true,
+            "server_name": "app.minty.art"
+        }
+    },
+    "common_log": "88.99.195.199 - - [17/Jul/2021:17:25:22 +0000] \"GET /art/95 HTTP/1.1\" 200 11755",
+    "duration": 0.000266099,
+    "size": 11755,
+    "status": 200,
+    "resp_headers": {
+        "Server": [
+            "Caddy"
+        ],
+        "Etag": [
+            "\"qvtr1c92j\""
+        ],
+        "Content-Type": [
+            "text/html; charset=utf-8"
+        ],
+        "Last-Modified": [
+            "Tue, 06 Jul 2021 13:05:36 GMT"
+        ],
+        "Accept-Ranges": [
+            "bytes"
+        ],
+        "Content-Length": [
+            "11755"
+        ]
+    }
+}
+{
+    "level": "info",
+    "ts": 1626542739.9676132,
+    "logger": "http.log.access.log1",
+    "msg": "handled request",
+    "request": {
+        "remote_addr": "213.186.4.78:33250",
+        "proto": "HTTP/1.1",
+        "method": "GET",
+        "host": "app.minty.art",
+        "uri": "/art/18",
+        "headers": {
+            "User-Agent": [
+                "Mediatoolkitbot (complaints@mediatoolkit.com)"
+            ],
+            "Accept-Encoding": [
+                "gzip, identity, *"
+            ],
+            "Accept": [
+                "text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2"
+            ],
+            "Connection": [
+                "keep-alive"
+            ]
+        },
+        "tls": {
+            "resumed": false,
+            "version": 771,
+            "cipher_suite": 49196,
+            "proto": "",
+            "proto_mutual": true,
+            "server_name": "app.minty.art"
+        }
+    },
+    "common_log": "213.186.4.78 - - [17/Jul/2021:17:25:39 +0000] \"GET /art/18 HTTP/1.1\" 200 11755",
+    "duration": 0.000260489,
+    "size": 11755,
+    "status": 200,
+    "resp_headers": {
+        "Etag": [
+            "\"qvtr1c92j\""
+        ],
+        "Content-Type": [
+            "text/html; charset=utf-8"
+        ],
+        "Last-Modified": [
+            "Tue, 06 Jul 2021 13:05:36 GMT"
+        ],
+        "Accept-Ranges": [
+            "bytes"
+        ],
+        "Content-Length": [
+            "11755"
+        ],
+        "Server": [
+            "Caddy"
+        ]
+    }
+}
+{
+    "level": "info",
+    "ts": 1626542823.098095,
+    "logger": "http.log.access.log1",
+    "msg": "handled request",
+    "request": {
+        "remote_addr": "77.23.252.124:41584",
+        "proto": "HTTP/2.0",
+        "method": "GET",
+        "host": "app.minty.art",
+        "uri": "/",
+        "headers": {
+            "Accept": [
+                "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8"
+            ],
+            "Upgrade-Insecure-Requests": [
+                "1"
+            ],
+            "User-Agent": [
+                "Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 Instagram 194.0.0.33.171 (iPhone13,1; iOS 14_6; ru_DE; ru-DE; scale=2.88; 1080x2338; 301014278)"
+            ],
+            "Accept-Language": [
+                "ru"
+            ],
+            "Accept-Encoding": [
+                "gzip, deflate"
+            ]
+        },
+        "tls": {
+            "resumed": false,
+            "version": 772,
+            "cipher_suite": 4865,
+            "proto": "h2",
+            "proto_mutual": true,
+            "server_name": "app.minty.art"
+        }
+    },
+    "common_log": "77.23.252.124 - - [17/Jul/2021:17:27:03 +0000] \"GET / HTTP/2.0\" 200 11755",
+    "duration": 0.000333118,
+    "size": 11755,
+    "status": 200,
+    "resp_headers": {
+        "Server": [
+            "Caddy"
+        ],
+        "Etag": [
+            "\"qvtr1c92j\""
+        ],
+        "Content-Type": [
+            "text/html; charset=utf-8"
+        ],
+        "Last-Modified": [
+            "Tue, 06 Jul 2021 13:05:36 GMT"
+        ],
+        "Accept-Ranges": [
+            "bytes"
+        ],
+        "Content-Length": [
+            "11755"
+        ]
+    }
+}
+{
+    "level": "info",
+    "ts": 1626542823.317416,
+    "logger": "http.log.access.log1",
+    "msg": "handled request",
+    "request": {
+        "remote_addr": "77.23.252.124:41584",
+        "proto": "HTTP/2.0",
+        "method": "GET",
+        "host": "app.minty.art",
+        "uri": "/static/css/main.93618531.chunk.css",
+        "headers": {
+            "Accept": [
+                "text/css,*/*;q=0.1"
+            ],
+            "Accept-Encoding": [
+                "gzip, deflate, br"
+            ],
+            "User-Agent": [
+                "Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 Instagram 194.0.0.33.171 (iPhone13,1; iOS 14_6; ru_DE; ru-DE; scale=2.88; 1080x2338; 301014278)"
+            ],
+            "Accept-Language": [
+                "ru"
+            ],
+            "Referer": [
+                "https://app.minty.art/"
+            ]
+        },
+        "tls": {
+            "resumed": false,
+            "version": 772,
+            "cipher_suite": 4865,
+            "proto": "h2",
+            "proto_mutual": true,
+            "server_name": "app.minty.art"
+        }
+    },
+    "common_log": "77.23.252.124 - - [17/Jul/2021:17:27:03 +0000] \"GET /static/css/main.93618531.chunk.css HTTP/2.0\" 200 1222",
+    "duration": 0.000215259,
+    "size": 1222,
+    "status": 200,
+    "resp_headers": {
+        "Server": [
+            "Caddy"
+        ],
+        "Etag": [
+            "\"qvtr1axy\""
+        ],
+        "Content-Type": [
+            "text/css; charset=utf-8"
+        ],
+        "Last-Modified": [
+            "Tue, 06 Jul 2021 13:05:34 GMT"
+        ],
+        "Accept-Ranges": [
+            "bytes"
+        ],
+        "Content-Length": [
+            "1222"
+        ]
+    }
+}
+{
+    "level": "info",
+    "ts": 1626542823.3176248,
+    "logger": "http.log.access.log1",
+    "msg": "handled request",
+    "request": {
+        "remote_addr": "77.23.252.124:41584",
+        "proto": "HTTP/2.0",
+        "method": "GET",
+        "host": "app.minty.art",
+        "uri": "/static/css/476.f9bf1038.chunk.css",
+        "headers": {
+            "Accept": [
+                "text/css,*/*;q=0.1"
+            ],
+            "Accept-Encoding": [
+                "gzip, deflate, br"
+            ],
+            "User-Agent": [
+                "Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 Instagram 194.0.0.33.171 (iPhone13,1; iOS 14_6; ru_DE; ru-DE; scale=2.88; 1080x2338; 301014278)"
+            ],
+            "Accept-Language": [
+                "ru"
+            ],
+            "Referer": [
+                "https://app.minty.art/"
+            ]
+        },
+        "tls": {
+            "resumed": false,
+            "version": 772,
+            "cipher_suite": 4865,
+            "proto": "h2",
+            "proto_mutual": true,
+            "server_name": "app.minty.art"
+        }
+    },
+    "common_log": "77.23.252.124 - - [17/Jul/2021:17:27:03 +0000] \"GET /static/css/476.f9bf1038.chunk.css HTTP/2.0\" 200 16593",
+    "duration": 0.000424296,
+    "size": 16593,
+    "status": 200,
+    "resp_headers": {
+        "Last-Modified": [
+            "Tue, 06 Jul 2021 13:05:34 GMT"
+        ],
+        "Accept-Ranges": [
+            "bytes"
+        ],
+        "Content-Length": [
+            "16593"
+        ],
+        "Server": [
+            "Caddy"
+        ],
+        "Etag": [
+            "\"qvtr1acsx\""
+        ],
+        "Content-Type": [
+            "text/css; charset=utf-8"
+        ]
+    }
+}
+{
+    "level": "info",
+    "ts": 1626542824.0713747,
+    "logger": "http.log.access.log1",
+    "msg": "handled request",
+    "request": {
+        "remote_addr": "77.23.252.124:41584",
+        "proto": "HTTP/2.0",
+        "method": "GET",
+        "host": "app.minty.art",
+        "uri": "/static/js/main.6e4ee731.chunk.js",
+        "headers": {
+            "Accept": [
+                "*/*"
+            ],
+            "Accept-Encoding": [
+                "gzip, deflate, br"
+            ],
+            "User-Agent": [
+                "Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 Instagram 194.0.0.33.171 (iPhone13,1; iOS 14_6; ru_DE; ru-DE; scale=2.88; 1080x2338; 301014278)"
+            ],
+            "Accept-Language": [
+                "ru"
+            ],
+            "Referer": [
+                "https://app.minty.art/"
+            ]
+        },
+        "tls": {
+            "resumed": false,
+            "version": 772,
+            "cipher_suite": 4865,
+            "proto": "h2",
+            "proto_mutual": true,
+            "server_name": "app.minty.art"
+        }
+    },
+    "common_log": "77.23.252.124 - - [17/Jul/2021:17:27:04 +0000] \"GET /static/js/main.6e4ee731.chunk.js HTTP/2.0\" 200 787696",
+    "duration": 0.59246969,
+    "size": 787696,
+    "status": 200,
+    "resp_headers": {
+        "Content-Type": [
+            "application/javascript"
+        ],
+        "Last-Modified": [
+            "Tue, 06 Jul 2021 13:05:34 GMT"
+        ],
+        "Accept-Ranges": [
+            "bytes"
+        ],
+        "Content-Length": [
+            "787696"
+        ],
+        "Server": [
+            "Caddy"
+        ],
+        "Etag": [
+            "\"qvtr1agvsg\""
+        ]
+    }
+}
+{
+    "level": "info",
+    "ts": 1626542824.2999508,
+    "logger": "http.log.access.log1",
+    "msg": "handled request",
+    "request": {
+        "remote_addr": "54.70.88.252:43712",
+        "proto": "HTTP/1.1",
+        "method": "GET",
+        "host": "app.minty.art",
+        "uri": "/art/95",
+        "headers": {
+            "User-Agent": [
+                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/50.0.2661.102 Safari/537.36"
+            ],
+            "Accept-Encoding": [
+                "gzip, deflate"
+            ],
+            "Accept": [
+                "*/*"
+            ],
+            "Connection": [
+                "keep-alive"
+            ]
+        },
+        "tls": {
+            "resumed": false,
+            "version": 771,
+            "cipher_suite": 49196,
+            "proto": "http/1.1",
+            "proto_mutual": true,
+            "server_name": "app.minty.art"
+        }
+    },
+    "common_log": "54.70.88.252 - - [17/Jul/2021:17:27:04 +0000] \"GET /art/95 HTTP/1.1\" 200 11755",
+    "duration": 0.000295035,
+    "size": 11755,
+    "status": 200,
+    "resp_headers": {
+        "Content-Type": [
+            "text/html; charset=utf-8"
+        ],
+        "Last-Modified": [
+            "Tue, 06 Jul 2021 13:05:36 GMT"
+        ],
+        "Accept-Ranges": [
+            "bytes"
+        ],
+        "Content-Length": [
+            "11755"
+        ],
+        "Server": [
+            "Caddy"
+        ],
+        "Etag": [
+            "\"qvtr1c92j\""
+        ]
+    }
+}
+{
+    "level": "info",
+    "ts": 1626542824.6533363,
+    "logger": "http.log.access.log1",
+    "msg": "handled request",
+    "request": {
+        "remote_addr": "77.23.252.124:41584",
+        "proto": "HTTP/2.0",
+        "method": "GET",
+        "host": "app.minty.art",
+        "uri": "/static/js/476.1a0961b8.chunk.js",
+        "headers": {
+            "Accept": [
+                "*/*"
+            ],
+            "Accept-Encoding": [
+                "gzip, deflate, br"
+            ],
+            "User-Agent": [
+                "Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 Instagram 194.0.0.33.171 (iPhone13,1; iOS 14_6; ru_DE; ru-DE; scale=2.88; 1080x2338; 301014278)"
+            ],
+            "Accept-Language": [
+                "ru"
+            ],
+            "Referer": [
+                "https://app.minty.art/"
+            ]
+        },
+        "tls": {
+            "resumed": false,
+            "version": 772,
+            "cipher_suite": 4865,
+            "proto": "h2",
+            "proto_mutual": true,
+            "server_name": "app.minty.art"
+        }
+    },
+    "common_log": "77.23.252.124 - - [17/Jul/2021:17:27:04 +0000] \"GET /static/js/476.1a0961b8.chunk.js HTTP/2.0\" 200 4281172",
+    "duration": 1.180021399,
+    "size": 4281172,
+    "status": 200,
+    "resp_headers": {
+        "Etag": [
+            "\"qvtr1a2jrdg\""
+        ],
+        "Content-Type": [
+            "application/javascript"
+        ],
+        "Last-Modified": [
+            "Tue, 06 Jul 2021 13:05:34 GMT"
+        ],
+        "Accept-Ranges": [
+            "bytes"
+        ],
+        "Content-Length": [
+            "4281172"
+        ],
+        "Server": [
+            "Caddy"
+        ]
+    }
+}
+{
+    "level": "info",
+    "ts": 1626542826.61753,
+    "logger": "http.log.access.log1",
+    "msg": "handled request",
+    "request": {
+        "remote_addr": "77.23.252.124:41584",
+        "proto": "HTTP/2.0",
+        "method": "GET",
+        "host": "app.minty.art",
+        "uri": "/node_modules/react-vis/dist/style",
+        "headers": {
+            "Accept": [
+                "text/css,*/*;q=0.1"
+            ],
+            "Accept-Encoding": [
+                "gzip, deflate, br"
+            ],
+            "User-Agent": [
+                "Mozilla/5.0 (iPhone; CPU iPhone OS 14_6 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Mobile/15E148 Instagram 194.0.0.33.171 (iPhone13,1; iOS 14_6; ru_DE; ru-DE; scale=2.88; 1080x2338; 301014278)"
+            ],
+            "Accept-Language": [
+                "ru"
+            ],
+            "Referer": [
+                "https://app.minty.art/"
+            ]
+        },
+        "tls": {
+            "resumed": false,
+            "version": 772,
+            "cipher_suite": 4865,
+            "proto": "h2",
+            "proto_mutual": true,
+            "server_name": "app.minty.art"
+        }
+    },
+    "common_log": "77.23.252.124 - - [17/Jul/2021:17:27:06 +0000] \"GET /node_modules/react-vis/dist/style HTTP/2.0\" 200 11755",
+    "duration": 0.000351666,
+    "size": 11755,
+    "status": 200,
+    "resp_headers": {
+        "Server": [
+            "Caddy"
+        ],
+        "Etag": [
+            "\"qvtr1c92j\""
+        ],
+        "Content-Type": [
+            "text/html; charset=utf-8"
+        ],
+        "Last-Modified": [
+            "Tue, 06 Jul 2021 13:05:36 GMT"
+        ],
+        "Accept-Ranges": [
+            "bytes"
+        ],
+        "Content-Length": [
+            "11755"
+        ]
+    }
+}

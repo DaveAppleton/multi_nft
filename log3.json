@@ -1,0 +1,523 @@
+{
+    "level": "info",
+    "ts": 1626543610.636225,
+    "logger": "http.log.access.log0",
+    "msg": "handled request",
+    "request": {
+        "remote_addr": "183.171.132.109:51886",
+        "proto": "HTTP/2.0",
+        "method": "GET",
+        "host": "preview.minty.art",
+        "uri": "/preview/art/19",
+        "headers": {
+            "Sec-Fetch-Mode": [
+                "navigate"
+            ],
+            "Sec-Fetch-Dest": [
+                "document"
+            ],
+            "Accept-Language": [
+                "en-US,en;q=0.9"
+            ],
+            "Cookie": [
+                "crisp-client%2Fsession%2F518d3742-b44b-4edb-8b8e-5c6d324fea85=session_22e1ab5d-1bca-4646-84a4-f2801135af34"
+            ],
+            "Sec-Fetch-User": [
+                "?1"
+            ],
+            "Sec-Ch-Ua": [
+                "\" Not;A Brand\";v=\"99\", \"Google Chrome\";v=\"91\", \"Chromium\";v=\"91\""
+            ],
+            "Sec-Ch-Ua-Mobile": [
+                "?0"
+            ],
+            "Dnt": [
+                "1"
+            ],
+            "Upgrade-Insecure-Requests": [
+                "1"
+            ],
+            "User-Agent": [
+                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36"
+            ],
+            "Accept": [
+                "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9"
+            ],
+            "Sec-Fetch-Site": [
+                "none"
+            ],
+            "Accept-Encoding": [
+                "gzip, deflate, br"
+            ]
+        },
+        "tls": {
+            "resumed": true,
+            "version": 772,
+            "cipher_suite": 4865,
+            "proto": "h2",
+            "proto_mutual": true,
+            "server_name": "preview.minty.art"
+        }
+    },
+    "common_log": "183.171.132.109 - - [17/Jul/2021:17:40:10 +0000] \"GET /preview/art/19 HTTP/2.0\" 200 482",
+    "duration": 0.822226965,
+    "size": 482,
+    "status": 200,
+    "resp_headers": {
+        "Server": [
+            "Caddy"
+        ],
+        "Date": [
+            "Sat, 17 Jul 2021 17:40:10 GMT"
+        ],
+        "Content-Length": [
+            "482"
+        ],
+        "Content-Type": [
+            "text/html; charset=utf-8"
+        ]
+    }
+}
+{
+    "level": "info",
+    "ts": 1626543671.934966,
+    "logger": "http.log.access.log0",
+    "msg": "handled request",
+    "request": {
+        "remote_addr": "199.59.150.181:37798",
+        "proto": "HTTP/1.1",
+        "method": "GET",
+        "host": "preview.minty.art",
+        "uri": "/preview/art/19",
+        "headers": {
+            "X-B3-Spanid": [
+                "d732905dc4d77ea2"
+            ],
+            "X-B3-Parentspanid": [
+                "012308395c74743d"
+            ],
+            "User-Agent": [
+                "Twitterbot/1.0"
+            ],
+            "X-B3-Flags": [
+                "2"
+            ],
+            "Accept-Encoding": [
+                "gzip, deflate"
+            ],
+            "Finagle-Ctx-Com.twitter.finagle.retries": [
+                "0"
+            ],
+            "Accept": [
+                "*/*"
+            ],
+            "X-B3-Sampled": [
+                "false"
+            ],
+            "X-B3-Traceid": [
+                "f164e44356accccb"
+            ]
+        },
+        "tls": {
+            "resumed": false,
+            "version": 771,
+            "cipher_suite": 49196,
+            "proto": "",
+            "proto_mutual": true,
+            "server_name": "preview.minty.art"
+        }
+    },
+    "common_log": "199.59.150.181 - - [17/Jul/2021:17:41:11 +0000] \"GET /preview/art/19 HTTP/1.1\" 200 482",
+    "duration": 0.778971401,
+    "size": 482,
+    "status": 200,
+    "resp_headers": {
+        "Content-Type": [
+            "text/html; charset=utf-8"
+        ],
+        "Server": [
+            "Caddy"
+        ],
+        "Date": [
+            "Sat, 17 Jul 2021 17:41:11 GMT"
+        ],
+        "Content-Length": [
+            "482"
+        ]
+    }
+}
+{
+    "level": "info",
+    "ts": 1626543675.691323,
+    "logger": "http.log.access.log0",
+    "msg": "handled request",
+    "request": {
+        "remote_addr": "148.251.81.40:42624",
+        "proto": "HTTP/1.1",
+        "method": "HEAD",
+        "host": "preview.minty.art",
+        "uri": "/preview/art/19",
+        "headers": {
+            "User-Agent": [
+                "Mozilla/5.0 (compatible; um-LN/1.0; mailto: techinfo@ubermetrics-technologies.com; Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.1"
+            ],
+            "Accept": [
+                "text/html, image/gif, image/jpeg, *; q=.2, */*; q=.2"
+            ],
+            "Connection": [
+                "keep-alive"
+            ]
+        },
+        "tls": {
+            "resumed": false,
+            "version": 771,
+            "cipher_suite": 49196,
+            "proto": "",
+            "proto_mutual": true,
+            "server_name": "preview.minty.art"
+        }
+    },
+    "common_log": "148.251.81.40 - - [17/Jul/2021:17:41:15 +0000] \"HEAD /preview/art/19 HTTP/1.1\" 200 0",
+    "duration": 0.066133658,
+    "size": 0,
+    "status": 200,
+    "resp_headers": {
+        "Server": [
+            "Caddy"
+        ],
+        "Content-Length": [
+            "482"
+        ],
+        "Content-Type": [
+            "text/html; charset=utf-8"
+        ],
+        "Date": [
+            "Sat, 17 Jul 2021 17:41:15 GMT"
+        ]
+    }
+}
+{
+    "level": "info",
+    "ts": 1626543676.3582127,
+    "logger": "http.log.access.log0",
+    "msg": "handled request",
+    "request": {
+        "remote_addr": "217.182.175.162:59788",
+        "proto": "HTTP/2.0",
+        "method": "HEAD",
+        "host": "preview.minty.art",
+        "uri": "/preview/art/19",
+        "headers": {
+            "User-Agent": [
+                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_0) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/70.0.3538.67 Safari/537.36"
+            ]
+        },
+        "tls": {
+            "resumed": false,
+            "version": 771,
+            "cipher_suite": 49196,
+            "proto": "h2",
+            "proto_mutual": true,
+            "server_name": "preview.minty.art"
+        }
+    },
+    "common_log": "217.182.175.162 - - [17/Jul/2021:17:41:16 +0000] \"HEAD /preview/art/19 HTTP/2.0\" 200 0",
+    "duration": 0.070693027,
+    "size": 0,
+    "status": 200,
+    "resp_headers": {
+        "Server": [
+            "Caddy"
+        ],
+        "Content-Type": [
+            "text/html; charset=utf-8"
+        ],
+        "Date": [
+            "Sat, 17 Jul 2021 17:41:16 GMT"
+        ],
+        "Content-Length": [
+            "482"
+        ]
+    }
+}
+{
+    "level": "error",
+    "ts": 1626543676.5339122,
+    "logger": "http.log.access.log0",
+    "msg": "handled request",
+    "request": {
+        "remote_addr": "148.251.81.40:42626",
+        "proto": "HTTP/1.1",
+        "method": "GET",
+        "host": "preview.minty.art",
+        "uri": "/robots.txt",
+        "headers": {
+            "Connection": [
+                "Keep-Alive"
+            ],
+            "User-Agent": [
+                "Mozilla/5.0 (compatible; um-LN/1.0; mailto: techinfo@ubermetrics-technologies.com; Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.1"
+            ],
+            "Accept-Encoding": [
+                "gzip,deflate"
+            ]
+        },
+        "tls": {
+            "resumed": false,
+            "version": 771,
+            "cipher_suite": 49196,
+            "proto": "",
+            "proto_mutual": true,
+            "server_name": "preview.minty.art"
+        }
+    },
+    "common_log": "148.251.81.40 - - [17/Jul/2021:17:41:16 +0000] \"GET /robots.txt HTTP/1.1\" 404 19",
+    "duration": 0.000390597,
+    "size": 19,
+    "status": 404,
+    "resp_headers": {
+        "Server": [
+            "Caddy"
+        ],
+        "X-Content-Type-Options": [
+            "nosniff"
+        ],
+        "Date": [
+            "Sat, 17 Jul 2021 17:41:16 GMT"
+        ],
+        "Content-Length": [
+            "19"
+        ],
+        "Content-Type": [
+            "text/plain; charset=utf-8"
+        ]
+    }
+}
+{
+    "level": "info",
+    "ts": 1626543676.6220117,
+    "logger": "http.log.access.log0",
+    "msg": "handled request",
+    "request": {
+        "remote_addr": "182.253.152.150:36702",
+        "proto": "HTTP/1.1",
+        "method": "GET",
+        "host": "preview.minty.art",
+        "uri": "/preview/art/19",
+        "headers": {
+            "Connection": [
+                "close"
+            ],
+            "Accept-Encoding": [
+                "identity"
+            ],
+            "User-Agent": [
+                "Python-urllib/3.6"
+            ]
+        },
+        "tls": {
+            "resumed": false,
+            "version": 771,
+            "cipher_suite": 49196,
+            "proto": "",
+            "proto_mutual": true,
+            "server_name": "preview.minty.art"
+        }
+    },
+    "common_log": "182.253.152.150 - - [17/Jul/2021:17:41:16 +0000] \"GET /preview/art/19 HTTP/1.1\" 200 482",
+    "duration": 0.060192895,
+    "size": 482,
+    "status": 200,
+    "resp_headers": {
+        "Date": [
+            "Sat, 17 Jul 2021 17:41:16 GMT"
+        ],
+        "Content-Length": [
+            "482"
+        ],
+        "Content-Type": [
+            "text/html; charset=utf-8"
+        ],
+        "Server": [
+            "Caddy"
+        ]
+    }
+}
+{
+    "level": "info",
+    "ts": 1626543676.843705,
+    "logger": "http.log.access.log0",
+    "msg": "handled request",
+    "request": {
+        "remote_addr": "148.251.81.40:42626",
+        "proto": "HTTP/1.1",
+        "method": "GET",
+        "host": "preview.minty.art",
+        "uri": "/preview/art/19",
+        "headers": {
+            "Connection": [
+                "Keep-Alive"
+            ],
+            "User-Agent": [
+                "Mozilla/5.0 (compatible; um-LN/1.0; mailto: techinfo@ubermetrics-technologies.com; Windows NT 6.1; WOW64; rv:40.0) Gecko/20100101 Firefox/40.1"
+            ],
+            "Accept-Encoding": [
+                "gzip,deflate"
+            ]
+        },
+        "tls": {
+            "resumed": false,
+            "version": 771,
+            "cipher_suite": 49196,
+            "proto": "",
+            "proto_mutual": true,
+            "server_name": "preview.minty.art"
+        }
+    },
+    "common_log": "148.251.81.40 - - [17/Jul/2021:17:41:16 +0000] \"GET /preview/art/19 HTTP/1.1\" 200 482",
+    "duration": 0.067849682,
+    "size": 482,
+    "status": 200,
+    "resp_headers": {
+        "Server": [
+            "Caddy"
+        ],
+        "Content-Length": [
+            "482"
+        ],
+        "Content-Type": [
+            "text/html; charset=utf-8"
+        ],
+        "Date": [
+            "Sat, 17 Jul 2021 17:41:16 GMT"
+        ]
+    }
+}
+{
+    "level": "info",
+    "ts": 1626543677.3237407,
+    "logger": "http.log.access.log0",
+    "msg": "handled request",
+    "request": {
+        "remote_addr": "35.227.139.54:43092",
+        "proto": "HTTP/2.0",
+        "method": "HEAD",
+        "host": "preview.minty.art",
+        "uri": "/preview/art/19",
+        "headers": {
+            "User-Agent": [
+                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_5) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/78.0.3904.108 Safari/537.36"
+            ]
+        },
+        "tls": {
+            "resumed": false,
+            "version": 772,
+            "cipher_suite": 4865,
+            "proto": "h2",
+            "proto_mutual": true,
+            "server_name": "preview.minty.art"
+        }
+    },
+    "common_log": "35.227.139.54 - - [17/Jul/2021:17:41:17 +0000] \"HEAD /preview/art/19 HTTP/2.0\" 200 0",
+    "duration": 0.063507023,
+    "size": 0,
+    "status": 200,
+    "resp_headers": {
+        "Server": [
+            "Caddy"
+        ],
+        "Content-Type": [
+            "text/html; charset=utf-8"
+        ],
+        "Date": [
+            "Sat, 17 Jul 2021 17:41:17 GMT"
+        ],
+        "Content-Length": [
+            "482"
+        ]
+    }
+}
+{
+    "level": "info",
+    "ts": 1626543677.3239634,
+    "logger": "http.log.access.log0",
+    "msg": "handled request",
+    "request": {
+        "remote_addr": "35.227.139.54:43092",
+        "proto": "HTTP/2.0",
+        "method": "HEAD",
+        "host": "preview.minty.art",
+        "uri": "/preview/art/19",
+        "headers": {},
+        "tls": {
+            "resumed": false,
+            "version": 772,
+            "cipher_suite": 4865,
+            "proto": "h2",
+            "proto_mutual": true,
+            "server_name": "preview.minty.art"
+        }
+    },
+    "common_log": "35.227.139.54 - - [17/Jul/2021:17:41:17 +0000] \"HEAD /preview/art/19 HTTP/2.0\" 200 0",
+    "duration": 0.064110237,
+    "size": 0,
+    "status": 200,
+    "resp_headers": {
+        "Server": [
+            "Caddy"
+        ],
+        "Date": [
+            "Sat, 17 Jul 2021 17:41:17 GMT"
+        ],
+        "Content-Length": [
+            "482"
+        ],
+        "Content-Type": [
+            "text/html; charset=utf-8"
+        ]
+    }
+}
+{
+    "level": "info",
+    "ts": 1626543677.334963,
+    "logger": "http.log.access.log0",
+    "msg": "handled request",
+    "request": {
+        "remote_addr": "35.227.139.54:43092",
+        "proto": "HTTP/2.0",
+        "method": "HEAD",
+        "host": "preview.minty.art",
+        "uri": "/preview/art/19",
+        "headers": {
+            "User-Agent": [
+                "Mozilla/5.0 (iPhone; CPU iPhone OS 12_2 like Mac OS X) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1 Mobile/15E148 Safari/604.1"
+            ]
+        },
+        "tls": {
+            "resumed": false,
+            "version": 772,
+            "cipher_suite": 4865,
+            "proto": "h2",
+            "proto_mutual": true,
+            "server_name": "preview.minty.art"
+        }
+    },
+    "common_log": "35.227.139.54 - - [17/Jul/2021:17:41:17 +0000] \"HEAD /preview/art/19 HTTP/2.0\" 200 0",
+    "duration": 0.076121574,
+    "size": 0,
+    "status": 200,
+    "resp_headers": {
+        "Server": [
+            "Caddy"
+        ],
+        "Date": [
+            "Sat, 17 Jul 2021 17:41:17 GMT"
+        ],
+        "Content-Length": [
+            "482"
+        ],
+        "Content-Type": [
+            "text/html; charset=utf-8"
+        ]
+    }
+}

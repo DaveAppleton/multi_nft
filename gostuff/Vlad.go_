@@ -1,0 +1,111 @@
+package main
+
+import (
+	"encoding/csv"
+	"encoding/json"
+	"fmt"
+	"log"
+	"math/big"
+	"net/http"
+	"os"
+	"strconv"
+	"strings"
+
+	"art.minty.backend/pMintyUnique"
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/ethclient"
+)
+
+func readCSV(input string) (data [][]string, err error) {
+	sf, err := os.Open(input)
+	if err != nil {
+		fmt.Println(err, "[", input, "]")
+		log.Fatal(err, input)
+	}
+	data, err = csv.NewReader(sf).ReadAll()
+	return
+}
+
+func writeCSV(fileName string, recs [][]string) (err error) {
+	if len(recs) == 0 {
+		fmt.Println("no records for ", fileName)
+		return
+	}
+	fil, err := os.OpenFile(fileName, os.O_RDWR|os.O_CREATE, 0755)
+	if err != nil {
+		log.Println("open ", fileName, err.Error())
+		return
+	}
+	w2 := csv.NewWriter(fil)
+	w2.WriteAll(recs) // calls Flush internally
+	if err := w2.Error(); err != nil {
+		log.Fatalln("error writing csv:", err)
+	}
+	fmt.Println(fileName, "written")
+	return
+}
+
+func main() {
+	client, err := ethclient.Dial("https://mainnet.infura.io/v3/a1a92273c03b4c9b83c5b2470058464f")
+	if err != nil {
+		log.Fatal(err)
+	}
+	addr := common.HexToAddress("0x2af6eb2bfda21572615708532602454e5413bda1")
+	contract, err := pMintyUnique.NewPMintyUnique(addr, client)
+	if err != nil {
+		log.Fatal(err)
+	}
+	supply, err := contract.TotalSupply(nil)
+	if err != nil {
+		log.Fatal(err)
+	}
+	data, err := readCSV("vlad.csv")
+	if err == nil {
+		records := make(map[string]int)
+		fmt.Println("using vlad.csv")
+		var out [][]string
+		for _, line := range data {
+			var meta struct {
+				Name         string
+				Image        string
+				AnimationURL string `json:"animation_url"`
+			}
+			numStr := strings.TrimSpace(line[1])
+			num, err := strconv.ParseInt(numStr, 10, 64)
+			if err != nil {
+				log.Fatal(err)
+			}
+			uri, err := contract.TokenURI(nil, big.NewInt(num))
+			if err != nil {
+				log.Fatal(err)
+			}
+			resp, err := http.Get(uri)
+			defer resp.Body.Close()
+			err = json.NewDecoder(resp.Body).Decode(&meta)
+			if err != nil {
+				log.Fatal(err)
+			}
+			records[meta.Name]++
+			newLine := []string{line[0], line[1], meta.Name, meta.AnimationURL, meta.Image}
+			fmt.Println(line[0], line[1], meta.Name, records[meta.Name])
+			out = append(out, newLine)
+		}
+		err = writeCSV("Vlad2.csv", out)
+		if err != nil {
+			log.Fatal(err)
+		}
+		fmt.Println("NFT allocations")
+		for key, count := range records {
+			fmt.Println(key, count)
+		}
+		os.Exit(0)
+	}
+	for j := int64(0); j < supply.Int64(); j++ {
+		tokenId, err := contract.TokenByIndex(nil, big.NewInt(j))
+		if err != nil {
+			log.Fatal(err)
+		}
+		fmt.Printf("%4d, %d\n", j, tokenId)
+	}
+
+}

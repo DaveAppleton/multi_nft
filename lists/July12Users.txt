@@ -1,0 +1,69 @@
+ id  |               email               |      nickname      
+-----+-----------------------------------+--------------------
+   1 |                                   | Dave
+   2 | amirsamtio@gmail.com              | amirone
+   3 | amirsamtio@gmail.com              | AmirHussain
+   4 | NFTYDaddy@minty.art               | NFTYDaddy
+   5 | staelens.jeferson@gmail.com       | Jef
+   6 | wwstudioz@mac.com                 | REMO
+   7 | aatqa@minty.art                   | AATQA
+   8 | antoine@samourai.coop             | SamouraiCoop
+  10 |                                   | Salamiah
+  13 |                                   | benjns
+  16 | ferris@fbls.win                   | ferrisbullish
+  19 | eddyshanghai@gmail.com            | NFTeddy
+  21 | mabuprojekt@gmail.com             | Mabu
+  28 |                                   | Lastprince
+  31 | elfresonero@gmail.com             | CesarYague
+  32 | xbrucethegoose@protonmail.com     | xBruceTheGoose
+  33 | limndigital@protonmail.com        | limn
+  34 | ejthek@protonmail.com             | ejthek
+  35 | adityasahay2014@gmail.com         | Aditya
+  36 | urushai.cripto@gmail.com          | urushai
+  37 | Akkrin.artist@gmail.com           | Akkrin
+  38 | komegayokutakeru@gmail.com        | meratakeru
+  41 | sssean@gmail.com                  | eaao
+  44 | thomas@polygonyogurt.com          | polygonyogurt
+  46 | lukevidler@hotmail.com            | 
+  56 | mail@speakcryptic.com             | SpeakCryptic
+  57 | joerivanmourik@Outlook.com        | PAMPMUSK
+  59 | neothink@protonmail.com           | zonpower
+  60 | tweetious@hotmail.com             | tweetious
+  62 | dani@socialbloom.co.uk            | Dani
+  65 | darianzamdesign@gmail.com         | ZAM
+  66 | lou@iamlou.com                    | edgarallenpoe
+  67 | masayaku@gmail.com                | Xaqu
+  69 |                                   | StrawberrySith
+  73 | riabovitchev@gmail.com            | Andrei
+  77 | fantocciomail@gmail.com           | GiacomoFumo
+  78 | saulz@protonmail.com              | SaulZ
+  81 |                                   | devwells
+  85 | Thejayderjp@gmail.com             | TheJayder
+  89 | maguszart@gmail.com               | Magusz
+  91 |                                   | MVCP
+  93 | sammy.khalid@yahoo.co.uk          | Chigg
+  96 | jorge.rubiotorres@gmail.com       | LimboMask
+  97 | info@stefanobagnoli.co.uk         | StefanoBagnoli
+ 103 | grebenshi@icloud.com              | grebenshyo
+ 105 | edwardghoiland@gmail.com          | TheCollector
+ 108 |                                   | EMI
+ 112 |                                   | DX
+ 113 |                                   | KiriakiMoulinou
+ 117 | fuga.nft@gmail.com                | FUGA
+ 119 | vazartgallery@gmail.com           | VazArt
+ 120 | sylare.network@protonmail.com     | JoweL
+ 121 | reglerogala@gmail.com             | GALAMIRISSA
+ 124 | andy@andyyang.com                 | AndyYangCreates
+ 126 | bookdesign@benedictocernaliii.com | benedictocernaliii
+ 140 | prash786kool@gmail.com            | apertureanecdotes
+ 149 | creativeonstock@gmail.com         | ArtDesignWorks
+ 151 | shirojapan@gmail.com              | Shiro
+ 153 | info@cipher-web.com               | CipherWeb
+ 158 | chavo@chavobizarro.com            | ChavoBizarro
+ 159 | itshandyscratch@gmail.com         | Handyscratch
+ 160 | armin.abz14@gmail.com             | armin
+ 162 | grete@ghjstudio.com               | ghjstudio
+ 170 | invest@lc.ventures                | NFTDadJokes
+ 172 | nonfungibleownership@gmail.com    | nfownership
+ 173 | karisuma.art@gmail.com            | CSLIM
+ (175 users, the rest hav no nickname or email)

@@ -5,7 +5,9 @@
     "HOST" : "https://mainnet.infura.io/v3/a1a92273c03b4c9b83c5b2470058464f",
     "WSSHOST" : "wss://mainnet.infura.io/ws/v3/4a39d44a7d7d4d8ea78a47b3d9e82ac3",
 
-
+    "NAME" : "Ether Cards",
+    "NETWORK" : "ETHEREUM",
+    "PORT" : ":8091",
     
     "DB_TIMEOUT" : 100,
 

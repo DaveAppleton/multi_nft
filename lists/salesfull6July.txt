@@ -1,0 +1,29 @@
+Unique 
+ blockchain=# select id, txhash, lookup_id, operation, buyer, tokenid,price from unique_sale where operation = 'OfferAccepted'ORDER BY buyer,id;
+ id |                               txhash                               | lookup_id |   operation   |                   buyer                    | tokenid |        price         
+----+--------------------------------------------------------------------+-----------+---------------+--------------------------------------------+---------+----------------------
+ 33 | 0x5dd77dd45a41526e2626433891df94425d2f10fcb7aae1cef887ce0fb088cde6 |         4 | OfferAccepted | 0xa1EFF0887B93e18bB0f59334a0CB57148BC2086f |      38 | 1.332500000000000000
+
+Project
+
+blockchain=# select id, txhash, lookup_id, operation, buyer, tokenid,price from multi_sales where operation = 'OfferAccepted'ORDER BY buyer,id;
+ id |                               txhash                               | lookup_id |   operation   |                   buyer                    | tokenid |        price         
+----+--------------------------------------------------------------------+-----------+---------------+--------------------------------------------+---------+----------------------
+ 30 | 0x98a9c4cabb472122c5d5be910a158d146e0cf60dbbb0dcd4c0897b51d054086c |         2 | OfferAccepted | 0x16d9d13bFDee5012b5CE81a2e5E621a3362b94b9 |      41 | 0.353625000000000000
+ 31 | 0x84a1bbe6aab669733bcd60467698daa757421e8069a35a1fd5674a76796aaeaa |         2 | OfferAccepted | 0x16d9d13bFDee5012b5CE81a2e5E621a3362b94b9 |      39 | 0.353625000000000000
+ 32 | 0x0f477929896293be40c794ae79d3aa795b1489856bd6a75d3407d6c093ef1817 |         2 | OfferAccepted | 0x16d9d13bFDee5012b5CE81a2e5E621a3362b94b9 |      19 | 0.353625000000000000
+ 52 | 0xb509033fc16a69d922e938c2d742551129f296b10f527a143fac41d10f7b9fff |         2 | OfferAccepted | 0x16d9d13bFDee5012b5CE81a2e5E621a3362b94b9 |      28 | 0.353625000000000000
+ 53 | 0x31a3a0fd0a19943f0b95102905dfb13b685ccde5cd8ef22153a815cdce40fff9 |         2 | OfferAccepted | 0x16d9d13bFDee5012b5CE81a2e5E621a3362b94b9 |      10 | 0.235750000000000000
+ 54 | 0x220fbd5d056448219555fa4f35ec004985567a3deeac3b2e1b9033d5fb97ae06 |         2 | OfferAccepted | 0x16d9d13bFDee5012b5CE81a2e5E621a3362b94b9 |      10 | 0.235750000000000000
+ 48 | 0xc862e1fe4243b4c5f2b4108de68d41343be75661a08492e838d918900082dd13 |         2 | OfferAccepted | 0x6C6558DAB14054d950bdE08A659D4a9aF113b243 |      26 | 0.353625000000000000
+ 34 | 0xc23b16d9dee481840c45629bf2f555f0aab66edadab0eaa70f87e9631112d248 |         2 | OfferAccepted | 0x7bEED30332656CA4220CB2ce8E4508fb18013E8d |      12 | 0.353625000000000000
+ 29 | 0xcfc1146c098fe6606896c6cf2d38e01f5e84e2e63041df39a5f2c4b5d8c9383a |         2 | OfferAccepted | 0xa1EFF0887B93e18bB0f59334a0CB57148BC2086f |      45 | 0.589375000000000000
+ 37 | 0x6503452ad5a25c5d3951c2be7f4d7f4d1ff92ab9db8c3625f8c44e2b97e0412c |         2 | OfferAccepted | 0xa1EFF0887B93e18bB0f59334a0CB57148BC2086f |      35 | 0.353625000000000000
+ 38 | 0x4fba400b22161df1cbea38fe6a7df348b6c39bca3e3989023e65a2fa5a9a22a6 |         2 | OfferAccepted | 0xa1EFF0887B93e18bB0f59334a0CB57148BC2086f |       1 | 0.235750000000000000
+ 39 | 0x2ef65af543277d5160e9c5add9539628a02d75f2fefae84c196eaea89d5702ab |         2 | OfferAccepted | 0xa1EFF0887B93e18bB0f59334a0CB57148BC2086f |      10 | 0.235750000000000000
+ 40 | 0xb608532b90ecf906d9cd3510710ddf78908115596f64534bb9993f91c04a8db7 |         2 | OfferAccepted | 0xa1EFF0887B93e18bB0f59334a0CB57148BC2086f |      50 | 1.178750000000000000
+ 28 | 0xde8957e950ca812dc82c2af56763a6c50fa759c9810ba1109f71cf0cc7cd2521 |         2 | OfferAccepted | 0xDb89C1C66191E6B3Af2A299fbfF2E22EB1Fe1AE0 |       1 | 0.235750000000000000
+ 33 | 0xadbf91e08136365a1f82da0c9b04887aa438479fe66a8a1ae114c04e8745b531 |         2 | OfferAccepted | 0xDb89C1C66191E6B3Af2A299fbfF2E22EB1Fe1AE0 |      47 | 1.178750000000000000
+ 36 | 0xf0a3c1ebc89c29d49a5d830cdb91064cc21a42ba4e5ddc71bb51df6db7102a89 |         2 | OfferAccepted | 0xDb89C1C66191E6B3Af2A299fbfF2E22EB1Fe1AE0 |      17 | 0.353625000000000000
+ 49 | 0xd9db3b50707f6c682e65c6fbfa9acfa07331fa99c0330be570354a82fbd69019 |         2 | OfferAccepted | 0xDb89C1C66191E6B3Af2A299fbfF2E22EB1Fe1AE0 |      18 | 0.353625000000000000
+(17 rows)

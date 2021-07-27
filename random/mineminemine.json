@@ -1,0 +1,8 @@
+{
+    "name": "Mine Mine Mine",
+    "description": "A test to see who owns this on Opensea.",
+    "image": "https://openseacreatures.io/image.png",
+    "external_link": "https://demo.minty.art/project/39",
+    "seller_fee_basis_points": 1000,
+    "fee_recipient": "0xA97F337c39cccE66adfeCB2BF99C1DdC54C2D721" 
+  }

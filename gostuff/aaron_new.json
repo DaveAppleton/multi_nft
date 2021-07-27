@@ -1,6 +1,6 @@
 [
-    "0x19643e80",
-    "0x9867cc5f7f196b93bae1e27e6320742445d290f2263827498b54fec539f756af",
+    "0x19643e80", ✅
+    "0x9867cc5f7f196b93bae1e27e6320742445d290f2263827498b54fec539f756af", 
     "0xe8f28f",
     "0x60cce928",
     "0x7075baad63b5893e5a18c3eab9501e833b76da1f6bc39c4838890dc04d7225c4",
@@ -11,9 +11,27 @@
     "0x"
 ]
 
-426000000
+426000000 = 426000000 OK & KOSHER
 ?
 15266447
 1624041768
+
+Tx Hash => Block Number
+
+0xb783305fbffb2ea2a22606ccbc44bda50ea1752d7b5a55a37054fc767e31c154 => 15266447
+
+"RootChainProxy": "0x2890bA17EfE978480615e330ecB65333b880928e", => to get the range
+
+CurrentHeaderBlock(4) -> HeaderBlocks
+443440000
+
+
+Then Binary Search -> to get our block in the range
+
+1) Checkpoint that contains child block number ✅
+
+Header Block Number
+
+2) Block Proof
 
 

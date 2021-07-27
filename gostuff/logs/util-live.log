@@ -67,3 +67,9 @@
 2021/07/01 01:12:21 database :  dial tcp [::1]:5432: connect: connection refused
 2021/07/01 01:12:21 host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname=minty connect_timeout=10
 2021/07/01 01:13:30 set minter  benedictocernaliii 126 0x38D8746Ddbd958cC5d4B44C381C3a4F07ebF3801 live
+2021/07/05 14:56:35 database :  dial tcp [::1]:5432: connect: connection refused
+2021/07/05 14:56:35 host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname=minty connect_timeout=10
+2021/07/05 15:04:41 set minter  Shiro 151 0x820C00E609FC01eC31816C782276f7F7fE460774 live
+2021/07/13 16:21:28 set minter  ghjstudio 162 0x4B46eA6Ba2FdF8B7eeC06079AC3670Ee6d82caf3 live
+2021/07/15 01:18:32 set minter  JoweL 120 0xf33B86Eeb3D368A0B18400d47dB5D861dfc7B8Ba live
+2021/07/16 15:27:34 set minter  Animatttic 185 0x294A137eE7d3de3D4DC8bBe229fD06c2997636ee live

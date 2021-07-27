@@ -1,0 +1,101 @@
+ id  |                     image                      |                          name                           | pool_id 
+-----+------------------------------------------------+---------------------------------------------------------+---------
+   1 | QmTZfjZMMuLvEkspDRwMcGTZwzDGvvRaSzJ4FPcaPva1N1 | Paris Avant-Première Ticket                             |       0
+   9 | QmfYG5QJP1BEb4qZb7b8DAAEqCew38TRhx165z5rJeaRze | Online Avant Première Rare Ticket                       |       0
+  10 | QmQ9gSCDHYweDDizZxNxNFST6pYZAsEKBXF6tx6NfqGXaz | Early Ticket - Souvenir - Limited Edition               |       0
+  11 | QmVrieNCNZJYFoTjQ6159J2qMZLWNetnmeQQoGfwwud9RB | Early Ticket - Souvenir - Limited Edition               |       0
+  12 | QmV11am1EbL7Cs5L4iA5LV1BW1v1XRPthQFmTwu8SUk7jL | Rare Card #1 : The Narrator                             |       0
+  13 | QmeQWNQ5PXXNkAYZBRP7gjrZgVCCHezsXT9i8SzwXCWg3V | Rare Card #2 : The Beginning                            |       0
+  14 | QmfLjmZp4VLXehtdYhRBFJA5Y1dRoiuDvaes2g4PArKANJ | Rare Card #3 : Measurements                             |       0
+  15 | QmeRvBwu8Mu4DJciHA4qupe3W9X4DshSonTu1q6k6iHsoM | Rare Card #4 : The Fight                                |       0
+  16 | QmcUUGwkAUxnJcKyr237hL4buS5E5BxY8efM8LSpng48Ca | Rare Card #5 : Subterranean                             |       0
+  17 | QmYxJKWVk4kPRKMHM2pj2o2Giwd1GCVVZmmpqfaRg7nagy | Rare Card #6 : Hanging out                              |       0
+  18 | QmetWtzcuBKU4wm3YaerpQHxwBsM6ffyCA7seCBnbeetaw | Rare Card #7 : Diving into the unknown                  |       0
+  19 | QmTgdftz54pjRk7eJYcTg7KAiHnGqcnGE8Ay9BiBUcDbmT | Rare Card #8 : First Brush Strokes                      |       0
+  20 | Qmd9abSiAgRvVaJub79CeWJRUdNBZrQUzYApMtpz9S3c6F | Rare Card #9 : Slowly taking shape                      |       0
+  21 | Qmd1a2uibGm8MWPw4oHma89WmfbvSH5zUvdfrve8mNpBt4 | Rare Card #10 : The Day fades away                      |       0
+  22 | QmY5W3L5vFhGP8uCAnJ6WVthRTaFiZf1sa5umUCpHhnCrp | Rare Card #11 : Moving Walls                            |       0
+  23 | QmXdFaPAPyGa4yYQUpXascyLL28oqzR1dNwjjzEAD4UkU2 | Rare Card #12 : Sun hits the foundry                    |       0
+  24 | QmbN8pzbqUrtRzWRfkNWLMmrt2nZG4rdXk9kUFpLMKgQT8 | Rare Card #13 : Anonymous Shadow                        |       0
+  25 | QmXZkZhBnMtTKwkbeK4c7qGtX3x9gawjZA2pb2K9LzqAQM | Rare Card #14 : Hidden Gem                              |       0
+  26 | QmSQkng9982VhqdujkNvUEkgUxZ2j3JP9p3foLokyDrNrP | Rare Card #15 : The Sculptor                            |       0
+  27 | Qmes465H9X2u4dZ3wRmx2PwFVDHEen4EiyBt1rWB93q41Q | Rare Card #16 : The Crew                                |       0
+  28 | QmQqnLDTrg5qNhgx7LL2C96pzRL6uuzNLMCVJMBFATnpEr | Rare Card #17 : The Hit                                 |       0
+  29 | QmUkyP5AABe7W81mg2TGDZTPfF1qfUVJdKkcj3wa5y767w | Rare Card #18 : Pool & Paint                            |       0
+  30 | Qmbz71n9zga6SGheSKUtVk7Lk8HPYLd38BBgZDNc4khSWi | Rare Card #19 : The Final Round                         |       0
+  31 | QmaV6tkNHBrXWBSDdve9i1srajYDx7xu2ukaoRCteKHB3Y | Rare Card #20 : It's in the Game                        |       0
+  32 | QmRxWskJZhdqFw22EdB8Qa9aabV1wRPKQrg3rjT37JsH4T | Rare Card #21 : Take a Breath                           |       0
+  33 | QmVV2wFZWmXUZFKWMzvbaKNVv7dyCK3YTHueBDuKHpAnm6 | Rare Card #22 : Make NFTs                               |       0
+  34 | QmWY3Shr737LBVyTT83mmcLh3Nx3yUYVrq2Y1j57GbUfr8 | Rare Card #23 : The Torture Room                        |       0
+  35 | QmYEY6QEgqzGnuGmzcVdimY7jNkxcxSmXx38xRvD6QN2BR | Rare Card #24 : Walk to the path                        |       0
+  36 | QmQDhDKwj2Y2rtnbsm397iwN4A1LfohaYEnA9chFKuAorb | Rare Card #25 : Get Out                                 |       0
+  37 | Qmcvy8eNb6H8q331AejWW5YRntp3gAXcbnox8b9g3ogayQ | Rare Card #26 : Fresh Paint                             |       0
+  38 | QmPzBnmb9BRPCXjZUofjXCcXdb3Zq5N3VkuBHrzEDs3GVH | Rare Card #27 : Tricky Position                         |       0
+  39 | QmPvY9S5A9VKxdyDesefsuowWRQMn1Wmn6PfYeZCsAJJve | Rare Card #28 : Go to work                              |       0
+  41 | QmNtTxdAAmVfT6Z94YbbVzCLLb6hG4yMnNivP17uSjsrX6 | Rare Card #29 : These men lived here                    |       0
+  42 | QmVLjaTNSVhDzBJxzsYpXpujaxMjV3GZp4VygJ4gEH1eyB | Rare Card #30 : The rage to succeed                     |       0
+  43 | QmcZRAH9RWa566hH4PVWx3H7BLi8MpfEh8QcyF4hYAHoLo | Film Production File - English Version                  |       0
+  44 | QmZZYxoGjSNcPqPqDavvc21YBaf4WXMPT3vRbVWoTV8MSZ | Film Production File - French Version                   |       0
+  45 | QmNVLYgUXfx3VMo8GNgbK2EqAvFuv4aSdgKBDEuipW4dsx | Limited Edition Movie Poster                            |       0
+  46 | QmWRetJSmLzT3Fp44Na4FARHynuWwupZeAkYGE9xhuYeVX | Gold Rare Card - Chapter #0 : Introduction              |       0
+  47 | QmR6pX3oJciJGrrVi5KNirJYC51zeQSs2dVMnpB1oZatDB | Gold Rare Card - Chapter #1 : The Genesis               |       0
+  48 | QmTTn8EjeRVwqVmxtxCieLNjvaCXDsv2fw92QjcdBniYZJ | Gold Rare Card - Chapter #2 : The Sketches              |       0
+  49 | QmbSo2SPiiMPZ2wRthozzTZuKJo3cn3XvPgVPTTKgaUC4o | Gold Rare Card - Chapter #3 : Summer is here            |       0
+  50 | QmTVrehVAuuYNF6GCU4WUyu63gcNsjdLb1mPckR3Dfr5fc | Gold Rare Card - Chapter #4 : The Apotheosis            |       0
+  67 | QmemJ9kcpdEvBxcLx1Ebr5AF4W6fkUagesV54sznKe7ED8 | Official Movie Minute : La Fonderie Part 1/2            |       0
+  68 | QmaZB3f3HD6uwjVq64h89LWkKtWY5t8kHmpi3zZzFrEL2y | Official Movie Minute : La Fonderie Part 2/2            |       0
+  69 | QmYyZe4w7EbeWndLCD2zNK9cnj6eSGfD4RfXnqbsoDPqUE | Official Movie Minute : The Genesis Part 1/5            |       0
+  70 | Qmd4sh3XUTJJb5PyPjCWLPj75UVBALB1Esp9gp2ZWZWhtB | Official Movie Minute : The Genesis Part 2/5            |       0
+  71 | QmaPQrEPV1D91WfYYQR8SQqLYy2hpkeXDgAgikZwHtXhdN | Official Movie Minute : The Genesis Part 3/5            |       0
+  72 | QmWiS8x4ZTMuPy4XNhixQ895JLPXukJ3pKySHzjJWUbpTg | Official Movie Minute : The Genesis Part 4/5            |       0
+  73 | QmUTAy8ZCBweHhxLtp1Gyn79TU8PgKEjs1QTvdoumQgdTi | Official Movie Minute : The Genesis Part 5/5            |       0
+  74 | QmeEHWrVH7kGt6Z9bioc87zdPqpTwrywHukv4ZqRNEG5Jj | Official Movie Minute : Inside « La Fonderie » Part 1/3 |       0
+  75 | QmTv879QTSYKhJKrKmQPTGvd5UDs9ST4C5Xhcx4uokCrnX | Official Movie Minute : Inside « La Fonderie » Part 2/3 |       0
+  76 | QmTgLpYaYnKf3DegndBq7mRzX2h3RxQqSqhEVeWr6ujzNr | Official Movie Minute : Inside « La Fonderie » Part 3/3 |       0
+  77 | QmWVCNV4nTT1LsTEMej5zAewQ6RXCrguXz25a5TeJBqbum | Official Movie Minute : The artistic process Part 1/2   |       0
+  78 | QmaSwxMCUFxov6MxjR3yHXyYjNqEUgtkbKfGg67CrK72X9 | Official Movie Minute : The artistic process Part 2/2   |       0
+    79 | QmYBUJuaBckBdSvQ8aZw7o4Z7uN5mYzct7j9sfTRs8XSYf | Official Movie Minute : Fresco work Part 1/1            |       0
+  80 | QmRBgLYzVQF2opscgAW7h8V5BqdMYNXNaLYQGkzNWbdibb | Official Movie Minute : The Sketches Part 1/2           |       0
+  81 | QmVRx52QJFrhbckDfWf2tjKAcqTtCRyWtRBdJK2AKuMEAz | Official Movie Minute : The Sketches Part 2/2           |       0
+  82 | QmNjprNkcrvaK2VeVxrGy1n65SoxoVgtN6g6KFJ7zLtvAg | Official Movie Minute : What seemed evident Part 1/1    |       0
+  83 | Qmdkc3LWBxLUKE5Q3hFvc6iSge1SbaiYf3KeWwbxpny94Z | Official Movie Minute : Crypto finances art Part 1/1    |       0
+  84 | QmTEMGGJRUDRWKErsMzdyT52PWKKZh2hEEZpmVhP2N6Yz1 | Official Movie Minute : The first brushstroke Part 1/1  |       0
+  85 | QmUPMDk5yU9wg9nMQfXWQj3wvWzjwzYvTgmxVMojLvsQ58 | Official Movie Minute : Night work Part 1/1             |       2
+  86 | QmZ5zsp64X63sZxzQLdeA6F4xoFx1ZquvQwJcHmnLumbfu | Official Movie Minute : The fight Part 1/1              |       2
+  87 | Qma83sAMEFTrHFPdpDfSW6TC6SHFcyrgbHhCgx5w1hyP9B | Official Movie Minute : El viejo Part 1/3               |       0
+  88 | QmRZHCDFiu7Uswf7A1XFyGJEtnk6gsugnVsy18MkByRgZY | Official Movie Minute : El viejo Part 2/3               |       0
+  89 | QmRrEskowqFyaKTF6ysXnRmaGvG6TAMJ46uNrTNxQGiPXH | Official Movie Minute : El viejo Part 3/3               |       0
+  90 | QmZTf1q3ycsk9PUApcZT68597F9sz3LiQwzFfr2k9HH4JQ | Official Movie Minute : Art is universal Part 1/1       |       2
+  91 | QmPMMHhF1y5Py3dFoXafdDkYrT7DpYNuaoAWkigA9WH2MY | Official Movie Minute : Deep Blue Part 1/1              |       2
+  92 | Qmd12siq5VoFhMS1ikw4WHTjnPtPHjyXWUxtJKmmySAyrr | Official Movie Minute : Grow & Exist 1/1                |       2
+  93 | QmbmfHBRxFH8fQbm6HYAEq26mdGngpdhLBwLVMNeU5NjpC | Official Movie Minute : NFT & ART Part 1/2              |       0
+  94 | QmRu2oL7Nt6TAcrrECDQexYdesH8UtzjXrTbrczKH5T67y | Official Movie Minute : NFT & ART Part 2/2              |       0
+  95 | QmPeWDWhTAHaz6r64tADfxy4sTzWhPEiqdzK2CXaTDuxjb | Official Movie Minute : Life goes on Part 1/1           |       2
+  96 | QmYDKkJ5T6DEx6QJaqCb3r2QRZtBVEawuMLPmQLJKcnMRm | Official Movie Minute : « Vivir el dia a dia » Part 1/1 |       2
+  97 |                                                | Official Movie Minute : The Last Judgment Part 1/1      |       2
+  98 | QmeMu9XjMDPtEC1xfjpTDUWc3eazwyBk1WFMgmNrk7VeDg | Exclusive Directors Cut #1                              |       0
+  99 | QmXaCrprRDySr4VAedakMfs5epgZQsy2CNC1XcGXoyCm5a | Exclusive Directors Cut #2                              |       0
+ 100 | QmPbgvo5Fc3qobAtHEkKJcZt27Q87tC8eNi51o7A8TZfxk | Exclusive Directors Cut #3                              |       0
+ 101 | QmYsab8LAC6KJx3TcSgTy9PJfsKhMjxcqtfoTTFg4uGuhg | Exclusive Directors Cut #4                              |       0
+ 102 | QmZEjd8TFxdnjVHu3hVPHaQ1Pt3c6mhgAXgNhLXyJEeaGM | Exclusive Directors Cut #5                              |       0
+ 103 | QmcceeMEsKe2ZtgDeF3Wyu9Avp7FnpLdyRJNJwDoBQ8zRu | Exclusive Directors Cut #6                              |       0
+ 104 | QmTzjAkWYNSX1yGgAZmJmh5vGJsLNKGh2JCGDZt7DiYwfU | Exclusive Directors Cut #7                              |       0
+ 105 | Qmb5hhjZhDrtG75ng52Xhs3ueqxnxjjSA3J32Un5kfL6mK | Exclusive Directors Cut #8                              |       0
+ 106 | Qma3a1hwgKNMeH5xHN2HyWW3nfnCKiDGg2BikSMPCk4Xbc | Exclusive Directors Cut #9                              |       0
+ 107 | QmYhvVyGAv6nzLdppJd3b2eK7NnVuyNkMHjuB9amvfCqSW | Exclusive Directors Cut #10                             |       0
+ 108 | Qmdv1nyLy4CHLyahYuTXNtRE24BtekRpZSG24qYC2zBuqn | Exclusive Directors Cut #11                             |       0
+ 109 | QmU5CrHGnsQWFq2w9FQjWAAPk9nRrxnbhcZ8ri2xZSv3uo | Exclusive Directors Cut #12                             |       0
+ 110 | QmVoPAPJPB3HG1yMDhAV1HxDKP4qXpprMAdxx8NYjfR3pF | Exclusive Directors Cut #13                             |       0
+ 111 | QmSw7EbDg3CAY28i5Jri339x1VSNFf9wC6EtwzL1eSKAAV | Exclusive Directors Cut #14                             |       0
+ 112 | QmXF4a67fYVGQtgf5bFe4XkrfXejiXo88WNrNpimsCKKkM | Exclusive Directors Cut #15                             |       0
+ 113 | Qma1TsavGSkkqYH9zM4TDxmL2LVgdn1ZA7Ubpeisujr6q9 | Original Movie Soundtrack - Enter the Foundry by Köl    |       1
+ 114 | QmUigzRbGTwNWhb1dU1u7NVabxbZ9kXR8ToyRYk7B38DgQ | Original Movie Soundtrack - The old gold poesy by Köl   |       1
+ 115 | QmSgp5zqnamPQk3hN2SWtpPabLBSjUF49vYyRgsYLUSMM8 | Original Movie Soundtrack - Gnothi seauton by Köl       |       1
+ 116 | QmZZsyie1RN8B8FpCKQLgcNMbrjDHVf5HhghD3TwmmgMjy | Original Movie Soundtrack - Walls’s Inspiration by Köl  |       1
+ 117 | QmQiPj6rLD5bpF5VGZJsfRWzyP7WrQgHziLfnzC7PYn4an | Original Movie Soundtrack - The in-between world by Köl |       1
+ 118 | Qmc2yZNxeC5vuHsB9Te4xVk68UxYLYbEXokyT8jWYy5c89 | Original Movie Soundtrack - Apotheosis by Köl           |       1
+ 119 | QmUYrko5Et7s5r14cfmKC79F2RVuqP3hqVEPt62V4Ewu6m | Original Movie Soundtrack - The Judgement by Köl        |       1
+ 120 | QmeyPMBxF2ckaa1PVNzQuqvmzpdonPZxy71xu6WCDYefyf | Original Movie Soundtrack - The Last Judgment by Köl    |       1
+ 121 | QmW7emp147h5jPubSGWiCW2UvZpiH5Ca3wZ8XwYqxR6xVu | Original Trailer Music by Köl                           |       1
+ 122 | QmWhHMSx2mgyW76UHTssfHP2p6eLuWwoHaoCctqz2VJWZx | Original Score of the Official Movie Soundtrack         |       1
+(98 rows)

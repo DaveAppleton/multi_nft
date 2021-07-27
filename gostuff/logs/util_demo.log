@@ -84,3 +84,4 @@
 2021/07/05 00:59:43 database :  dial tcp [::1]:5432: connect: connection refused
 2021/07/05 00:59:43 host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname='minty-demo' connect_timeout=10
 2021/07/05 00:59:43 dial tcp [::1]:5432: connect: connection refused
+2021/07/27 15:45:24 set minter  aatqa 4 0xB0f1A004b34457F62a29f42dF1e6D82bf9e39c74 demo

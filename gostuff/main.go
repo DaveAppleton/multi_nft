@@ -906,5 +906,5 @@ go run . -action add_pools -database demo -initial_share_addrs 0x39d07f321cAF5b0
 
 go run . -action add_pools -database demo -initial_share_addrs 0x39d07f321cAF5b0668459DB5Bcf039A462A9273d,0x6e93Deb7FDa0E5A4CA8A3566785F0c7f4D0A2cb3 -later_share_addrs 0x39d07f321cAF5b0668459DB5Bcf039A462A9273d,0x6e93Deb7FDa0E5A4CA8A3566785F0c7f4D0A2cb3 -initial_share_shares 200,800 -later_share_shares 200,800  -contract 0x36c5e21902d04902B577EcBF9B2273675C6c738E -description sea-20-80
 
-
+go run . -action web -database demo
 */

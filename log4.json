@@ -1,0 +1,351 @@
+{
+    "level": "error",
+    "ts": 1626543787.4842532,
+    "logger": "http.log.access.log0",
+    "msg": "handled request",
+    "request": {
+        "remote_addr": "138.201.35.109:57410",
+        "proto": "HTTP/1.1",
+        "method": "GET",
+        "host": "preview.minty.art",
+        "uri": "/robots.txt",
+        "headers": {
+            "Accept-Encoding": [
+                "gzip, deflate"
+            ],
+            "User-Agent": [
+                "Mozilla/5.0 (compatible; Semanticbot/1.0; +http://sempi.tech/bot.html)"
+            ],
+            "Accept-Language": [
+                "en"
+            ],
+            "Accept": [
+                "*/*"
+            ]
+        },
+        "tls": {
+            "resumed": false,
+            "version": 772,
+            "cipher_suite": 4865,
+            "proto": "",
+            "proto_mutual": true,
+            "server_name": "preview.minty.art"
+        }
+    },
+    "common_log": "138.201.35.109 - - [17/Jul/2021:17:43:07 +0000] \"GET /robots.txt HTTP/1.1\" 404 19",
+    "duration": 0.001895259,
+    "size": 19,
+    "status": 404,
+    "resp_headers": {
+        "Server": [
+            "Caddy"
+        ],
+        "Date": [
+            "Sat, 17 Jul 2021 17:43:07 GMT"
+        ],
+        "Content-Length": [
+            "19"
+        ],
+        "Content-Type": [
+            "text/plain; charset=utf-8"
+        ],
+        "X-Content-Type-Options": [
+            "nosniff"
+        ]
+    }
+}
+{
+    "level": "info",
+    "ts": 1626543788.0877328,
+    "logger": "http.log.access.log0",
+    "msg": "handled request",
+    "request": {
+        "remote_addr": "138.201.35.109:57462",
+        "proto": "HTTP/1.1",
+        "method": "GET",
+        "host": "preview.minty.art",
+        "uri": "/preview/art/19",
+        "headers": {
+            "User-Agent": [
+                "Mozilla/5.0 (compatible; Semanticbot/1.0; +http://sempi.tech/bot.html)"
+            ],
+            "Accept-Language": [
+                "en"
+            ],
+            "Referer": [
+                "https://preview.minty.art/"
+            ],
+            "Accept": [
+                "*/*"
+            ],
+            "Accept-Encoding": [
+                "gzip, deflate"
+            ]
+        },
+        "tls": {
+            "resumed": false,
+            "version": 772,
+            "cipher_suite": 4865,
+            "proto": "",
+            "proto_mutual": true,
+            "server_name": "preview.minty.art"
+        }
+    },
+    "common_log": "138.201.35.109 - - [17/Jul/2021:17:43:08 +0000] \"GET /preview/art/19 HTTP/1.1\" 200 482",
+    "duration": 0.073551397,
+    "size": 482,
+    "status": 200,
+    "resp_headers": {
+        "Server": [
+            "Caddy"
+        ],
+        "Content-Type": [
+            "text/html; charset=utf-8"
+        ],
+        "Date": [
+            "Sat, 17 Jul 2021 17:43:08 GMT"
+        ],
+        "Content-Length": [
+            "482"
+        ]
+    }
+}
+{
+    "level": "info",
+    "ts": 1626543817.2034419,
+    "logger": "http.log.access.log0",
+    "msg": "handled request",
+    "request": {
+        "remote_addr": "107.178.232.181:51571",
+        "proto": "HTTP/1.1",
+        "method": "GET",
+        "host": "preview.minty.art",
+        "uri": "/preview/art/19",
+        "headers": {
+            "User-Agent": [
+                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_3) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/79.0.3945.130 Safari/537.36"
+            ],
+            "Accept-Encoding": [
+                "gzip, deflate"
+            ],
+            "Accept": [
+                "*/*"
+            ],
+            "Connection": [
+                "keep-alive"
+            ]
+        },
+        "tls": {
+            "resumed": false,
+            "version": 772,
+            "cipher_suite": 4865,
+            "proto": "http/1.1",
+            "proto_mutual": true,
+            "server_name": "preview.minty.art"
+        }
+    },
+    "common_log": "107.178.232.181 - - [17/Jul/2021:17:43:37 +0000] \"GET /preview/art/19 HTTP/1.1\" 200 482",
+    "duration": 0.095737597,
+    "size": 482,
+    "status": 200,
+    "resp_headers": {
+        "Server": [
+            "Caddy"
+        ],
+        "Date": [
+            "Sat, 17 Jul 2021 17:43:37 GMT"
+        ],
+        "Content-Length": [
+            "482"
+        ],
+        "Content-Type": [
+            "text/html; charset=utf-8"
+        ]
+    }
+}
+{
+    "level": "info",
+    "ts": 1626543817.8959966,
+    "logger": "http.log.access.log0",
+    "msg": "handled request",
+    "request": {
+        "remote_addr": "107.178.232.181:55417",
+        "proto": "HTTP/1.1",
+        "method": "HEAD",
+        "host": "preview.minty.art",
+        "uri": "/preview/art/19",
+        "headers": {
+            "User-Agent": [
+                "python-requests/2.25.1"
+            ],
+            "Accept-Encoding": [
+                "gzip, deflate"
+            ],
+            "Accept": [
+                "*/*"
+            ],
+            "Connection": [
+                "keep-alive"
+            ]
+        },
+        "tls": {
+            "resumed": false,
+            "version": 772,
+            "cipher_suite": 4865,
+            "proto": "http/1.1",
+            "proto_mutual": true,
+            "server_name": "preview.minty.art"
+        }
+    },
+    "common_log": "107.178.232.181 - - [17/Jul/2021:17:43:37 +0000] \"HEAD /preview/art/19 HTTP/1.1\" 200 0",
+    "duration": 0.063155258,
+    "size": 0,
+    "status": 200,
+    "resp_headers": {
+        "Server": [
+            "Caddy"
+        ],
+        "Date": [
+            "Sat, 17 Jul 2021 17:43:37 GMT"
+        ],
+        "Content-Length": [
+            "482"
+        ],
+        "Content-Type": [
+            "text/html; charset=utf-8"
+        ]
+    }
+}
+{
+    "level": "info",
+    "ts": 1626543818.7873046,
+    "logger": "http.log.access.log0",
+    "msg": "handled request",
+    "request": {
+        "remote_addr": "74.125.210.93:35734",
+        "proto": "HTTP/1.1",
+        "method": "GET",
+        "host": "preview.minty.art",
+        "uri": "/preview/art/19",
+        "headers": {
+            "Connection": [
+                "keep-alive"
+            ],
+            "Accept": [
+                "*/*"
+            ],
+            "User-Agent": [
+                "Mozilla/5.0 (Linux; Android 6.0.1; Nexus 5X Build/MMB29P) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.90 Mobile Safari/537.36 (compatible; Google-AMPHTML)"
+            ],
+            "Accept-Encoding": [
+                "gzip, deflate, br"
+            ]
+        },
+        "tls": {
+            "resumed": false,
+            "version": 772,
+            "cipher_suite": 4865,
+            "proto": "",
+            "proto_mutual": true,
+            "server_name": "preview.minty.art"
+        }
+    },
+    "common_log": "74.125.210.93 - - [17/Jul/2021:17:43:38 +0000] \"GET /preview/art/19 HTTP/1.1\" 200 482",
+    "duration": 0.087445567,
+    "size": 482,
+    "status": 200,
+    "resp_headers": {
+        "Content-Type": [
+            "text/html; charset=utf-8"
+        ],
+        "Server": [
+            "Caddy"
+        ],
+        "Date": [
+            "Sat, 17 Jul 2021 17:43:38 GMT"
+        ],
+        "Content-Length": [
+            "482"
+        ]
+    }
+}
+{
+    "level": "info",
+    "ts": 1626544156.8895905,
+    "logger": "http.log.access.log0",
+    "msg": "handled request",
+    "request": {
+        "remote_addr": "183.171.132.109:52046",
+        "proto": "HTTP/2.0",
+        "method": "GET",
+        "host": "preview.minty.art",
+        "uri": "/preview/art/84",
+        "headers": {
+            "Cookie": [
+                "crisp-client%2Fsession%2F518d3742-b44b-4edb-8b8e-5c6d324fea85=session_22e1ab5d-1bca-4646-84a4-f2801135af34"
+            ],
+            "Sec-Ch-Ua": [
+                "\" Not;A Brand\";v=\"99\", \"Google Chrome\";v=\"91\", \"Chromium\";v=\"91\""
+            ],
+            "Sec-Ch-Ua-Mobile": [
+                "?0"
+            ],
+            "Upgrade-Insecure-Requests": [
+                "1"
+            ],
+            "User-Agent": [
+                "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.114 Safari/537.36"
+            ],
+            "Accept-Language": [
+                "en-US,en;q=0.9"
+            ],
+            "Sec-Fetch-Dest": [
+                "document"
+            ],
+            "Accept-Encoding": [
+                "gzip, deflate, br"
+            ],
+            "Dnt": [
+                "1"
+            ],
+            "Accept": [
+                "text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9"
+            ],
+            "Sec-Fetch-Site": [
+                "none"
+            ],
+            "Sec-Fetch-Mode": [
+                "navigate"
+            ],
+            "Sec-Fetch-User": [
+                "?1"
+            ]
+        },
+        "tls": {
+            "resumed": true,
+            "version": 772,
+            "cipher_suite": 4865,
+            "proto": "h2",
+            "proto_mutual": true,
+            "server_name": "preview.minty.art"
+        }
+    },
+    "common_log": "183.171.132.109 - - [17/Jul/2021:17:49:16 +0000] \"GET /preview/art/84 HTTP/2.0\" 200 752",
+    "duration": 1.872363534,
+    "size": 752,
+    "status": 200,
+    "resp_headers": {
+        "Server": [
+            "Caddy"
+        ],
+        "Date": [
+            "Sat, 17 Jul 2021 17:49:16 GMT"
+        ],
+        "Content-Length": [
+            "752"
+        ],
+        "Content-Type": [
+            "text/html; charset=utf-8"
+        ]
+    }
+}
