@@ -92,6 +92,7 @@ func main() {
 	client, err = ethclient.Dial(host)
 	chkErr("Get Client", err)
 	etherdb.InitDB(viper.GetString("TOKEN_HOST"))
+	etherdb.InitLockingDB(viper.GetString("DB_HOST"))
 
 	if *newDatabase {
 		fmt.Println("create Lookup : ")
@@ -167,6 +168,7 @@ func main() {
 		os.Exit(0)
 	}
 	if *monitor {
+		fmt.Println("Starting Monitor")
 		wg.Add(1)
 		go uniqueTransfers(client, &wg)
 		wg.Add(1)
@@ -175,8 +177,11 @@ func main() {
 		go multiTransfers(client, &wg)
 		wg.Add(1)
 		go multiSales(client, &wg)
+		wg.Add(1)
+		go lockingMonitor(client, &wg)
 	}
 	if *web {
+		fmt.Println("Starting Web")
 		// web section
 		http.HandleFunc("/monitor/", projectIndex)
 		http.HandleFunc("/monitor/unique/", projectUnique)

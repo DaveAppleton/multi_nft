@@ -8,7 +8,7 @@ type Lookup struct {
 	ID          int
 	Description string
 	Address     string
-	Type        int // 1 : ERC721, 2 : ERC1155, 3 : MultiSale, 4 : Sale
+	Type        int // 1 : ERC721, 2 : ERC1155, 3 : MultiSale, 4 : Sale, 5 : Locking
 	Enabled     bool
 	LastChecked uint64
 	Created     uint64
@@ -51,6 +51,10 @@ func GetAllMultiSaleIds() (lups []Lookup, err error) {
 
 func GetAllUniqueSaleIds() (lups []Lookup, err error) {
 	return getAllTokensOfType(4)
+}
+
+func GetAllLockingIds() (lups []Lookup, err error) {
+	return getAllTokensOfType(5)
 }
 
 func getAllTokensOfType(tokenType int) (lups []Lookup, err error) {

@@ -1,5 +1,6 @@
 {
     "log" : "util-live.log",
+    "DB_HOST" : "host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname='minty' connect_timeout=10",
     "DB_HOST___" : "host=localhost user=postgres password=P@ssword1 port=5432 sslmode=disable dbname=minty connect_timeout=10",
     "TOKEN_HOST" : "host=localhost user=token password='erc20' port=5432 sslmode=disable dbname=minty_tokens connect_timeout=10",
     "HOST" : "https://polygon-mainnet.infura.io/v3/a1a92273c03b4c9b83c5b2470058464f",
